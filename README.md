@@ -22,6 +22,6 @@ php flarum cache:clear
 
 ## Links
 
-<!-- - [Packagist](https://packagist.org/packages/club-1/flarum-ext-cross-references) -->
+- [Packagist](https://packagist.org/packages/club-1/flarum-ext-cross-references)
 - [GitHub](https://github.com/club-1/flarum-ext-cross-references)
 <!-- - [Discuss](https://discuss.flarum.org/d/PUT_DISCUSS_SLUG_HERE) -->

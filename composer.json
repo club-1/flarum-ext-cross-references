@@ -7,6 +7,7 @@
     "type": "flarum-extension",
     "license": "AGPL-3.0-or-later",
     "require": {
+        "php": ">=7.3",
         "flarum/core": "^1.2.0"
     },
     "authors": [

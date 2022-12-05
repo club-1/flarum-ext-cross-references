@@ -21,6 +21,7 @@
 
 import app from 'flarum/forum/app';
 import EventPost from 'flarum/forum/components/EventPost';
+import Link from 'flarum/common/components/Link';
 
 
 export default class DiscussionReferencedPost extends EventPost {
@@ -40,7 +41,7 @@ export default class DiscussionReferencedPost extends EventPost {
 
   descriptionData() {
     return {
-      source: this.attrs.source.title()
+      source: <Link href={app.route('discussion', {id: this.attrs.source.id()})}>{this.attrs.source.title()}</Link>
     }
   }
 }

@@ -1,0 +1,12 @@
+# Project files
+/vendor
+/tests/.phpunit.result.cache
+/tests/integration/tmp
+/js/coverage-ts
+
+# Other generated files
+.DS_Store
+Thumbs.db
+.vagrant
+.idea/*
+.vscode

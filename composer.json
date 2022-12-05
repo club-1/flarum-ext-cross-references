@@ -27,8 +27,8 @@
             "title": "Cross references",
             "category": "",
             "icon": {
-                "name": "fas fa-smile",
-                "backgroundColor": "#238c59",
+                "name": "fas fa-hashtag",
+                "backgroundColor": "#a83297",
                 "color": "#fff"
             }
         },

@@ -12,13 +12,13 @@ This extension is mainly inspired by GitHub cross linking features.
 So it adds similar features to Flarum forums.
 
 - EventPost in target discussion:
-  - [x] is created in a discussion when a post referencing to it is saved
+  - [x] is created when a post referencing it is saved
   - [x] links back to the source and displays its title
   - [ ] shows the ID of the source (option)
   - [ ] shows the primary tags of the source (option)
   - [ ] shows the secondary tags of the source (option)
 - Links in source discussion:
-  - [x] are changed to show the title of target discussion when the text the same as the href
+  - [x] are changed to show the title of target discussion when the text is the same as the href
   - [ ] are automatically created from `#<id>` text (e.g. `#42`)
   - [ ] are auto-completed with a selection box when `#` is entered
   - [ ] shows the ID of the target (option)

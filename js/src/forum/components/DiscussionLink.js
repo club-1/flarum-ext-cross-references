@@ -20,28 +20,29 @@
  */
 
 import app from 'flarum/forum/app';
-import EventPost from 'flarum/forum/components/EventPost';
-import DiscussionLink from './DiscussionLink';
+import Link from 'flarum/common/components/Link';
+import Component from 'flarum/common/Component';
 
 
-export default class DiscussionReferencedPost extends EventPost {
-  static initAttrs(attrs) {
-    super.initAttrs(attrs);
-
-    const sourceId = attrs.post.content()[0];
-    attrs.source = app.store.getById('discussions', sourceId);
+export default class DiscussionLink extends Link {
+  view() {
+    const discussion = this.attrs.discussion;
+    const href = this.attrs.href;
+    const showId = this.attrs.showId;
+    return (
+      <Link
+        href={href ? href : app.route('discussion', {id: discussion.id()})}
+        class="DiscussionLink"
+      >
+        {discussion.title()}
+      {showId && <DiscussionId discussionId={discussion.id()} /> }
+      </Link>
+    );
   }
-  icon() {
-    return 'fas fa-reply';
-  }
+}
 
-  descriptionKey() {
-    return 'club-1-cross-references.forum.post_stream.discussion_referenced_text';
-  }
-
-  descriptionData() {
-    return {
-      source: <DiscussionLink discussion={this.attrs.source} />
-    }
+class DiscussionId extends Component {
+  view() {
+    return <span class="DiscussionId"> #{this.attrs.discussionId}</span>
   }
 }

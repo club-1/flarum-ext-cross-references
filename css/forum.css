@@ -1,0 +1,8 @@
+.DiscussionId {
+	font-weight: normal;
+	color: var(--muted-color);
+}
+
+.EventPost .DiscussionLink {
+	color: var(--link-color);
+}

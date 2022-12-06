@@ -19,9 +19,34 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { extend, override } from 'flarum/common/extend';
 import app from 'flarum/forum/app';
+import CommentPost from 'flarum/forum/components/CommentPost';
+import DiscussionLink from './components/DiscussionLink';
 import DiscussionReferencedPost from './components/DiscussionReferencedPost';
 
 app.initializers.add('club-1/flarum-ext-cross-references', () => {
   app.postComponents.discussionReferenced = DiscussionReferencedPost;
+});
+
+extend(CommentPost.prototype, 'content', (original) => {
+  const postBody = original[1];
+  const content = postBody.children[0];
+  const el = document.createElement('p');
+  el.innerHTML = content.children;
+  el.querySelectorAll('a').forEach((a: HTMLAnchorElement) => {
+    if (a.text !== a.href) {
+      return;
+    }
+    if (a.protocol === document.location.protocol && a.host === document.location.host) {
+      const match = a.pathname.match(/\/d\/([0-9]+)/);
+      if (match == null) {
+        return;
+      }
+      const discussionId = match[1];
+      const discussion = app.store.getById('discussions', discussionId);
+      m.mount(a, {view: () => m(DiscussionLink, {discussion, href: a.href})});
+    }
+  });
+  content.children = el.innerHTML;
 });

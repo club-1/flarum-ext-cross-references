@@ -38,17 +38,19 @@ return [
         ->type(DiscussionReferencedPost::class),
 
     (new Extend\Model(Discussion::class))
-        ->belongsToMany('references', Discussion::class, 'discussion_reference', 'target_id', 'source_id'),
+        ->belongsToMany('sources', Discussion::class, 'discussion_reference', 'target_id', 'source_id')
+        ->belongsToMany('targets', Discussion::class, 'discussion_reference', 'source_id', 'target_id'),
 
     (new Extend\ApiSerializer(DiscussionSerializer::class))
-        ->hasMany('references', DiscussionSerializer::class),
+        ->hasMany('sources', DiscussionSerializer::class)
+        ->hasMany('targets', DiscussionSerializer::class),
 
     (new Extend\ApiController(ShowDiscussionController::class))
-        ->addInclude(['references'])
-        ->load('references'),
+        ->addInclude(['sources', 'targets']),
 
     (new Extend\Frontend('forum'))
-        ->js(__DIR__.'/js/dist/forum.js'),
+        ->js(__DIR__.'/js/dist/forum.js')
+        ->css(__DIR__.'/css/forum.css'),
 
     new Extend\Locales(__DIR__.'/locale'),
 ];

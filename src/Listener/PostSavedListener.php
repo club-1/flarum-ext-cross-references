@@ -57,10 +57,10 @@ class PostSavedListener
             if ($target == null) {
                 continue;
             }
-            if ($target->references()->where('source_id', $event->post->discussion_id)->exists()) {
+            if ($target->sources()->where('source_id', $event->post->discussion_id)->exists()) {
                 continue;
             }
-            $target->references()->save($event->post->discussion);
+            $target->sources()->save($event->post->discussion);
             $post = DiscussionReferencedPost::reply(
                 $targetId,
                 $event->actor->id,

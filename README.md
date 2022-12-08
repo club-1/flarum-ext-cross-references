@@ -20,6 +20,7 @@ So it adds similar features to Flarum forums.
 - Links in source discussion:
   - [x] are changed to show the title of target discussion when the text is the same as the href
   - [x] have `(comment)` indication if it points to a specific comment
+  - [ ] are shown in the preview the way they will be seen once posted
   - [ ] are automatically created from `#<id>` text (e.g. `#42`)
   - [ ] are auto-completed with a selection box when `#` is entered
   - [ ] shows the ID of the target (option)

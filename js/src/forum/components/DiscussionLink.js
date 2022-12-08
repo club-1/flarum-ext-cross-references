@@ -29,13 +29,19 @@ export default class DiscussionLink extends Link {
     const discussion = this.attrs.discussion;
     const href = this.attrs.href;
     const showId = this.attrs.showId;
+    const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
     return (
       <Link
         href={href ? href : app.route('discussion', {id: discussion.id()})}
         class="DiscussionLink"
       >
-        {discussion.title()}
-      {showId && <DiscussionId discussionId={discussion.id()} /> }
+        {
+          discussion.title()
+        } {
+          showId && <DiscussionId discussionId={discussion.id()} />
+        } {
+          isComment && <DiscussionComment/>
+        }
       </Link>
     );
   }
@@ -43,6 +49,14 @@ export default class DiscussionLink extends Link {
 
 class DiscussionId extends Component {
   view() {
-    return <span class="DiscussionId"> #{this.attrs.discussionId}</span>
+    return <span class="DiscussionId">#{this.attrs.discussionId}</span>
+  }
+}
+
+class DiscussionComment extends Component {
+  view() {
+    return <span class="DiscussionComment">
+      ({app.translator.trans('club-1-cross-references.forum.comment')})
+    </span>
   }
 }

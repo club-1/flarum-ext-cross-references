@@ -1,4 +1,4 @@
-.DiscussionId {
+.DiscussionId, .DiscussionComment {
 	font-weight: normal;
 	color: var(--muted-color);
 }

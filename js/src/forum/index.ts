@@ -43,27 +43,33 @@ app.initializers.add('club-1-cross-references', function(app) {
  * formated ones using its title as the text.
  */
 function addSourceLinkReplacement() {
-  extend(CommentPost.prototype, 'content', function(original) {
-    const postBody = original[1];
-    const content = postBody.children[0];
-    const el = document.createElement('p');
-    el.innerHTML = content.children;
-    el.querySelectorAll('a').forEach((a: HTMLAnchorElement) => {
-      if (a.text !== a.href) {
-        return;
+  function replaceSourceLinks(this: CommentPost) {
+    this.$('.Post-body a').replaceWith(function() {
+      const a = this as HTMLAnchorElement;
+      if (a.protocol !== document.location.protocol || a.host !== document.location.host) {
+        return a;
       }
-      if (a.protocol === document.location.protocol && a.host === document.location.host) {
-        const match = a.pathname.match(/\/d\/([0-9]+)/);
-        if (match == null) {
-          return;
-        }
+      const match = a.pathname.match(/\/d\/([0-9]+)/);
+      if (match == null) {
+        return a;
+      }
+      if (a.text === a.href) {
         const discussionId = match[1];
         const discussion = app.store.getById('discussions', discussionId);
-        m.mount(a, {view: () => m(DiscussionLink, {discussion, href: a.href})});
+        const span = document.createElement('span');
+        m.render(span, m(DiscussionLink, {discussion, href: a.href}));
+        return span;
+      } else {
+        a.addEventListener('click', (e) => {
+          m.route.set(this.getAttribute('href'))
+          e.preventDefault();
+        });
+        return a;
       }
     });
-    content.children = el.innerHTML;
-  });
+  }
+  extend(CommentPost.prototype, 'oncreate', replaceSourceLinks);
+  extend(CommentPost.prototype, 'onupdate', replaceSourceLinks);
 }
 
 /**

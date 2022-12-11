@@ -19,6 +19,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import Component from "flarum/common/Component";
+
 export default class DiscussionId extends Component {
   view() {
     return <span class="DiscussionId">#{this.attrs.discussionId}</span>

@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ DiscussionId)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__);
 
 /*
  * This file is part of club-1/flarum-ext-cross-references.
@@ -35,6 +37,8 @@ __webpack_require__.r(__webpack_exports__);
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+
+
 var DiscussionId = /*#__PURE__*/function (_Component) {
   (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionId, _Component);
   function DiscussionId() {
@@ -47,7 +51,7 @@ var DiscussionId = /*#__PURE__*/function (_Component) {
     }, "#", this.attrs.discussionId);
   };
   return DiscussionId;
-}(Component);
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
 
 
 /***/ }),

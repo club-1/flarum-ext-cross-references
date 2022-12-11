@@ -2,6 +2,9 @@ club-1-cross-references:
   # For more details on the format
   # Checkout https://docs.flarum.org/extend/i18n/#appendix-a-standard-key-format
   admin:
+    show_discussion_id:
+      label: 'Show discussion ID'
+      help: 'Add discussion ID numbers everywhere a discussion is displayed'
   forum:
     post_stream:
       discussion_referenced_text: '{username} referenced this discussion from {source}'

@@ -52,5 +52,13 @@ return [
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/css/forum.css'),
 
+    (new Extend\Frontend('admin'))
+        ->js(__DIR__.'/js/dist/admin.js'),
+
+    (new Extend\Settings())
+        ->serializeToForum('showDiscussionId', 'club-1-cross-references.show_discussion_id', function($value) {
+            return $value === '1';
+        }),
+
     new Extend\Locales(__DIR__.'/locale'),
 ];

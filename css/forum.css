@@ -3,6 +3,16 @@
 	color: var(--muted-color);
 }
 
+.DiscussionHero .DiscussionId {
+	color: inherit;
+	opacity: 0.6;
+}
+
+.DiscussionListItem .DiscussionId {
+	color: var(--muted-more-color);
+	margin-right: 5px;
+}
+
 .EventPost .DiscussionLink {
 	color: var(--link-color);
 }

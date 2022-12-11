@@ -14,7 +14,7 @@ So it adds similar features to Flarum forums.
 - EventPost in target discussion:
   - [x] is created when a post referencing it is saved
   - [x] links back to the source and displays its title
-  - [ ] shows the ID of the source (option)
+  - [x] shows the ID of the source (option)
   - [ ] shows the primary tags of the source (option)
   - [ ] shows the secondary tags of the source (option)
 - Links in source discussion:
@@ -23,13 +23,13 @@ So it adds similar features to Flarum forums.
   - [ ] are shown in the preview the way they will be seen once posted
   - [ ] are automatically created from `#<id>` text (e.g. `#42`)
   - [ ] are auto-completed with a selection box when `#` is entered
-  - [ ] shows the ID of the target (option)
+  - [x] shows the ID of the target (option)
   - [ ] shows the primary tags of the target (option)
   - [ ] shows the secondary tags of the target (option)
 - Discussion list:
-  - [ ] shows the ID of the discussions (option)
+  - [x] shows the ID of the discussions (option)
 - HeaderRow
-  - [ ] shows the ID of the discussion (option)
+  - [x] shows the ID of the discussion (option)
 
 ## Installation
 

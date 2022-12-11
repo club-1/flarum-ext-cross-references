@@ -22,13 +22,14 @@
 import app from 'flarum/forum/app';
 import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
+import DiscussionId from './DiscussionId';
 
 
 export default class DiscussionLink extends Link {
   view() {
     const discussion = this.attrs.discussion;
     const href = this.attrs.href;
-    const showId = this.attrs.showId;
+    const showId = app.forum.attribute('showDiscussionId');
     const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
     return (
       <Link
@@ -44,12 +45,6 @@ export default class DiscussionLink extends Link {
         }
       </Link>
     );
-  }
-}
-
-class DiscussionId extends Component {
-  view() {
-    return <span class="DiscussionId">#{this.attrs.discussionId}</span>
   }
 }
 

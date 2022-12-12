@@ -1,6 +1,6 @@
 {
     "name": "club-1/flarum-ext-cross-references",
-    "description": "Add cross references when a discussion is mentionned from another one.",
+    "description": "Add cross reference links when a discussion is mentioned from another one.",
     "keywords": [
         "flarum"
     ],

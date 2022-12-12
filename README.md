@@ -2,14 +2,14 @@
 
 ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue) [![Latest Stable Version](https://img.shields.io/packagist/v/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references) [![Total Downloads](https://img.shields.io/packagist/dt/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references)
 
-A [Flarum](http://flarum.org) extension. Add cross references when a discussion is mentionned from another one.
+A [Flarum](http://flarum.org) extension. Add cross reference links when a discussion is mentioned from another one.
 
 ![cross reference screenshot](https://static.club1.fr/nicolas/flarum-ext-cross-references.png)
 
 ## Features
 
 This extension is mainly inspired by GitHub cross linking features.
-So it adds similar features to Flarum forums.
+It adds similar features to Flarum forums.
 
 - EventPost in target discussion:
   - [x] is created when a post referencing it is saved
@@ -20,12 +20,13 @@ So it adds similar features to Flarum forums.
 - Links in source discussion:
   - [x] are changed to show the title of target discussion when the text is the same as the href
   - [x] have `(comment)` indication if it points to a specific comment
+  - [x] load the target discussion faster as they use the _FrontEnd Router_
   - [ ] are shown in the preview the way they will be seen once posted
   - [ ] are automatically created from `#<id>` text (e.g. `#42`)
   - [ ] are auto-completed with a selection box when `#` is entered
-  - [x] shows the ID of the target (option)
-  - [ ] shows the primary tags of the target (option)
-  - [ ] shows the secondary tags of the target (option)
+  - [x] show the ID of the target (option)
+  - [ ] show the primary tags of the target (option)
+  - [ ] show the secondary tags of the target (option)
 - Discussion list:
   - [x] shows the ID of the discussions (option)
 - HeaderRow

@@ -19,7 +19,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import app from 'flarum/forum/app';
 import EventPost from 'flarum/forum/components/EventPost';
 import DiscussionLink from './DiscussionLink';
 
@@ -28,8 +27,7 @@ export default class DiscussionReferencedPost extends EventPost {
   static initAttrs(attrs) {
     super.initAttrs(attrs);
 
-    const sourceId = attrs.post.content()[0];
-    attrs.source = app.store.getById('discussions', sourceId);
+    attrs.sourceId = attrs.post.content()[0];
   }
   icon() {
     return 'fas fa-reply';
@@ -41,7 +39,7 @@ export default class DiscussionReferencedPost extends EventPost {
 
   descriptionData() {
     return {
-      source: <DiscussionLink discussion={this.attrs.source} />
+      source: <DiscussionLink discussionId={this.attrs.sourceId} />
     }
   }
 }

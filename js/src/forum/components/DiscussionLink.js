@@ -22,26 +22,44 @@
 import app from 'flarum/forum/app';
 import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
+import tagsLabel from 'flarum/tags/helpers/tagsLabel';
 import DiscussionId from './DiscussionId';
 
-
 export default class DiscussionLink extends Link {
+  oninit(vnode) {
+    super.oninit(vnode);
+    this.discussion = app.store.getById('discussions', this.attrs.discussionId)
+    if ('flarum-tags' in flarum.extensions && !this.discussion.tags()) {
+      app.store.find('discussions', this.attrs.discussionId, {include: 'tags'})
+        .then((discussion) => {
+          this.discussion = discussion;
+          m.redraw();
+        });
+    }
+  }
+
   view() {
-    const discussion = this.attrs.discussion;
+    const id = this.attrs.discussionId;
     const href = this.attrs.href;
     const showId = app.forum.attribute('showDiscussionId');
     const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
     return (
       <Link
-        href={href ? href : app.route('discussion', {id: discussion.id()})}
+        href={href ? href : app.route('discussion', {id})}
         class="DiscussionLink"
       >
         {
-          discussion.title()
+          this.discussion.title()
         } {
-          showId && <DiscussionId discussionId={discussion.id()} />
+          showId && <DiscussionId discussionId={id} />
         } {
           isComment && <DiscussionComment/>
+        } {
+          'flarum-tags' in flarum.extensions
+            && this.discussion.tags()
+            && tagsLabel(this.discussion.tags().filter((tag) => {
+              return tag.position() !== null && !tag.isChild();
+            }))
         }
       </Link>
     );

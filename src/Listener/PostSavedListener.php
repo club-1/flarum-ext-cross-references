@@ -52,6 +52,9 @@ class PostSavedListener
         $matches = [];
         preg_match_all("~$this->discussionPath/([0-9]+)~", $event->post->content, $matches);
         foreach($matches[1] as $targetId) {
+            if ($targetId == $event->post->discussion_id) {
+                continue;
+            }
             /** @var Discussion|null */
             $target = Discussion::find($targetId);
             if ($target == null) {

@@ -23,6 +23,7 @@ import app from 'flarum/forum/app';
 import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
 import type { ComponentAttrs } from 'flarum/common/Component';
+import tagsLabel from 'flarum/tags/helpers/tagsLabel';
 import DiscussionId from './DiscussionId';
 import { ResponseCache } from '../cache';
 import Discussion from 'flarum/common/models/Discussion';
@@ -74,6 +75,10 @@ export default class DiscussionLink extends Link {
           showId && <DiscussionId discussionId={this.attrs.discussionId} />
         } {
           isComment && <DiscussionComment/>
+        } {
+          'flarum-tags' in flarum.extensions
+            && this.discussion.tags()
+            && tagsLabel(this.discussion.tags())
         }
       </Link>
     } else {

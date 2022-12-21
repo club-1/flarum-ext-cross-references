@@ -23,7 +23,6 @@
 
 namespace Club1\CrossReferences\Formatter;
 
-use Flarum\Post\Post;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
@@ -39,10 +38,7 @@ class CrossReferencesRenderer
      */
     public function __invoke(Renderer $renderer, $context, string $xml)
     {
-        return Utils::replaceAttributes($xml, 'CROSSREFERENCE', function ($attributes) use ($context) {
-            assert($context instanceof Post);
-            $post = $context;
-            $attributes['title'] = $post->discussion->title;
+        return Utils::replaceAttributes($xml, 'CROSSREFERENCESHORT', function ($attributes) use ($context) {
             return $attributes;
         });
     }

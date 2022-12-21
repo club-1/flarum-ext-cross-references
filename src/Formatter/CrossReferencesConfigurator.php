@@ -29,44 +29,66 @@ use s9e\TextFormatter\Configurator;
 class CrossReferencesConfigurator
 {
 
-    /**
-     * @var UrlGenerator
-     */
+    /** @var UrlGenerator */
     protected $urlGen;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $discussionPath;
+
+    /** @var string */
+    protected $discussionPathEsc;
 
     public function __construct(UrlGenerator $urlGenerator)
     {
         $this->urlGen = $urlGenerator;
         $this->discussionPath = $this->urlGen->to('forum')->route('discussion', ['id' => '']);
+        $this->discussionPathEsc = addcslashes($this->discussionPath, '/');
     }
 
     public function __invoke(Configurator $config)
     {
-        $this->configureCrossReference($config);
+        $config->rendering->parameters['DISCUSSION_URL'] = $this->discussionPath;
+        $this->configureCrossReferenceShort($config);
+        $this->configureCrossReferenceURL($config);
+        $this->configureCrossReferenceURLComment($config);
         error_log('configured cross references');
     }
 
-    protected function configureCrossReference(Configurator $config)
+    protected function configureCrossReferenceShort(Configurator $config)
     {
-        $config->rendering->parameters['DISCUSSION_URL'] = $this->discussionPath;
-        $discussionPathRegex = addcslashes($this->discussionPath, '/');
-
-        $tagName = 'CROSSREFERENCE';
+        $tagName = 'CROSSREFERENCESHORT';
 
         $tag = $config->tags->add($tagName);
-
         $tag->attributes->add('id')->filterChain->append('#uint');
-        // $tag->attributes->add('comment')->filterChain->append('#bool');
-        // $tag->attributes->add('title');
-
         $tag->template = '<a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">#<xsl:value-of select="@id"/></a>';
 
         $config->Preg->match('/\B#(?<id>[0-9]+)\b/i', $tagName);
-        $config->Preg->match("/(?:^|\b)$discussionPathRegex(?<id>[0-9]+)[^\s\/]*(?<comment>\/[0-9]+)?/i", $tagName);
+    }
+
+    protected function configureCrossReferenceURL(Configurator $config)
+    {
+        $tagName = 'CROSSREFERENCEURL';
+
+        $tag = $config->tags->add($tagName);
+        $tag->attributes->add('id')->filterChain->append('#uint');
+        $tag->attributes->add('url')->filterChain->append('#url');
+        $tag->template = '<a href="{@url}" class="DiscussionLink">#<xsl:value-of select="@id"/></a>';
+
+        $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/?)(?=\s|$)/i", $tagName);
+    }
+
+    protected function configureCrossReferenceURLComment(Configurator $config)
+    {
+        $tagName = 'CROSSREFERENCEURLCOMMENT';
+
+        $tag = $config->tags->add($tagName);
+        $tag->attributes->add('id')->filterChain->append('#uint');
+        $tag->attributes->add('url')->filterChain->append('#url');
+        $tag->template = '
+            <a href="{@url}" class="DiscussionLink">
+                #<xsl:value-of select="@id"/> <span class="DiscussionComment">(comment)</span>
+            </a>';
+
+        $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/[0-9]+)(?=\s|$)/i", $tagName);
     }
 }

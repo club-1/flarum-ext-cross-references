@@ -23,6 +23,8 @@
 
 namespace Club1\CrossReferences;
 
+use Club1\CrossReferences\Formatter\CrossReferencesConfigurator;
+use Club1\CrossReferences\Formatter\CrossReferencesRenderer;
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
 use Flarum\Api\Controller\ShowDiscussionController;
 use Flarum\Api\Serializer\DiscussionSerializer;
@@ -31,6 +33,10 @@ use Flarum\Extend;
 use Flarum\Post;
 
 return [
+    (new Extend\Formatter)
+        ->configure(CrossReferencesConfigurator::class)
+        ->render(CrossReferencesRenderer::class),
+
     (new Extend\Event())
         ->listen(Post\Event\Posted::class, Listener\PostEventListener::class)
         ->listen(Post\Event\Revised::class, Listener\PostEventListener::class),

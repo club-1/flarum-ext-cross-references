@@ -24,10 +24,16 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Http\UrlGenerator;
+use Flarum\Settings\SettingsRepositoryInterface;
 use s9e\TextFormatter\Configurator;
 
 class CrossReferencesConfigurator
 {
+    const PARAM_DISCUSSION_URL = 'DISCUSSION_URL';
+    const PARAM_SHOW_DISCUSSION_ID = 'SHOW_DISCUSSION_ID';
+
+    /** @var SettingsRepositoryInterface */
+    protected $settings;
 
     /** @var UrlGenerator */
     protected $urlGen;
@@ -38,8 +44,9 @@ class CrossReferencesConfigurator
     /** @var string */
     protected $discussionPathEsc;
 
-    public function __construct(UrlGenerator $urlGenerator)
+    public function __construct(SettingsRepositoryInterface $settings, UrlGenerator $urlGenerator)
     {
+        $this->settings = $settings;
         $this->urlGen = $urlGenerator;
         $this->discussionPath = $this->urlGen->to('forum')->route('discussion', ['id' => '']);
         $this->discussionPathEsc = addcslashes($this->discussionPath, '/');
@@ -47,7 +54,8 @@ class CrossReferencesConfigurator
 
     public function __invoke(Configurator $config)
     {
-        $config->rendering->parameters['DISCUSSION_URL'] = $this->discussionPath;
+        $config->rendering->parameters[self::PARAM_DISCUSSION_URL] = $this->discussionPath;
+        $config->rendering->parameters[self::PARAM_SHOW_DISCUSSION_ID] = $this->settings->get('club-1-cross-references.show_discussion_id');
         $this->configureCrossReferenceShort($config);
         $this->configureCrossReferenceURL($config);
         $this->configureCrossReferenceURLComment($config);
@@ -60,7 +68,11 @@ class CrossReferencesConfigurator
 
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
-        $tag->template = '<a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">#<xsl:value-of select="@id"/></a>';
+        $tag->template = '
+            <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
+                #<xsl:value-of select="@id"/>
+                <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span></xsl:if>
+            </a>';
 
         $config->Preg->match('/\B#(?<id>[0-9]+)\b/i', $tagName);
     }
@@ -72,7 +84,11 @@ class CrossReferencesConfigurator
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->attributes->add('url')->filterChain->append('#url');
-        $tag->template = '<a href="{@url}" class="DiscussionLink">#<xsl:value-of select="@id"/></a>';
+        $tag->template = '
+            <a href="{@url}" class="DiscussionLink">
+                #<xsl:value-of select="@id"/>
+                <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span></xsl:if>
+            </a>';
 
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/?)(?=\s|$)/i", $tagName);
     }
@@ -86,7 +102,9 @@ class CrossReferencesConfigurator
         $tag->attributes->add('url')->filterChain->append('#url');
         $tag->template = '
             <a href="{@url}" class="DiscussionLink">
-                #<xsl:value-of select="@id"/> <span class="DiscussionComment">(comment)</span>
+                #<xsl:value-of select="@id"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                </xsl:if> <span class="DiscussionComment">(comment)</span>
             </a>';
 
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/[0-9]+)(?=\s|$)/i", $tagName);

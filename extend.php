@@ -30,7 +30,8 @@ use Flarum\Api\Controller\ShowDiscussionController;
 use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Discussion\Discussion;
 use Flarum\Extend;
-use Flarum\Post\Event\Saving;
+use Flarum\Post\Event\Saving as PostSaving;
+use Flarum\Settings\Event\Saved as SettingsSaved;
 
 return [
     (new Extend\Formatter)
@@ -38,7 +39,8 @@ return [
         ->render(CrossReferencesRenderer::class),
 
     (new Extend\Event())
-        ->listen(Saving::class, Listener\PostSavedListener::class),
+        ->listen(PostSaving::class, Listener\PostSavedListener::class)
+        ->listen(SettingsSaved::class, Listener\SettingsSavedListener::class),
 
     (new Extend\Post())
         ->type(DiscussionReferencedPost::class),

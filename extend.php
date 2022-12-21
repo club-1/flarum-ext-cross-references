@@ -31,6 +31,7 @@ use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Discussion\Discussion;
 use Flarum\Extend;
 use Flarum\Post;
+use Flarum\Settings\Event\Saved as SettingsSaved;
 
 return [
     (new Extend\Formatter)
@@ -39,7 +40,8 @@ return [
 
     (new Extend\Event())
         ->listen(Post\Event\Posted::class, Listener\PostEventListener::class)
-        ->listen(Post\Event\Revised::class, Listener\PostEventListener::class),
+        ->listen(Post\Event\Revised::class, Listener\PostEventListener::class)
+        ->listen(SettingsSaved::class, Listener\SettingsSavedListener::class),
 
     (new Extend\Post())
         ->type(DiscussionReferencedPost::class),

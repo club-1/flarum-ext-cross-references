@@ -106,7 +106,7 @@ class CrossReferencesConfigurator
             <a href="{@url}" class="DiscussionLink">
                 <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
                     <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                </xsl:if> <span class="DiscussionComment">(comment)</span>
+                </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
             </a>';
 
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/[0-9]+)(?=\s|$)/i", $tagName);

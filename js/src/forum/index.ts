@@ -104,3 +104,15 @@ function addDiscussionListId() {
     items.add('id', m(DiscussionId, {discussionId}), 90);
   });
 }
+
+export function filterCrossReferences(tag) {
+  const res = app.store.getById('discussions', tag.getAttribute('id'));
+  if (res) {
+    const discussion = res as Discussion;
+    tag.setAttribute('title', discussion.title());
+  } else {
+    tag.setAttribute('title', app.translator.trans('club-1-cross-references.forum.unknown_discussion'));
+  }
+  tag.setAttribute('comment', app.translator.trans('club-1-cross-references.forum.comment'));
+  return true;
+}

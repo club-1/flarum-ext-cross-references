@@ -26,6 +26,7 @@ namespace Club1\CrossReferences\Formatter;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use s9e\TextFormatter\Configurator;
+use s9e\TextFormatter\Parser\Tag;
 
 class CrossReferencesConfigurator
 {
@@ -62,12 +63,21 @@ class CrossReferencesConfigurator
         error_log('configured cross references');
     }
 
+    public static function filterCrossReferences(Tag $tag)
+    {
+        // Set a placeholder for TextFormatter to be happy.
+        // The real value of 'title' is set during render.
+        $tag->setAttribute('title', '');
+        return true;
+    }
+
     protected function configureCrossReferenceShort(Configurator $config)
     {
         $tagName = 'CROSSREFERENCESHORT';
 
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
+        $tag->attributes->add('title');
         $tag->template = '
             <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
                 <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
@@ -75,6 +85,9 @@ class CrossReferencesConfigurator
                 </xsl:if>
             </a>';
 
+        $tag->filterChain
+            ->prepend([static::class, 'filterCrossReferences'])
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
         $config->Preg->match('/\B#(?<id>[0-9]+)\b/i', $tagName);
     }
 
@@ -85,6 +98,7 @@ class CrossReferencesConfigurator
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->attributes->add('url')->filterChain->append('#url');
+        $tag->attributes->add('title');
         $tag->template = '
             <a href="{@url}" class="DiscussionLink">
                 <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
@@ -92,6 +106,9 @@ class CrossReferencesConfigurator
                 </xsl:if>
             </a>';
 
+        $tag->filterChain
+            ->prepend([static::class, 'filterCrossReferences'])
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/?)(?=\s|$)/i", $tagName);
     }
 
@@ -102,6 +119,8 @@ class CrossReferencesConfigurator
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->attributes->add('url')->filterChain->append('#url');
+        $tag->attributes->add('title');
+        $tag->attributes->add('comment');
         $tag->template = '
             <a href="{@url}" class="DiscussionLink">
                 <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
@@ -109,6 +128,9 @@ class CrossReferencesConfigurator
                 </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
             </a>';
 
+        $tag->filterChain
+            ->prepend([static::class, 'filterCrossReferences'])
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/[0-9]+)(?=\s|$)/i", $tagName);
     }
 }

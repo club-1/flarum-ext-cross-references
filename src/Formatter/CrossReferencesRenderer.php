@@ -24,11 +24,22 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Locale\Translator;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
 class CrossReferencesRenderer
 {
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Configure rendering for cross references.
      *
@@ -47,7 +58,10 @@ class CrossReferencesRenderer
             if (!is_null($discussion)) {
                 error_log($discussion->title);
                 $attributes['title'] = $discussion->title;
+            } else {
+                $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');
             }
+            $attributes['comment'] = $this->translator->trans('club-1-cross-references.forum.comment');
             return $attributes;
         };
         $xml = Utils::replaceAttributes($xml, 'CROSSREFERENCESHORT', $filterCrossReferences);

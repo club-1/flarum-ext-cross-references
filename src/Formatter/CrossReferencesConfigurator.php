@@ -65,9 +65,10 @@ class CrossReferencesConfigurator
 
     public static function filterCrossReferences(Tag $tag)
     {
-        // Set a placeholder for TextFormatter to be happy.
-        // The real value of 'title' is set during render.
+        // Set placeholder values for TextFormatter to be happy.
+        // The real values is set during render.
         $tag->setAttribute('title', '');
+        $tag->setAttribute('comment', '');
         return true;
     }
 

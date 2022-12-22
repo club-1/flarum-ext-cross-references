@@ -56,7 +56,6 @@ class CrossReferencesRenderer
             /** @var Discussion|null */
             $discussion = Discussion::find($attributes['id']);
             if (!is_null($discussion)) {
-                error_log($discussion->title);
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');

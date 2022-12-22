@@ -23,6 +23,7 @@
 
 namespace Club1\CrossReferences\Formatter;
 
+use Flarum\Discussion\Discussion;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
@@ -38,8 +39,20 @@ class CrossReferencesRenderer
      */
     public function __invoke(Renderer $renderer, $context, string $xml)
     {
-        return Utils::replaceAttributes($xml, 'CROSSREFERENCESHORT', function ($attributes) use ($context) {
+        $filterCrossReferences = function ($attributes) use ($context) {
+            // assert ($context instanceof Post);
+            // error_log($context->discussion->title);
+            /** @var Discussion|null */
+            $discussion = Discussion::find($attributes['id']);
+            if (!is_null($discussion)) {
+                error_log($discussion->title);
+                $attributes['title'] = $discussion->title;
+            }
             return $attributes;
-        });
+        };
+        $xml = Utils::replaceAttributes($xml, 'CROSSREFERENCESHORT', $filterCrossReferences);
+        $xml = Utils::replaceAttributes($xml, 'CROSSREFERENCEURL', $filterCrossReferences);
+        $xml = Utils::replaceAttributes($xml, 'CROSSREFERENCEURLCOMMENT', $filterCrossReferences);
+        return $xml;
     }
 }

@@ -22,7 +22,7 @@ It adds similar features to Flarum forums.
   - [x] have `(comment)` indication if it points to a specific comment
   - [x] load the target discussion faster as they use the _FrontEnd Router_
   - [ ] are shown in the preview the way they will be seen once posted
-  - [ ] are automatically created from `#<id>` text (e.g. `#42`)
+  - [x] are automatically created from `#<id>` text (e.g. `#42`)
   - [ ] are auto-completed with a selection box when `#` is entered
   - [x] show the ID of the target (option)
   - [ ] show the primary tags of the target (option)

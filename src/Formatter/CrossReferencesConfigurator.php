@@ -70,8 +70,9 @@ class CrossReferencesConfigurator
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->template = '
             <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
-                #<xsl:value-of select="@id"/>
-                <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span></xsl:if>
+                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                </xsl:if>
             </a>';
 
         $config->Preg->match('/\B#(?<id>[0-9]+)\b/i', $tagName);
@@ -86,8 +87,9 @@ class CrossReferencesConfigurator
         $tag->attributes->add('url')->filterChain->append('#url');
         $tag->template = '
             <a href="{@url}" class="DiscussionLink">
-                #<xsl:value-of select="@id"/>
-                <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span></xsl:if>
+                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                </xsl:if>
             </a>';
 
         $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/?)(?=\s|$)/i", $tagName);
@@ -102,7 +104,7 @@ class CrossReferencesConfigurator
         $tag->attributes->add('url')->filterChain->append('#url');
         $tag->template = '
             <a href="{@url}" class="DiscussionLink">
-                #<xsl:value-of select="@id"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
                     <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
                 </xsl:if> <span class="DiscussionComment">(comment)</span>
             </a>';

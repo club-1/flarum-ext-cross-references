@@ -348,10 +348,9 @@ function filterCrossReferences(tag) {
     var discussion = res;
     tag.setAttribute('title', discussion.title());
   } else {
-    tag.setAttribute('title', flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.unknown_discussion'));
+    tag.setAttribute('title', flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.discussion_title'));
   }
   tag.setAttribute('comment', flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.comment'));
-  return true;
 }
 
 /***/ }),

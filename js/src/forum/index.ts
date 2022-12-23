@@ -111,8 +111,7 @@ export function filterCrossReferences(tag) {
     const discussion = res as Discussion;
     tag.setAttribute('title', discussion.title());
   } else {
-    tag.setAttribute('title', app.translator.trans('club-1-cross-references.forum.unknown_discussion'));
+    tag.setAttribute('title', app.translator.trans('club-1-cross-references.forum.discussion_title'));
   }
   tag.setAttribute('comment', app.translator.trans('club-1-cross-references.forum.comment'));
-  return true;
 }

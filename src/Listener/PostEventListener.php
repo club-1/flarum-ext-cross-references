@@ -26,9 +26,10 @@ namespace Club1\CrossReferences\Listener;
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
 use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
-use Flarum\Post\Event\Saving;
+use Flarum\Post\Event\Posted;
+use Flarum\Post\Event\Revised;
 
-class PostSavedListener
+class PostEventListener
 {
 
     /**
@@ -47,7 +48,10 @@ class PostSavedListener
         $this->discussionPath = $this->urlGen->to('forum')->path('d');
     }
 
-    public function handle(Saving $event)
+    /**
+     * @param Posted | Revised $event
+     */
+    public function handle(object $event)
     {
         $matches = [];
         preg_match_all("~$this->discussionPath/([0-9]+)~", $event->post->content, $matches);

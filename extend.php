@@ -28,11 +28,12 @@ use Flarum\Api\Controller\ShowDiscussionController;
 use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Discussion\Discussion;
 use Flarum\Extend;
-use Flarum\Post\Event\Saving;
+use Flarum\Post;
 
 return [
     (new Extend\Event())
-        ->listen(Saving::class, Listener\PostSavedListener::class),
+        ->listen(Post\Event\Posted::class, Listener\PostEventListener::class)
+        ->listen(Post\Event\Revised::class, Listener\PostEventListener::class),
 
     (new Extend\Post())
         ->type(DiscussionReferencedPost::class),

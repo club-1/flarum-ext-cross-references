@@ -23,6 +23,7 @@
 
 namespace Club1\CrossReferences\Formatter;
 
+use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use s9e\TextFormatter\Configurator;
@@ -65,9 +66,15 @@ class CrossReferencesConfigurator
 
     public static function filterCrossReferences(Tag $tag)
     {
+        /** @var Discussion|null */
+        $d = Discussion::find($tag->getAttribute('id'));
+        if (is_null($d)) {
+            $tag->invalidate();
+            return false;
+        }
         // Set placeholder values for TextFormatter to be happy.
         // The real values is set during render.
-        $tag->setAttribute('title', '');
+        $tag->setAttribute('title', $d->title);
         $tag->setAttribute('comment', '');
         return true;
     }

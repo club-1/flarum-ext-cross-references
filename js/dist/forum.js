@@ -342,13 +342,40 @@ function addDiscussionListId() {
     }), 90);
   });
 }
+
+/** Empty function used to disable callbacks */
+function noop() {}
+;
+
+/**
+ * Extremely dirty hack to trigger a refresh of the composer preview
+ * by inserting a ZeroWidthSpace at the beginning of the message and
+ * then removing it 50ms later after the render pass.
+ *
+ * TODO: Replace this workaround once this issue is fixed:
+ * <https://github.com/flarum/framework/issues/3720>
+ */
+function refreshComposerPreview() {
+  var _app$composer$fields;
+  var content = (_app$composer$fields = (flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().composer.fields)) == null ? void 0 : _app$composer$fields.content;
+  if (content) {
+    content('​' + content());
+    setTimeout(function () {
+      return content(content().slice(1));
+    }, 50);
+  }
+}
 function filterCrossReferences(tag) {
-  var res = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.getById('discussions', tag.getAttribute('id'));
+  var id = tag.getAttribute('id');
+  var res = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.getById('discussions', id);
   if (res) {
     var discussion = res;
     tag.setAttribute('title', discussion.title());
   } else {
-    tag.setAttribute('title', flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.discussion_title'));
+    flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.find('discussions', id, {}, {
+      errorHandler: noop
+    }).then(refreshComposerPreview)["catch"](noop);
+    return false;
   }
   tag.setAttribute('comment', flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.comment'));
 }

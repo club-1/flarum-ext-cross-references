@@ -22,6 +22,7 @@
 import { ComponentAttrs } from 'flarum/common/Component';
 import { extend } from 'flarum/common/extend';
 import Discussion from 'flarum/common/models/Discussion';
+import Stream from 'flarum/common/utils/Stream';
 import app from 'flarum/forum/app';
 import CommentPost from 'flarum/forum/components/CommentPost';
 import DiscussionHero from 'flarum/forum/components/DiscussionHero';
@@ -105,13 +106,36 @@ function addDiscussionListId() {
   });
 }
 
+/** Empty function used to disable callbacks */
+function noop() {};
+
+/**
+ * Extremely dirty hack to trigger a refresh of the composer preview
+ * by inserting a ZeroWidthSpace at the beginning of the message and
+ * then removing it 50ms later after the render pass.
+ *
+ * TODO: Replace this workaround once this issue is fixed:
+ * <https://github.com/flarum/framework/issues/3720>
+ */
+function refreshComposerPreview() {
+  const content = app.composer.fields?.content;
+  if (content) {
+    content('​' + content());
+    setTimeout(() => content(content().slice(1)), 50);
+  }
+}
+
 export function filterCrossReferences(tag) {
-  const res = app.store.getById('discussions', tag.getAttribute('id'));
+  const id = tag.getAttribute('id');
+  const res = app.store.getById('discussions', id);
   if (res) {
     const discussion = res as Discussion;
     tag.setAttribute('title', discussion.title());
   } else {
-    tag.setAttribute('title', app.translator.trans('club-1-cross-references.forum.discussion_title'));
+    app.store.find('discussions', id, {}, {errorHandler: noop})
+      .then(refreshComposerPreview)
+      .catch(noop);
+    return false;
   }
   tag.setAttribute('comment', app.translator.trans('club-1-cross-references.forum.comment'));
 }

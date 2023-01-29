@@ -28,6 +28,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
 use Flarum\Post\Event\Posted;
 use Flarum\Post\Event\Revised;
+use s9e\TextFormatter\Utils;
 
 class PostEventListener
 {
@@ -53,9 +54,12 @@ class PostEventListener
      */
     public function handle(object $event)
     {
-        $matches = [];
-        preg_match_all("~$this->discussionPath/([0-9]+)~", $event->post->content, $matches);
-        foreach($matches[1] as $targetId) {
+        $xml = $event->post->parsed_content;
+        $xrefshortIds  = utils::getattributevalues($xml, 'CROSSREFERENCESHORT', 'id');
+        $xrefurlIds    = utils::getattributevalues($xml, 'CROSSREFERENCEURL', 'id');
+        $xrefurlcomIds = utils::getattributevalues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
+        $targetIds = array_unique(array_merge($xrefshortIds, $xrefurlIds, $xrefurlcomIds));
+        foreach($targetIds as $targetId) {
             if ($targetId == $event->post->discussion_id) {
                 continue;
             }

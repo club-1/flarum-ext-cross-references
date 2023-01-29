@@ -9,5 +9,4 @@ club-1-cross-references:
     post_stream:
       discussion_referenced_text: '{username} referenced this discussion from {source}'
     unknown_discussion: '<UNKNOWN DISCUSSION>'
-    discussion_title: '<DISCUSSION TITLE>'
     comment: 'comment'

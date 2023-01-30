@@ -22,10 +22,18 @@
 import app from 'flarum/forum/app';
 import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
+import {ComponentAttrs} from "flarum/common/Component";
 import DiscussionId from './DiscussionId';
+import Discussion from 'flarum/common/models/Discussion';
 
+type DiscussionLinkAttrs = ComponentAttrs & {
+  discussion: Discussion,
+  href?: string,
+}
 
 export default class DiscussionLink extends Link {
+  attrs!: DiscussionLinkAttrs;
+
   view() {
     const discussion = this.attrs.discussion;
     const href = this.attrs.href;

@@ -20,8 +20,11 @@
  */
 
 import Component from "flarum/common/Component";
+import {ComponentAttrs} from "flarum/common/Component";
 
-export default class DiscussionId extends Component {
+type DiscussionIdAttrs = ComponentAttrs & {discussionId: string}
+
+export default class DiscussionId extends Component<DiscussionIdAttrs> {
   view() {
     return <span class="DiscussionId">#{this.attrs.discussionId}</span>
   }

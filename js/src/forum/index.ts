@@ -22,11 +22,11 @@
 import { ComponentAttrs } from 'flarum/common/Component';
 import { extend } from 'flarum/common/extend';
 import Discussion from 'flarum/common/models/Discussion';
-import Stream from 'flarum/common/utils/Stream';
 import app from 'flarum/forum/app';
 import CommentPost from 'flarum/forum/components/CommentPost';
 import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
+import { ResponseCache } from './cache';
 import DiscussionId from './components/DiscussionId';
 import DiscussionLink from './components/DiscussionLink';
 import DiscussionReferencedPost from './components/DiscussionReferencedPost';
@@ -106,9 +106,6 @@ function addDiscussionListId() {
   });
 }
 
-/** Empty function used to disable callbacks */
-function noop() {};
-
 /**
  * Extremely dirty hack to trigger a refresh of the composer preview
  * by inserting a ZeroWidthSpace at the beginning of the message and
@@ -132,9 +129,9 @@ export function filterCrossReferences(tag) {
     const discussion = res as Discussion;
     tag.setAttribute('title', discussion.title());
   } else {
-    app.store.find('discussions', id, {}, {errorHandler: noop})
-      .then(refreshComposerPreview)
-      .catch(noop);
+    ResponseCache.find(Discussion, id).then((d) => {
+      if (d) refreshComposerPreview();
+    });
     return false;
   }
   tag.setAttribute('comment', app.translator.trans('club-1-cross-references.forum.comment'));

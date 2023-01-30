@@ -1,5 +1,4 @@
 # Project files
-composer.lock
 /vendor
 /tests/.phpunit.result.cache
 /tests/integration/tmp

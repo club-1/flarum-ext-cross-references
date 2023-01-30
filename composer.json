@@ -41,7 +41,7 @@
                 "css": false,
                 "locale": true,
                 "gitConf": true,
-                "githubActions": true,
+                "githubActions": false,
                 "prettier": false,
                 "typescript": true,
                 "bundlewatch": false,

@@ -12,6 +12,8 @@
       "@types/**/*"
 ],
   "compilerOptions": {
+    // Do not check files of included libraries
+    "skipLibCheck": true,
     // This will output typings to `dist-typings`
     "declarationDir": "./dist-typings",
     "baseUrl": ".",

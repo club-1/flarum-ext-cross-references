@@ -122,7 +122,7 @@ function refreshComposerPreview() {
   }
 }
 
-export function filterCrossReferences(tag) {
+export function filterCrossReferences(tag: any): false | void {
   const id = tag.getAttribute('id');
   const res = app.store.getById('discussions', id);
   if (res) {

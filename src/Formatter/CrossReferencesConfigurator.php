@@ -96,7 +96,7 @@ class CrossReferencesConfigurator
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
             ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
-        $config->Preg->match('/\B#(?<id>[0-9]+)\b/i', $tagName);
+        $config->Preg->match('/\B#(?<id>\d+)\b/i', $tagName);
     }
 
     protected function configureCrossReferenceURL(Configurator $config)
@@ -117,7 +117,7 @@ class CrossReferencesConfigurator
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
             ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
-        $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/?)(?=\s|$)/i", $tagName);
+        $config->Preg->match("/\b(?<url>$this->discussionPathEsc(?<id>\d+)(-[-\p{L}\p{N}\p{M}]*)?\/?)(?=[.,!?;:\s]|$)/i", $tagName);
     }
 
     protected function configureCrossReferenceURLComment(Configurator $config)
@@ -139,6 +139,6 @@ class CrossReferencesConfigurator
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
             ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
-        $config->Preg->match("/(?:^|\b)(?<url>$this->discussionPathEsc(?<id>[0-9]+)[^\s\/]*\/[0-9]+)(?=\s|$)/i", $tagName);
+        $config->Preg->match("/\b(?<url>$this->discussionPathEsc(?<id>\d+)(-[-\p{L}\p{N}\p{M}]*)?\/\d+)(?=[.,!?;:\s]|$)/i", $tagName);
     }
 }

@@ -45,27 +45,25 @@ app.initializers.add('club-1-cross-references', function(app) {
  */
 function addSourceLinkReplacement() {
   function replaceSourceLinks(this: CommentPost) {
-    this.$('.Post-body a').replaceWith(function() {
+    this.$('.Post-body a').map(function() {
       const a = this as HTMLAnchorElement;
       if (a.protocol !== document.location.protocol || a.host !== document.location.host) {
-        return a;
+        return;
       }
       const match = a.pathname.match(/\/d\/([0-9]+)/);
       if (match == null) {
-        return a;
+        return;
       }
       if (a.text === a.href) {
         const discussionId = match[1];
-        const discussion = app.store.getById('discussions', discussionId);
         const span = document.createElement('span');
-        m.render(span, m(DiscussionLink, {discussion, href: a.href}));
-        return span;
+        m.mount(span, {view: () => m(DiscussionLink, {discussionId, href: a.href})});
+        a.replaceWith(span)
       } else {
         a.addEventListener('click', (e) => {
           m.route.set(this.getAttribute('href'))
           e.preventDefault();
         });
-        return a;
       }
     });
   }

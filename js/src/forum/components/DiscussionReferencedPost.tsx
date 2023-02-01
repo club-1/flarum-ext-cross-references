@@ -19,20 +19,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Discussion from 'flarum/common/models/Discussion';
-import app from 'flarum/forum/app';
 import EventPost from 'flarum/forum/components/EventPost';
 import { IPostAttrs } from 'flarum/forum/components/Post';
-import DiscussionLink, { IDiscussion } from './DiscussionLink';
+import DiscussionLink from './DiscussionLink';
 
-type DiscussionReferencedPostAttrs = IPostAttrs & {source: IDiscussion};
-
-function dummyDiscussion(id: string) {
-  return {
-    id: () => id,
-    title: () => app.translator.trans('club-1-cross-references.forum.unknown_discussion').toString(),
-  }
-}
+type DiscussionReferencedPostAttrs = IPostAttrs & {sourceId: string};
 
 export default class DiscussionReferencedPost extends EventPost {
   attrs!: DiscussionReferencedPostAttrs
@@ -40,9 +31,7 @@ export default class DiscussionReferencedPost extends EventPost {
   static initAttrs(attrs: DiscussionReferencedPostAttrs) {
     super.initAttrs(attrs);
 
-    const sourceId = attrs.post.content()![0];
-    const source = app.store.getById<Discussion>('discussions', sourceId);
-    attrs.source = source || dummyDiscussion(sourceId);
+    attrs.sourceId = attrs.post.content()![0];
   }
   icon() {
     return 'fas fa-reply';
@@ -54,7 +43,7 @@ export default class DiscussionReferencedPost extends EventPost {
 
   descriptionData() {
     return {
-      source: <DiscussionLink discussion={this.attrs.source} />
+      source: <DiscussionLink discussionId={this.attrs.sourceId} />
     }
   }
 }

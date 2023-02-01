@@ -27,7 +27,6 @@ use Club1\CrossReferences\Formatter\CrossReferencesConfigurator;
 use Club1\CrossReferences\Formatter\CrossReferencesRenderer;
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
 use Flarum\Api\Controller\ShowDiscussionController;
-use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Discussion\Discussion;
 use Flarum\Extend;
 use Flarum\Post;
@@ -49,10 +48,6 @@ return [
     (new Extend\Model(Discussion::class))
         ->belongsToMany('sources', Discussion::class, 'discussion_reference', 'target_id', 'source_id')
         ->belongsToMany('targets', Discussion::class, 'discussion_reference', 'source_id', 'target_id'),
-
-    (new Extend\ApiSerializer(DiscussionSerializer::class))
-        ->hasMany('sources', DiscussionSerializer::class)
-        ->hasMany('targets', DiscussionSerializer::class),
 
     (new Extend\ApiController(ShowDiscussionController::class))
         ->addInclude(['sources', 'targets']),

@@ -22,8 +22,11 @@
 import app from 'flarum/forum/app';
 import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
-import {ComponentAttrs} from "flarum/common/Component";
+import type { ComponentAttrs } from 'flarum/common/Component';
 import DiscussionId from './DiscussionId';
+import { ResponseCache } from '../cache';
+import Discussion from 'flarum/common/models/Discussion';
+import type { Vnode } from 'mithril';
 
 export interface IDiscussion {
   id(): string|undefined
@@ -31,27 +34,53 @@ export interface IDiscussion {
 }
 
 type DiscussionLinkAttrs = ComponentAttrs & {
-  discussion: IDiscussion,
+  discussionId: string,
   href?: string,
+}
+
+function dummyDiscussion(id: string) {
+  return {
+    id: () => id,
+    title: () => app.translator.trans('club-1-cross-references.forum.unknown_discussion').toString(),
+  }
 }
 
 export default class DiscussionLink extends Link {
   attrs!: DiscussionLinkAttrs;
+  discussion?: IDiscussion;
+
+  oninit(vnode: Vnode) {
+    super.oninit(vnode);
+    const discussionId = this.attrs.discussionId;
+    const discussion = app.store.getById<Discussion>('discussions', discussionId);
+    if (!discussion) {
+      ResponseCache.find(Discussion, discussionId).then((d) => {
+        if (d) {
+          this.discussion = d;
+          m.redraw();
+        }
+      });
+    }
+    if (discussion) {
+      this.discussion = discussion;
+    } else {
+      this.discussion = dummyDiscussion(discussionId);
+    }
+  }
 
   view() {
-    const discussion = this.attrs.discussion;
     const href = this.attrs.href;
     const showId = app.forum.attribute('showDiscussionId');
     const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
     return (
       <Link
-        href={href ? href : app.route('discussion', {id: discussion.id()})}
+        href={href ? href : app.route('discussion', {id: this.attrs.discussionId})}
         class="DiscussionLink"
       >
         {
-          discussion.title()
+          this.discussion?.title()
         } {
-          showId && <DiscussionId discussionId={discussion.id()} />
+          showId && <DiscussionId discussionId={this.attrs.discussionId} />
         } {
           isComment && <DiscussionComment/>
         }

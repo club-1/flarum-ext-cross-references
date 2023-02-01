@@ -78,7 +78,7 @@ function noop() {};
 
 export abstract class ResponseCache {
   private static responseErrors: Cache<boolean> = new FIFOCache(128);
-  private static inFlight: Map<string, Promise<Model | void>> = new Map();
+  private static inFlight: Map<string, Promise<Model | null>> = new Map();
 
   public static async find<T extends Model>(m: new () => T, id: string, options = {}): Promise<T | null> {
     const key = getKey(m.name, id);
@@ -87,23 +87,17 @@ export abstract class ResponseCache {
       return null;
     }
     const inFlight = this.inFlight.get(key);
-    let req: Promise<T | void>;
     if (inFlight) {
-      req = inFlight as Promise<T | void>;
+      return inFlight as Promise<T | null>;
     } else {
-      req = app.store.find<T>(ModelMap[m.name] , id, options, {errorHandler: noop})
-        .then((res) => {
-          this.inFlight.delete(key);
-          return res;
+      const req = app.store.find<T>(ModelMap[m.name], id, options, {errorHandler: noop})
+        .catch(() => {
+          this.responseErrors.set(key, true);
+          return null;
         })
-        .catch(noop);
+        .finally(() => this.inFlight.delete(key));
       this.inFlight.set(key, req);
+      return req;
     }
-    const res = await req;
-    if (res) {
-      return res;
-    }
-    this.responseErrors.set(key, true);
-    return null;
   }
 }

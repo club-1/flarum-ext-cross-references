@@ -325,6 +325,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function dummyDiscussion(_id) {
+  return {
+    id: function id() {
+      return _id;
+    },
+    title: function title() {
+      return flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.unknown_discussion').toString();
+    }
+  };
+}
 var DiscussionReferencedPost = /*#__PURE__*/function (_EventPost) {
   (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionReferencedPost, _EventPost);
   function DiscussionReferencedPost() {
@@ -339,7 +349,8 @@ var DiscussionReferencedPost = /*#__PURE__*/function (_EventPost) {
   DiscussionReferencedPost.initAttrs = function initAttrs(attrs) {
     _EventPost.initAttrs.call(this, attrs);
     var sourceId = attrs.post.content()[0];
-    attrs.source = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.getById('discussions', sourceId);
+    var source = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.getById('discussions', sourceId);
+    attrs.source = source || dummyDiscussion(sourceId);
   };
   var _proto = DiscussionReferencedPost.prototype;
   _proto.icon = function icon() {

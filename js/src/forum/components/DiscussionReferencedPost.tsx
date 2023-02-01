@@ -23,9 +23,16 @@ import Discussion from 'flarum/common/models/Discussion';
 import app from 'flarum/forum/app';
 import EventPost from 'flarum/forum/components/EventPost';
 import { IPostAttrs } from 'flarum/forum/components/Post';
-import DiscussionLink from './DiscussionLink';
+import DiscussionLink, { IDiscussion } from './DiscussionLink';
 
-type DiscussionReferencedPostAttrs = IPostAttrs & {source: Discussion};
+type DiscussionReferencedPostAttrs = IPostAttrs & {source: IDiscussion};
+
+function dummyDiscussion(id: string) {
+  return {
+    id: () => id,
+    title: () => app.translator.trans('club-1-cross-references.forum.unknown_discussion').toString(),
+  }
+}
 
 export default class DiscussionReferencedPost extends EventPost {
   attrs!: DiscussionReferencedPostAttrs
@@ -34,7 +41,8 @@ export default class DiscussionReferencedPost extends EventPost {
     super.initAttrs(attrs);
 
     const sourceId = attrs.post.content()![0];
-    attrs.source = app.store.getById<Discussion>('discussions', sourceId)!;
+    const source = app.store.getById<Discussion>('discussions', sourceId);
+    attrs.source = source || dummyDiscussion(sourceId);
   }
   icon() {
     return 'fas fa-reply';

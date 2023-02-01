@@ -24,10 +24,14 @@ import Link from 'flarum/common/components/Link';
 import Component from 'flarum/common/Component';
 import {ComponentAttrs} from "flarum/common/Component";
 import DiscussionId from './DiscussionId';
-import Discussion from 'flarum/common/models/Discussion';
+
+export interface IDiscussion {
+  id(): string|undefined
+  title(): string
+}
 
 type DiscussionLinkAttrs = ComponentAttrs & {
-  discussion: Discussion,
+  discussion: IDiscussion,
   href?: string,
 }
 

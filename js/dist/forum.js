@@ -80,7 +80,7 @@ var FIFOCache = /*#__PURE__*/function () {
   };
   return FIFOCache;
 }();
-function key(name, id) {
+function getKey(name, id) {
   return name + id;
 }
 var ModelMap = {};
@@ -93,7 +93,8 @@ var ResponseCache = /*#__PURE__*/function () {
   function ResponseCache() {}
   ResponseCache.find = /*#__PURE__*/function () {
     var _find = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(m, id, options) {
-      var res;
+      var _this = this;
+      var key, inFlight, req, res;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -101,27 +102,38 @@ var ResponseCache = /*#__PURE__*/function () {
               if (options === void 0) {
                 options = {};
               }
-              if (!(this.responseErrors.get(key(m.name, id)) == true)) {
-                _context.next = 3;
+              key = getKey(m.name, id);
+              if (!(this.responseErrors.get(key) == true)) {
+                _context.next = 4;
                 break;
               }
               return _context.abrupt("return", null);
-            case 3:
-              _context.next = 5;
-              return flarum_forum_app__WEBPACK_IMPORTED_MODULE_3___default().store.find(ModelMap[m.name], id, options, {
-                errorHandler: noop
-              })["catch"](noop);
-            case 5:
+            case 4:
+              inFlight = this.inFlight.get(key);
+              if (inFlight) {
+                req = inFlight;
+              } else {
+                req = flarum_forum_app__WEBPACK_IMPORTED_MODULE_3___default().store.find(ModelMap[m.name], id, options, {
+                  errorHandler: noop
+                }).then(function (res) {
+                  _this.inFlight["delete"](key);
+                  return res;
+                })["catch"](noop);
+                this.inFlight.set(key, req);
+              }
+              _context.next = 8;
+              return req;
+            case 8:
               res = _context.sent;
               if (!res) {
-                _context.next = 8;
+                _context.next = 11;
                 break;
               }
               return _context.abrupt("return", res);
-            case 8:
-              this.responseErrors.set(key(m.name, id), true);
+            case 11:
+              this.responseErrors.set(key, true);
               return _context.abrupt("return", null);
-            case 10:
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -136,6 +148,7 @@ var ResponseCache = /*#__PURE__*/function () {
   return ResponseCache;
 }();
 ResponseCache.responseErrors = new FIFOCache(128);
+ResponseCache.inFlight = new Map();
 
 /***/ }),
 

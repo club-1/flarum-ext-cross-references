@@ -65,7 +65,7 @@ export class FIFOCache<T> implements Cache<T> {
   }
 }
 
-function key(name: string, id: string): string {
+function getKey(name: string, id: string): string {
   return name + id;
 }
 
@@ -78,17 +78,32 @@ function noop() {};
 
 export abstract class ResponseCache {
   private static responseErrors: Cache<boolean> = new FIFOCache(128);
+  private static inFlight: Map<string, Promise<Model | void>> = new Map();
 
   public static async find<T extends Model>(m: new () => T, id: string, options = {}): Promise<T | null> {
-    if (this.responseErrors.get(key(m.name, id)) == true) {
+    const key = getKey(m.name, id);
+
+    if (this.responseErrors.get(key) == true) {
       return null;
     }
-    const res = await app.store.find<T>(ModelMap[m.name] , id, options, {errorHandler: noop})
-      .catch(noop);
+    const inFlight = this.inFlight.get(key);
+    let req: Promise<T | void>;
+    if (inFlight) {
+      req = inFlight as Promise<T | void>;
+    } else {
+      req = app.store.find<T>(ModelMap[m.name] , id, options, {errorHandler: noop})
+        .then((res) => {
+          this.inFlight.delete(key);
+          return res;
+        })
+        .catch(noop);
+      this.inFlight.set(key, req);
+    }
+    const res = await req;
     if (res) {
       return res;
     }
-    this.responseErrors.set(key(m.name, id), true);
+    this.responseErrors.set(key, true);
     return null;
   }
 }

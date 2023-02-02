@@ -26,6 +26,7 @@ namespace Club1\CrossReferences\Formatter;
 use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\User\User;
 use s9e\TextFormatter\Configurator;
 use s9e\TextFormatter\Parser\Tag;
 
@@ -64,11 +65,11 @@ class CrossReferencesConfigurator
         error_log('configured cross references');
     }
 
-    public static function filterCrossReferences(Tag $tag)
+    public static function filterCrossReferences(Tag $tag, User $actor)
     {
         /** @var Discussion|null */
         $d = Discussion::find($tag->getAttribute('id'));
-        if (is_null($d)) {
+        if (is_null($d) || $actor->cannot('viewForum', $d)) {
             $tag->invalidate();
             return false;
         }
@@ -95,7 +96,8 @@ class CrossReferencesConfigurator
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
-            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences')
+            ->addParameterByName('actor');
         $config->Preg->match('/\B#(?<id>\d+)\b/i', $tagName);
     }
 
@@ -116,7 +118,8 @@ class CrossReferencesConfigurator
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
-            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences')
+            ->addParameterByName('actor');
         $config->Preg->match("/\b(?<url>$this->discussionPathEsc(?<id>\d+)(-[-\p{L}\p{N}\p{M}]*)?\/?)(?=[^-\p{L}\p{N}\/]|$)/i", $tagName);
     }
 
@@ -138,7 +141,8 @@ class CrossReferencesConfigurator
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
-            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences');
+            ->setJS('flarum.extensions["club-1-cross-references"].filterCrossReferences')
+            ->addParameterByName('actor');
         $config->Preg->match("/\b(?<url>$this->discussionPathEsc(?<id>\d+)(-[-\p{L}\p{N}\p{M}]*)?\/\d+)(?=[^-\p{L}\p{N}\/]|$)/i", $tagName);
     }
 }

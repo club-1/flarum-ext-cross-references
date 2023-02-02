@@ -24,7 +24,9 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Http\RequestUtil;
 use Flarum\Locale\Translator;
+use Psr\Http\Message\ServerRequestInterface;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
@@ -48,14 +50,13 @@ class CrossReferencesRenderer
      * @param string|null $xml
      * @return string $xml to be rendered
      */
-    public function __invoke(Renderer $renderer, $context, string $xml)
+    public function __invoke(Renderer $renderer, $context, string $xml, ServerRequestInterface $request)
     {
-        $filterCrossReferences = function ($attributes) use ($context) {
-            // assert ($context instanceof Post);
-            // error_log($context->discussion->title);
+        $actor = RequestUtil::getActor($request);
+        $filterCrossReferences = function ($attributes) use ($actor) {
             /** @var Discussion|null */
             $discussion = Discussion::find($attributes['id']);
-            if (!is_null($discussion)) {
+            if (!is_null($discussion) && $actor->can('viewForum', $discussion)) {
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');

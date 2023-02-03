@@ -40,6 +40,11 @@ flarum_admin_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('club-1
     label: app.translator.trans('club-1-cross-references.admin.show_discussion_id.label'),
     help: app.translator.trans('club-1-cross-references.admin.show_discussion_id.help'),
     type: 'boolean'
+  }).registerSetting({
+    setting: 'club-1-cross-references.enable_short_references',
+    label: app.translator.trans('club-1-cross-references.admin.enable_short_references.label'),
+    help: app.translator.trans('club-1-cross-references.admin.enable_short_references.help'),
+    type: 'boolean'
   });
 });
 

@@ -59,7 +59,9 @@ class CrossReferencesConfigurator
     {
         $config->rendering->parameters[self::PARAM_DISCUSSION_URL] = $this->discussionPath;
         $config->rendering->parameters[self::PARAM_SHOW_DISCUSSION_ID] = $this->settings->get('club-1-cross-references.show_discussion_id');
-        $this->configureCrossReferenceShort($config);
+        if ($this->settings->get('club-1-cross-references.enable_short_references')) {
+            $this->configureCrossReferenceShort($config);
+        }
         $this->configureCrossReferenceURL($config);
         $this->configureCrossReferenceURLComment($config);
         error_log('configured cross references');

@@ -5,6 +5,9 @@ club-1-cross-references:
     show_discussion_id:
       label: "Afficher l'ID des discussion"
       help: "Ajoute le numéro d'ID d'une discussion partout où elle est affichée"
+    enable_short_references:
+      label: 'Activer les références courtes'
+      help: 'Convertit les textes #<ID> dans les messages (e.g. #42) en liens vers la discussion corresponndante'
   forum:
     post_stream:
       discussion_referenced_text: '{username} a référencé cette discussion depuis {source}'

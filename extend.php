@@ -60,6 +60,7 @@ return [
         ->js(__DIR__.'/js/dist/admin.js'),
 
     (new Extend\Settings())
+        ->default('club-1-cross-references.enable_short_references', true)
         ->serializeToForum('showDiscussionId', 'club-1-cross-references.show_discussion_id', function($value) {
             return $value === '1';
         }),

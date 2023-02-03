@@ -128,25 +128,63 @@ class CrossReferencesConfiguratorTest extends TestCase
     public function urlReferencesProvider(): array
     {
         return [
-            ['https://forum.club1.fr/d/3-discussion-3/foo.', []],
-            ['https://forum.club1.fr/d/3-discussion-3/,foo', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-/foo.', []],
-            ['https://forum.club1.fr/d/3-discussion-3/ ', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-3/}', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-3 ', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-3/.', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-3//', []],
-            ['https://forum.club1.fr/d/3-discussion-3.', ['3']],
-            ['https://forum.club1.fr/d/3-discussion-.', ['3']],
-            ['https://forum.club1.fr/d/3-discussion', ['3']],
-            ['https://forum.club1.fr/d/3-', ['3']],
-            ['https://forum.club1.fr/d/3discussion', []],
-            ['https://forum.club1.fr/d/3', ['3']],
-            [' https://forum.club1.fr/d/3', ['3']],
-            ['coucou https://forum.club1.fr/d/3', ['3']],
-            ['coucou phttps://forum.club1.fr/d/3', []],
-            ['coucou.https://forum.club1.fr/d/3', ['3']],
-            ['coucou (https://forum.club1.fr/d/3)', ['3']],
+            ['https://forum.club1.fr/d/9-d-3/foo.', []],
+            ['https://forum.club1.fr/d/9-d-3/,foo', ['9']],
+            ['https://forum.club1.fr/d/9-d-/foo.', []],
+            ['https://forum.club1.fr/d/9-d-3/ ', ['9']],
+            ['https://forum.club1.fr/d/9-d-3/}', ['9']],
+            ['https://forum.club1.fr/d/9-d-3 ', ['9']],
+            ['https://forum.club1.fr/d/9-d-3/.', ['9']],
+            ['https://forum.club1.fr/d/9-d-3//', []],
+            ['https://forum.club1.fr/d/9-d-3.', ['9']],
+            ['https://forum.club1.fr/d/9-d-.', ['9']],
+            ['https://forum.club1.fr/d/9-d', ['9']],
+            ['https://forum.club1.fr/d/9-', ['9']],
+            ['https://forum.club1.fr/d/9d', []],
+            ['https://forum.club1.fr/d/9', ['9']],
+            [' https://forum.club1.fr/d/9', ['9']],
+            ['coucou https://forum.club1.fr/d/9', ['9']],
+            ['coucou phttps://forum.club1.fr/d/9', []],
+            ['coucou.https://forum.club1.fr/d/9', ['9']],
+            ['coucou (https://forum.club1.fr/d/9)', ['9']],
+        ];
+    }
+
+    /**
+     * @dataProvider commentUrlReferencesProvider
+     * @param string $text The text to parse.
+     * @param string[] $expected The expected array of ids found in the text.
+     */
+    public function testCommentUrlReferences(string $text, array $expected): void
+    {
+        $parser = $this->basicParser();
+        $xml = $parser->parse($text);
+        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
+        assertEquals($expected, $actual);
+    }
+
+    public function commentUrlReferencesProvider(): array
+    {
+        return [
+            ['https://forum.club1.fr/d/9-d-3/2foo.', []],
+            ['https://forum.club1.fr/d/9-d-3/2,foo', ['9']],
+            ['https://forum.club1.fr/d/9-d-/2foo.', []],
+            ['https://forum.club1.fr/d/9-d-3/22 ', ['9']],
+            ['https://forum.club1.fr/d/9-d-3/2}', ['9']],
+            ['https://forum.club1.fr/d/9-d-3 ', []],
+            ['https://forum.club1.fr/d/9-d-3/2/.', []],
+            ['https://forum.club1.fr/d/9-d-3/2//', []],
+            ['https://forum.club1.fr/d/9-d-3/2.', ['9']],
+            ['https://forum.club1.fr/d/9-d-/2.', ['9']],
+            ['https://forum.club1.fr/d/9-d/2', ['9']],
+            ['https://forum.club1.fr/d/9-/2', ['9']],
+            ['https://forum.club1.fr/d/9d/2', []],
+            ['https://forum.club1.fr/d/9/2', ['9']],
+            [' https://forum.club1.fr/d/9/2', ['9']],
+            ['coucou https://forum.club1.fr/d/9/2', ['9']],
+            ['coucou phttps://forum.club1.fr/d/9/2', []],
+            ['coucou.https://forum.club1.fr/d/9/2', ['9']],
+            ['coucou (https://forum.club1.fr/d/9/2)', ['9']],
         ];
     }
 }

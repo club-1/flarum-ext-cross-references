@@ -64,7 +64,6 @@ class CrossReferencesConfigurator
         }
         $this->configureCrossReferenceURL($config);
         $this->configureCrossReferenceURLComment($config);
-        error_log('configured cross references');
     }
 
     public static function filterCrossReferences(Tag $tag, User $actor)

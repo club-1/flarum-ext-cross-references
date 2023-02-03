@@ -44,6 +44,8 @@ class CrossReferencesConfiguratorTest extends TestCase
     protected $urlGenerator;
     /** @var Configurator */
     protected $configurator;
+    /** @var \Flarum\Discussion\Discussion */
+    protected $discussionModel;
 
     public function setUp(): void
     {
@@ -60,10 +62,7 @@ class CrossReferencesConfiguratorTest extends TestCase
         // Mock Eloquent Discussion Model by creating an alias in the autoloader.
         // This only works if the aliased class is not yet loaded.
         // See: <https://docs.mockery.io/en/latest/reference/creating_test_doubles.html#aliasing>
-        $discussionModel = m::mock('alias:Flarum\Discussion\Discussion');
-        $discussion = new \Flarum\Discussion\Discussion();
-        $discussion->title = 'dummy discussion';
-        $discussionModel->shouldReceive('find')->andReturn($discussion);
+        $this->discussionModel = m::mock('alias:Flarum\Discussion\Discussion');
 
         $this->configurator = new Configurator;
     }
@@ -75,8 +74,19 @@ class CrossReferencesConfiguratorTest extends TestCase
         return $actor;
     }
 
-    public function basicParser(): Parser
+    public function mockDiscussion(?array $data = ['title' => 'dummy']): void
     {
+        $discussion = null;
+        if (!is_null($data)) {
+            $discussion = new \Flarum\Discussion\Discussion();
+            $discussion->title = $data['title'];
+        }
+        $this->discussionModel->shouldReceive('find')->andReturn($discussion);
+    }
+
+    public function basicConfiguration(): Parser
+    {
+        $this->mockDiscussion();
         $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
         $xrefConfigurator($this->configurator);
         extract($this->configurator->finalize());
@@ -91,7 +101,7 @@ class CrossReferencesConfiguratorTest extends TestCase
      */
     public function testShortReferences(string $text, array $expected): void
     {
-        $parser = $this->basicParser();
+        $parser = $this->basicConfiguration();
         $xml = $parser->parse($text);
         $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
         assertEquals($expected, $actual);
@@ -119,7 +129,7 @@ class CrossReferencesConfiguratorTest extends TestCase
      */
     public function testUrlReferences(string $text, array $expected): void
     {
-        $parser = $this->basicParser();
+        $parser = $this->basicConfiguration();
         $xml = $parser->parse($text);
         $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCEURL', 'id');
         assertEquals($expected, $actual);
@@ -157,7 +167,7 @@ class CrossReferencesConfiguratorTest extends TestCase
      */
     public function testCommentUrlReferences(string $text, array $expected): void
     {
-        $parser = $this->basicParser();
+        $parser = $this->basicConfiguration();
         $xml = $parser->parse($text);
         $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
         assertEquals($expected, $actual);
@@ -185,6 +195,65 @@ class CrossReferencesConfiguratorTest extends TestCase
             ['coucou phttps://forum.club1.fr/d/9/2', []],
             ['coucou.https://forum.club1.fr/d/9/2', ['9']],
             ['coucou (https://forum.club1.fr/d/9/2)', ['9']],
+        ];
+    }
+
+    /**
+     * @dataProvider actorPermissionsProvider
+     * @param string $text The text to parse.
+     * @param bool $allowed If the actor is allowed or not.
+     * @param string[] $expected The expected array of ids found in the text.
+     */
+    public function testActorPermissions(string $text, bool $allowed, array $expected): void
+    {
+        $this->mockDiscussion();
+        $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
+        $xrefConfigurator($this->configurator);
+        extract($this->configurator->finalize());
+        $parser->registeredVars['actor'] = self::mockActor($allowed);
+
+        $xml = $parser->parse($text);
+        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
+        assertEquals($expected, $actual);
+    }
+
+    public function actorPermissionsProvider(): array
+    {
+        return [
+            ['#42', true, ['42']],
+            ['#42', false, []],
+        ];
+    }
+
+
+    /**
+     * @dataProvider discussionExistsProvider
+     * @param string $text The text to parse.
+     * @param bool $exists If the discussion exists or not.
+     * @param string[] $expected The expected array of ids found in the text.
+     */
+    public function testDiscussionExists(string $text, bool $exists, array $expected): void
+    {
+        if ($exists) {
+            $this->mockDiscussion();
+        } else {
+            $this->mockDiscussion(null);
+        }
+        $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
+        $xrefConfigurator($this->configurator);
+        extract($this->configurator->finalize());
+        $parser->registeredVars['actor'] = self::mockActor(true);
+
+        $xml = $parser->parse($text);
+        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
+        assertEquals($expected, $actual);
+    }
+
+    public function discussionExistsProvider(): array
+    {
+        return [
+            ['#42', true, ['42']],
+            ['#42', false, []],
         ];
     }
 }

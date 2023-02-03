@@ -16,3 +16,8 @@
 .EventPost .DiscussionLink {
 	color: var(--link-color);
 }
+
+.DiscussionReferencedPost .EventPost-info ul {
+	list-style: none;
+	padding: 0;
+}

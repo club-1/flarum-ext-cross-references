@@ -25,14 +25,33 @@ namespace Club1\CrossReferences\Post;
 
 use Carbon\Carbon;
 use Flarum\Post\AbstractEventPost;
+use Flarum\Post\MergeableInterface;
+use Flarum\Post\Post;
 
-class DiscussionReferencedPost extends AbstractEventPost
+class DiscussionReferencedPost extends AbstractEventPost implements MergeableInterface
 {
     /**
      * {@inheritdoc}
      */
     public static $type = 'discussionReferenced';
 
+    /**
+     * {@inheritdoc}
+     */
+    public function saveAfter(Post $previous = null)
+    {
+        // If the previous post is another 'discussion referenced' post, and it's
+        // by the same user, then we can merge this post into it.
+        if ($previous instanceof static && $this->user_id === $previous->user_id) {
+            $previous->content = array_merge($previous->content, $this->content);
+            $previous->save();
+            return $previous;
+        }
+
+        $this->save();
+
+        return $this;
+    }
 
     /**
      * Create a new instance in reply to a discussion.

@@ -78,7 +78,7 @@ class PostEventListener
                 $event->post->discussion_id
             );
 
-            $post->save();
+            $target->mergePost($post);
         }
     }
 }

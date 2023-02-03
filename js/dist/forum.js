@@ -384,7 +384,7 @@ var DiscussionReferencedPost = /*#__PURE__*/function (_EventPost) {
   }
   DiscussionReferencedPost.initAttrs = function initAttrs(attrs) {
     _EventPost.initAttrs.call(this, attrs);
-    attrs.sourceId = attrs.post.content()[0];
+    attrs.sourceIds = attrs.post.content();
   };
   var _proto = DiscussionReferencedPost.prototype;
   _proto.icon = function icon() {
@@ -394,11 +394,21 @@ var DiscussionReferencedPost = /*#__PURE__*/function (_EventPost) {
     return 'club-1-cross-references.forum.post_stream.discussion_referenced_text';
   };
   _proto.descriptionData = function descriptionData() {
-    return {
-      source: m(_DiscussionLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        discussionId: this.attrs.sourceId
-      })
-    };
+    if (this.attrs.sourceIds.length == 1) {
+      return {
+        source: m(_DiscussionLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          discussionId: this.attrs.sourceIds[0]
+        })
+      };
+    } else {
+      return {
+        source: m("ul", null, this.attrs.sourceIds.map(function (id) {
+          return m("li", null, m(_DiscussionLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            discussionId: id
+          }));
+        }))
+      };
+    }
   };
   return DiscussionReferencedPost;
 }((flarum_forum_components_EventPost__WEBPACK_IMPORTED_MODULE_1___default()));

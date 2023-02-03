@@ -23,7 +23,7 @@ import EventPost from 'flarum/forum/components/EventPost';
 import { IPostAttrs } from 'flarum/forum/components/Post';
 import DiscussionLink from './DiscussionLink';
 
-type DiscussionReferencedPostAttrs = IPostAttrs & {sourceId: string};
+type DiscussionReferencedPostAttrs = IPostAttrs & {sourceIds: string[]};
 
 export default class DiscussionReferencedPost extends EventPost {
   attrs!: DiscussionReferencedPostAttrs
@@ -31,7 +31,7 @@ export default class DiscussionReferencedPost extends EventPost {
   static initAttrs(attrs: DiscussionReferencedPostAttrs) {
     super.initAttrs(attrs);
 
-    attrs.sourceId = attrs.post.content()![0];
+    attrs.sourceIds = attrs.post.content() as unknown as string[];
   }
   icon() {
     return 'fas fa-reply';
@@ -42,8 +42,18 @@ export default class DiscussionReferencedPost extends EventPost {
   }
 
   descriptionData() {
-    return {
-      source: <DiscussionLink discussionId={this.attrs.sourceId} />
+    if (this.attrs.sourceIds.length == 1) {
+      return {
+        source: <DiscussionLink discussionId={this.attrs.sourceIds[0]} />
+      }
+    } else {
+      return {
+        source: <ul>
+          {this.attrs.sourceIds.map((id) =>
+            <li><DiscussionLink discussionId={id} /></li>
+          )}
+        </ul>
+      }
     }
   }
 }

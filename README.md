@@ -1,6 +1,6 @@
 # CLUB1 Cross-references
 
-![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue) [![Latest Stable Version](https://img.shields.io/packagist/v/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references) [![Total Downloads](https://img.shields.io/packagist/dt/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references) [![Build Status](https://github.com/club-1/flarum-ext-cross-references/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/club-1/flarum-ext-cross-references/actions/workflows/check.yml)
+![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue) [![Latest Stable Version](https://img.shields.io/packagist/v/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references) [![Total Downloads](https://img.shields.io/packagist/dt/club-1/flarum-ext-cross-references.svg)](https://packagist.org/packages/club-1/flarum-ext-cross-references) [![codecov](https://codecov.io/gh/club-1/flarum-ext-cross-references/branch/main/graph/badge.svg?token=FZFGE1M3GW)](https://codecov.io/gh/club-1/flarum-ext-cross-references) [![Build Status](https://github.com/club-1/flarum-ext-cross-references/actions/workflows/check.yml/badge.svg?branch=main)](https://github.com/club-1/flarum-ext-cross-references/actions/workflows/check.yml)
 
 A [Flarum](http://flarum.org) extension. Add cross reference links when a discussion is mentioned from another one.
 

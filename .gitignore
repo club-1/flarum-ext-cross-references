@@ -1,6 +1,8 @@
 # Project files
 /vendor
 /tests/.phpunit.result.cache
+/tests/.phpunit.cov.cache
+/tests/.phpunit.*.cov.xml
 /tests/integration/tmp
 /js/coverage-ts
 

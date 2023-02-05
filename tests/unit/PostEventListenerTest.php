@@ -38,7 +38,7 @@ $url     = 'CROSSREFERENCEURL';
 $comment = 'CROSSREFERENCEURLCOMMENT';
 
 /**
- * @runTestsInSeparateProcesses
+ * @runClassInSeparateProcess
  * @preserveGlobalState disabled
  */
 class PostEventListenerTest extends TestCase
@@ -59,7 +59,6 @@ class PostEventListenerTest extends TestCase
         $this->urlGenerator = m::mock(UrlGenerator::class);
         $this->urlGenerator->shouldReceive('to')->with('forum')->andReturn($routeCollection);
         $this->listener = m::mock(PostEventListener::class, [$this->urlGenerator])->makePartial()->shouldAllowMockingProtectedMethods();
-        $this->listener->allows('handle')->passthru();
 
         $xrefPost = m::mock('alias:Club1\CrossReferences\Post\DiscussionReferencedPost');
         $xrefPost->shouldReceive('reply')->andReturn(m::mock(MergeableInterface::class));

@@ -21,7 +21,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace Club1\Test\unit;
+namespace Club1\CrossReferences\Tests\unit;
 
 use Club1\CrossReferences\Formatter\CrossReferencesRenderer;
 use Flarum\Locale\Translator;

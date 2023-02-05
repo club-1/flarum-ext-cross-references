@@ -21,10 +21,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace Club1\Test\unit;
+namespace Club1\CrossReferences\Tests\unit;
 
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
-use Flarum\Post\AbstractEventPost;
+use Flarum\Post\CommentPost;
 use Flarum\Testing\unit\TestCase;
 use Mockery as m;
 
@@ -34,7 +34,7 @@ class DiscussionReferencedPostTest extends TestCase
 {
     public function testSaveAfterDifferentClass(): void
     {
-        $previous = m::mock(AbstractEventPost::class);
+        $previous = m::mock(CommentPost::class);
         $post = m::mock(DiscussionReferencedPost::class)->makePartial();
         $post->shouldReceive('save')->once();
 
@@ -67,5 +67,18 @@ class DiscussionReferencedPostTest extends TestCase
 
         $new = $post->saveAfter($previous);
         assertEquals($previous, $new);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testReply(): void
+    {
+        m::mock('overload:Flarum\Post\AbstractEventPost');
+        $post = DiscussionReferencedPost::reply(1, 2, 3);
+        assertEquals(1, $post->discussion_id);
+        assertEquals(2, $post->user_id);
+        assertEquals([3], $post->content);
     }
 }

@@ -28,6 +28,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
 use Flarum\Post\CommentPost;
 use Flarum\Post\Event\Posted;
+use Flarum\Post\Event\Revised;
 use Flarum\Post\MergeableInterface;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
@@ -64,11 +65,11 @@ class PostEventListenerTest extends TestCase
         $xrefPost->shouldReceive('reply')->andReturn(m::mock(MergeableInterface::class));
     }
 
-    public function registerRequiredDiscussion($id, $targetExists = false)
+    public function registerTargetDiscussion($id, $sourceAlreadyExists = false)
     {
         $sources = m::mock('sources');
-        $sources->shouldReceive('where->exists')->andReturn($targetExists);
-        if (!$targetExists) {
+        $sources->shouldReceive('where->exists')->andReturn($sourceAlreadyExists);
+        if (!$sourceAlreadyExists) {
             $sources->shouldReceive('save')->once();
         }
         $d = m::mock(Discussion::class);
@@ -112,9 +113,22 @@ class PostEventListenerTest extends TestCase
         $xml = "<CROSSREFERENCEURL id=\"$id\"></CROSSREFERENCEURL>";
         $post = self::mockPost($xml, 2);
         $actor = self::mockActor(3);
-        $this->registerRequiredDiscussion($id, true);
+        $this->registerTargetDiscussion($id, true);
 
         $event = new Posted($post, $actor);
+        $this->listener->handle($event);
+    }
+
+    public function testRevisedEvent(): void
+    {
+        $id = 1;
+        $xml = "<CROSSREFERENCEURL id=\"$id\"></CROSSREFERENCEURL>";
+        $post = self::mockPost($xml, 2);
+        $actor = self::mockActor(3);
+        $d = $this->registerTargetDiscussion($id);
+        $d->shouldReceive('mergePost')->once();
+
+        $event = new Revised($post, $actor);
         $this->listener->handle($event);
     }
 
@@ -126,7 +140,7 @@ class PostEventListenerTest extends TestCase
         $post = self::mockPost($xml, $discussionId);
         $actor = self::mockActor($actorId);
         foreach($ids as $id) {
-            $d = $this->registerRequiredDiscussion($id);
+            $d = $this->registerTargetDiscussion($id);
             $d->shouldReceive('mergePost')->once();
         }
 

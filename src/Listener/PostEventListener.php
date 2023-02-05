@@ -46,7 +46,13 @@ class PostEventListener
     public function __construct(UrlGenerator $urlGenerator)
     {
         $this->urlGen = $urlGenerator;
-        $this->discussionPath = $this->urlGen->to('forum')->path('d');
+        $this->discussionPath = $this->urlGen->to('forum')->route('discussion', ['id' => '']);
+    }
+
+    /** Indirection to allow mocking the static call in unit tests */
+    protected function findDiscussion(string $id): ?Discussion
+    {
+        return Discussion::find($id);
     }
 
     /**
@@ -63,8 +69,7 @@ class PostEventListener
             if ($targetId == $event->post->discussion_id) {
                 continue;
             }
-            /** @var Discussion|null */
-            $target = Discussion::find($targetId);
+            $target = $this->findDiscussion($targetId);
             if ($target == null) {
                 continue;
             }

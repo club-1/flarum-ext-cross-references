@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "167347ba9644bd72898bc8185ab4979f",
+    "content-hash": "89e7ef121b5c0a9a70b0922a2d678cf9",
     "packages": [
         {
             "name": "axy/backtrace",
@@ -1053,16 +1053,16 @@
         },
         {
             "name": "flarum/core",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flarum/flarum-core.git",
-                "reference": "d359cd7a905eb341ffb7ea4e8c5595ee46084b67"
+                "reference": "9ae3d20f82da3df3e7ebbb145a7c47c006b36966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flarum/flarum-core/zipball/d359cd7a905eb341ffb7ea4e8c5595ee46084b67",
-                "reference": "d359cd7a905eb341ffb7ea4e8c5595ee46084b67",
+                "url": "https://api.github.com/repos/flarum/flarum-core/zipball/9ae3d20f82da3df3e7ebbb145a7c47c006b36966",
+                "reference": "9ae3d20f82da3df3e7ebbb145a7c47c006b36966",
                 "shasum": ""
             },
             "require": {
@@ -1193,7 +1193,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-11-18T21:35:12+00:00"
+            "time": "2023-01-10T12:17:54+00:00"
         },
         {
             "name": "franzl/whoops-middleware",

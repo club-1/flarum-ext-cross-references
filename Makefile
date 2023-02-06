@@ -3,13 +3,16 @@ all: vendor js;
 dev: vendor js;
 
 js:
-	$(MAKE) -C $@ $(MAKECMDGOALS)
+	$(MAKE) -C $@ $(filter $(JSPHONY),$(MAKECMDGOALS))
 
 vendor: composer.json composer.lock
 	composer install
 	touch $@
 
-check: js test;
+check: analyse test js;
+
+analyse: js;
+#	vendor/bin/phpstan
 
 test: testunit;
 #test: testunit testintegration;
@@ -24,7 +27,5 @@ clean: js cleancache
 cleancache:
 	rm -rf tests/.phpunit*
 
-%:
-	$(MAKE) all
-
-.PHONY: all dev js check checkphp test testunit clean
+JSPHONY = all dev check analyse clean
+.PHONY: all dev js check analyse test testunit testintegration clean cleancache

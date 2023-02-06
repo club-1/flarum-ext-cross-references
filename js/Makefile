@@ -8,13 +8,12 @@ node_modules: package.json package-lock.json
 	npm install
 	touch $@
 
-check: node_modules
+check: analyse;
+
+analyse: node_modules
 	npm run check-typings
 
 clean:
 	rm -rf node_modules
 
-%:
-	$(MAKE) all
-
-.PHONY: all dev check clean
+.PHONY: all dev check analyse clean

@@ -69,9 +69,9 @@ class PostEventListener
             return;
         }
         $xml = $event->post->parsed_content;
-        $xrefshortIds  = utils::getattributevalues($xml, 'CROSSREFERENCESHORT', 'id');
-        $xrefurlIds    = utils::getattributevalues($xml, 'CROSSREFERENCEURL', 'id');
-        $xrefurlcomIds = utils::getattributevalues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
+        $xrefshortIds  = Utils::getattributevalues($xml, 'CROSSREFERENCESHORT', 'id');
+        $xrefurlIds    = Utils::getattributevalues($xml, 'CROSSREFERENCEURL', 'id');
+        $xrefurlcomIds = Utils::getattributevalues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
         $targetIds = array_unique(array_merge($xrefshortIds, $xrefurlIds, $xrefurlcomIds));
         foreach($targetIds as $targetId) {
             $targetId = intval($targetId);

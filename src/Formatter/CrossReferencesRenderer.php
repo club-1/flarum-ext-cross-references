@@ -45,12 +45,12 @@ class CrossReferencesRenderer
     /**
      * Configure rendering for cross references.
      *
-     * @param s9e\TextFormatter\Renderer $renderer
+     * @param Renderer $renderer
      * @param mixed $context
      * @param string|null $xml
      * @return string $xml to be rendered
      */
-    public function __invoke(Renderer $renderer, $context, string $xml, ServerRequestInterface $request)
+    public function __invoke(Renderer $renderer, $context, ?string $xml, ServerRequestInterface $request)
     {
         $actor = RequestUtil::getActor($request);
         $filterCrossReferences = function ($attributes) use ($actor) {

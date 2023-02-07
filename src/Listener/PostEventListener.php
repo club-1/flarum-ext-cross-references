@@ -26,6 +26,7 @@ namespace Club1\CrossReferences\Listener;
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
 use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
+use Flarum\Post\CommentPost;
 use Flarum\Post\Event\Posted;
 use Flarum\Post\Event\Revised;
 use s9e\TextFormatter\Utils;
@@ -49,8 +50,12 @@ class PostEventListener
         $this->discussionPath = $this->urlGen->to('forum')->route('discussion', ['id' => '']);
     }
 
-    /** Indirection to allow mocking the static call in unit tests */
-    protected function findDiscussion(string $id): ?Discussion
+    /**
+     * Indirection to allow mocking the static call in unit tests
+     *
+     * @codeCoverageIgnore
+     */
+    protected function findDiscussion(int $id): ?Discussion
     {
         return Discussion::find($id);
     }
@@ -60,12 +65,16 @@ class PostEventListener
      */
     public function handle(object $event)
     {
+        if (!($event->post instanceof CommentPost)) {
+            return;
+        }
         $xml = $event->post->parsed_content;
         $xrefshortIds  = utils::getattributevalues($xml, 'CROSSREFERENCESHORT', 'id');
         $xrefurlIds    = utils::getattributevalues($xml, 'CROSSREFERENCEURL', 'id');
         $xrefurlcomIds = utils::getattributevalues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
         $targetIds = array_unique(array_merge($xrefshortIds, $xrefurlIds, $xrefurlcomIds));
         foreach($targetIds as $targetId) {
+            $targetId = intval($targetId);
             if ($targetId == $event->post->discussion_id) {
                 continue;
             }

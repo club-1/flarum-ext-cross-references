@@ -25,14 +25,17 @@ namespace Club1\CrossReferences\Tests\unit;
 
 use Club1\CrossReferences\Listener\PostEventListener;
 use Flarum\Discussion\Discussion;
+use Flarum\Http\RouteCollection;
 use Flarum\Http\UrlGenerator;
 use Flarum\Post\CommentPost;
 use Flarum\Post\Event\Posted;
 use Flarum\Post\Event\Revised;
 use Flarum\Post\MergeableInterface;
+use Flarum\Post\Post;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
 use Mockery as m;
+use Mockery\MockInterface;
 
 $short   = 'CROSSREFERENCESHORT';
 $url     = 'CROSSREFERENCEURL';
@@ -45,15 +48,14 @@ $comment = 'CROSSREFERENCEURLCOMMENT';
 class PostEventListenerTest extends TestCase
 {
 
-    /** @var UrlGenerator */
+    /** @var UrlGenerator&MockInterface */
     protected $urlGenerator;
-    /** @var \Flarum\Discussion\Discussion */
-    protected $discussionModel;
-    /** @var PostEventListener */
+    /** @var PostEventListener&MockInterface */
     protected $listener;
 
     public function setUp(): void
     {
+        parent::setUp();
         $routeCollection = m::mock(RouteCollection::class);
         $routeCollection->shouldReceive('route')->with('discussion', ['id' => ''])->andReturn('https://forum.club1.fr/d/');
 
@@ -65,8 +67,9 @@ class PostEventListenerTest extends TestCase
         $xrefPost->shouldReceive('reply')->andReturn(m::mock(MergeableInterface::class));
     }
 
-    public function registerTargetDiscussion($id, $sourceAlreadyExists = false)
+    public function registerTargetDiscussion(int $id, bool $sourceAlreadyExists = false)
     {
+        /** @var MockInterface */
         $sources = m::mock('sources');
         $sources->shouldReceive('where->exists')->andReturn($sourceAlreadyExists);
         if (!$sourceAlreadyExists) {
@@ -79,16 +82,16 @@ class PostEventListenerTest extends TestCase
         return $d;
     }
 
-    public static function mockPost($xml, $discussionId, $discussion = null): CommentPost
+    public static function mockPost(string $xml, int $discussionId, ?Discussion $discussion = null): CommentPost
     {
-        $post = m::mock(CommentPost::class);
-        $post->shouldReceive('getAttribute')->with('parsed_content')->once()->andReturn($xml);
-        $post->shouldReceive('getAttribute')->with('discussion_id')->andReturn($discussionId);
-        $post->shouldReceive('getAttribute')->with('discussion')->andReturn($discussion);
+        $post = m::mock(CommentPost::class)->makePartial();
+        $post->parsed_content = $xml;
+        $post->discussion_id = $discussionId;
+        $post->discussion = $discussion;
      return $post;
     }
 
-    public static function mockActor($id): User
+    public static function mockActor(int $id): User
     {
         $actor = m::mock(User::class);
         $actor->shouldReceive('getAttribute')->with('id')->andReturn($id);
@@ -129,6 +132,16 @@ class PostEventListenerTest extends TestCase
         $d->shouldReceive('mergePost')->once();
 
         $event = new Revised($post, $actor);
+        $this->listener->handle($event);
+    }
+
+    public function testPostNotComment(): void
+    {
+        $post = m::mock(Post::class)->makePartial();
+        $post->shouldNotReceive('getAttribute');
+        $actor = self::mockActor(1);
+
+        $event = new Posted($post, $actor);
         $this->listener->handle($event);
     }
 

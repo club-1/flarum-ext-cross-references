@@ -30,6 +30,7 @@ use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
 use Mockery as m;
+use Mockery\MockInterface;
 use s9e\TextFormatter\Configurator;
 use s9e\TextFormatter\Parser;
 use s9e\TextFormatter\Utils;
@@ -38,17 +39,18 @@ use function PHPUnit\Framework\assertEquals;
 
 class CrossReferencesConfiguratorTest extends TestCase
 {
-    /** @var SettingsRepositoryInterface */
+    /** @var SettingsRepositoryInterface&MockInterface */
     protected $settingsRepo;
-    /** @var UrlGenerator */
+    /** @var UrlGenerator&MockInterface */
     protected $urlGenerator;
     /** @var Configurator */
     protected $configurator;
-    /** @var \Flarum\Discussion\Discussion */
+    /** @var \Flarum\Discussion\Discussion&MockInterface */
     protected $discussionModel;
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->settingsRepo = m::mock(SettingsRepositoryInterface::class);
         $this->settingsRepo->shouldReceive('get')->with('club-1-cross-references.show_discussion_id')->andReturn(false);
         $this->settingsRepo->shouldReceive('get')->with('club-1-cross-references.enable_short_references')->andReturn(true);

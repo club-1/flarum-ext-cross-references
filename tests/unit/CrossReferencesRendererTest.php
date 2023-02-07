@@ -28,6 +28,7 @@ use Flarum\Locale\Translator;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
 use Mockery as m;
+use Mockery\MockInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
@@ -36,19 +37,20 @@ use function PHPUnit\Framework\assertEquals;
 
 class CrossReferencesRendererTest extends TestCase
 {
-    /** @var User */
+    /** @var User&MockInterface */
     protected $actor;
-    /** @var ServerRequestInterface */
+    /** @var Request&MockInterface */
     protected $request;
-    /** @var Translator */
+    /** @var Translator&MockInterface */
     protected $translator;
-    /** @var Renderer */
+    /** @var Renderer&MockInterface */
     protected $renderer;
-    /** @var \Flarum\Discussion\Discussion */
+    /** @var \Flarum\Discussion\Discussion&MockInterface */
     protected $discussionModel;
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->actor = m::mock(User::class);
         $this->request = m::mock(Request::class)->makePartial();
         $this->request->shouldReceive('getAttribute->getActor')->andReturn($this->actor);
@@ -64,7 +66,7 @@ class CrossReferencesRendererTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testDiscussionNotFound(string $tag, string $title, string $id): void
+    public function testDiscussionNotFound(string $tag, string $title, int $id): void
     {
         $this->discussionModel->shouldReceive('find')->with($id)->once()->andReturn(null);
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->once()->andReturn('unknown');
@@ -79,7 +81,7 @@ class CrossReferencesRendererTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testUserNotPermitted(string $tag, string $title, string $id): void
+    public function testUserNotPermitted(string $tag, string $title, int $id): void
     {
         $discussion = new \Flarum\Discussion\Discussion();
         $discussion->title = $title;
@@ -98,7 +100,7 @@ class CrossReferencesRendererTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testValid(string $tag, string $title, string $id): void
+    public function testValid(string $tag, string $title, int $id): void
     {
         $discussion = new \Flarum\Discussion\Discussion();
         $discussion->title = $title;
@@ -116,9 +118,9 @@ class CrossReferencesRendererTest extends TestCase
     public function dataProvider(): array
     {
         return [
-            [ 'CROSSREFERENCESHORT', 'Super titre', '42'],
-            [ 'CROSSREFERENCEURL', 'Super titre !', '41'],
-            [ 'CROSSREFERENCEURLCOMMENT', 'Titre.', '40'],
+            [ 'CROSSREFERENCESHORT', 'Super titre', 42],
+            [ 'CROSSREFERENCEURL', 'Super titre !', 41],
+            [ 'CROSSREFERENCEURLCOMMENT', 'Titre.', 40],
         ];
     }
 }

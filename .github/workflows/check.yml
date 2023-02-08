@@ -8,19 +8,43 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install dependencies & Build
-      run: make
+      - name: Install dependencies & Build
+        run: make
 
-    - name: Run check
-      run: make check
+      - name: Run check
+        run: make check -k
 
-    - name: Upload coverage
-      uses: codecov/codecov-action@v3
-      with:
-        files: tests/.phpunit.unit.cov.xml,tests/.phpunit.integration.cov.xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: tests/.phpunit.unit.cov.xml,tests/.phpunit.integration.cov.xml
+
+  php_74:
+    name: PHP 7.4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: xdebug
+
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: rm composer.lock && composer install
+
+      - name: Analyse PHP
+        run: make analysephp
+
+      - name: Make test
+        run: make test
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: tests/.phpunit.unit.cov.xml,tests/.phpunit.integration.cov.xml

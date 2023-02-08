@@ -53,6 +53,9 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
     "autoload-dev": {
         "psr-4": {
             "Club1\\CrossReferences\\Tests\\": "tests/"
@@ -73,7 +76,18 @@
         "test:integration": "Runs all integration tests.",
         "test:setup": "Sets up a database for use with integration tests. Execute this only once."
     },
+    "repositories": [
+        {
+            "name": "flarum/phpstan",
+            "type": "git",
+            "url": "https://github.com/flarum/phpstan"
+        }
+    ],
     "require-dev": {
-        "flarum/testing": "^1.0.0"
+        "flarum/phpstan": "dev-main",
+        "flarum/testing": "^1.0.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-mockery": "^1.1",
+        "phpstan/phpstan-phpunit": "^1.2"
     }
 }

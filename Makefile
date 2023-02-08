@@ -1,6 +1,6 @@
-all: vendor js;
+all: js vendor;
 
-dev: vendor js;
+dev: js vendor;
 
 js:
 	$(MAKE) -C $@ $(filter $(JSPHONY),$(MAKECMDGOALS))
@@ -22,10 +22,12 @@ releasepatch releaseminor releasemajor: release%: .confirm check all
 	git tag $(TAG)
 	git push --tags
 
-check: analyse test js;
+check: js analyse test;
 
-analyse: js;
-#	vendor/bin/phpstan
+analyse: js analysephp;
+
+analysephp: vendor
+	vendor/bin/phpstan analyse --no-progress
 
 test: testunit;
 #test: testunit testintegration;
@@ -44,4 +46,4 @@ cleancache:
 	@echo -n "$(CONFIRM_MSG)? [y/N] " && read ans && [ $${ans:-N} = y ]
 
 JSPHONY = all dev check analyse clean
-.PHONY: all dev js releasepatch releaseminor releasemajor check analyse test testunit testintegration clean cleancache .confirm
+.PHONY: all dev js releasepatch releaseminor releasemajor check analyse analysephp test testunit testintegration clean cleancache .confirm

@@ -9,6 +9,15 @@ vendor: composer.json composer.lock
 	composer install
 	touch $@
 
+# Create a new release
+.PHONY: release-patch release-minor release-major
+release-%: TAG = v$(shell js/node_modules/.bin/semver -i $* `git describe --tags --abbrev=0`)
+release-patch release-minor release-major: release-%: check all
+	git add js/dist
+	git commit -m $(TAG)
+	git tag $(TAG)
+	git push --tags
+
 check: analyse test js;
 
 analyse: js;

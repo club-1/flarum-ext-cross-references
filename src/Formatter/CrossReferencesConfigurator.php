@@ -89,11 +89,22 @@ class CrossReferencesConfigurator
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->attributes->add('title');
         $tag->template = '
-            <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
-                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
-                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                </xsl:if>
-            </a>';
+            <xsl:choose>
+                <xsl:when test="@unknown = 1">
+                    <span class="DiscussionLink DiscussionUnknown">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if>
+                    </span>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if>
+                    </a>
+                </xsl:otherwise>
+            </xsl:choose>';
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
@@ -111,11 +122,22 @@ class CrossReferencesConfigurator
         $tag->attributes->add('url')->filterChain->append('#url');
         $tag->attributes->add('title');
         $tag->template = '
-            <a href="{@url}" class="DiscussionLink">
-                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
-                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                </xsl:if>
-            </a>';
+            <xsl:choose>
+                <xsl:when test="@unknown = 1">
+                    <span class="DiscussionLink DiscussionUnknown">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if>
+                    </span>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a href="{@url}" class="DiscussionLink">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if>
+                    </a>
+                </xsl:otherwise>
+            </xsl:choose>';
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])
@@ -134,11 +156,22 @@ class CrossReferencesConfigurator
         $tag->attributes->add('title');
         $tag->attributes->add('comment');
         $tag->template = '
-            <a href="{@url}" class="DiscussionLink">
-                <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
-                    <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
-            </a>';
+            <xsl:choose>
+                <xsl:when test="@unknown = 1">
+                    <span class="DiscussionLink DiscussionUnknown">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
+                    </span>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a href="{@url}" class="DiscussionLink">
+                        <xsl:value-of select="@title"/> <xsl:if test="$SHOW_DISCUSSION_ID = 1">
+                            <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
+                        </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
+                    </a>
+                </xsl:otherwise>
+            </xsl:choose>';
 
         $tag->filterChain
             ->prepend([static::class, 'filterCrossReferences'])

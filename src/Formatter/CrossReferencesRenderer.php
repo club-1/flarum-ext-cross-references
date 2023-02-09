@@ -60,6 +60,7 @@ class CrossReferencesRenderer
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');
+                $attributes['unknown'] = true;
             }
             $attributes['comment'] = $this->translator->trans('club-1-cross-references.forum.comment');
             return $attributes;

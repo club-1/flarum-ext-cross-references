@@ -38,13 +38,6 @@ type DiscussionLinkAttrs = ComponentAttrs & {
   href?: string,
 }
 
-function dummyDiscussion(id: string) {
-  return {
-    id: () => id,
-    title: () => app.translator.trans('club-1-cross-references.forum.unknown_discussion').toString(),
-  }
-}
-
 export default class DiscussionLink extends Link {
   attrs!: DiscussionLinkAttrs;
   discussion?: IDiscussion;
@@ -63,8 +56,6 @@ export default class DiscussionLink extends Link {
     }
     if (discussion) {
       this.discussion = discussion;
-    } else {
-      this.discussion = dummyDiscussion(discussionId);
     }
   }
 
@@ -72,8 +63,8 @@ export default class DiscussionLink extends Link {
     const href = this.attrs.href;
     const showId = app.forum.attribute('showDiscussionId');
     const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
-    return (
-      <Link
+    if (this.discussion) {
+      return <Link
         href={href ? href : app.route('discussion', {id: this.attrs.discussionId})}
         class="DiscussionLink"
       >
@@ -85,7 +76,19 @@ export default class DiscussionLink extends Link {
           isComment && <DiscussionComment/>
         }
       </Link>
-    );
+    } else {
+      return <span
+        class="DiscussionLink DiscussionUnknown"
+      >
+        {
+          app.translator.trans('club-1-cross-references.forum.unknown_discussion')
+        } {
+          showId && <DiscussionId discussionId={this.attrs.discussionId} />
+        } {
+          isComment && <DiscussionComment/>
+        }
+      </span>
+    }
   }
 }
 

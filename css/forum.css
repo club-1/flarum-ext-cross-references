@@ -1,3 +1,7 @@
+.DiscussionLink {
+	font-weight: 600;
+}
+
 .DiscussionId, .DiscussionComment {
 	font-weight: normal;
 	color: var(--muted-color);
@@ -15,6 +19,12 @@
 
 .EventPost .DiscussionLink {
 	color: var(--link-color);
+}
+
+.DiscussionLink.DiscussionUnknown,
+.DiscussionUnknown .DiscussionId,
+.DiscussionUnknown .DiscussionComment {
+	color: var(--muted-more-color);
 }
 
 .DiscussionReferencedPost .EventPost-info ul {

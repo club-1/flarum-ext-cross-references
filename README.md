@@ -37,13 +37,13 @@ It adds similar features to Flarum forums.
 Install with composer:
 
 ```sh
-composer require club-1/flarum-ext-cross-references:"*"
+composer require club-1/flarum-ext-cross-references
 ```
 
 ## Updating
 
 ```sh
-composer update club-1/flarum-ext-cross-references:"*"
+composer update club-1/flarum-ext-cross-references
 php flarum migrate
 php flarum cache:clear
 ```

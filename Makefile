@@ -10,7 +10,10 @@ vendor: composer.json composer.lock
 	touch $@
 
 # Create a new release
-release%: TAG = v$(shell js/node_modules/.bin/semver -i $* `git describe --tags --abbrev=0`)
+releasepatch: V = patch
+releaseminor: V = minor
+releasemajor: V = major
+release%: TAG = v$(shell js/node_modules/.bin/semver -i $V `git describe --tags --abbrev=0`)
 release%: CONFIRM_MSG = Create release $(TAG)
 releasepatch releaseminor releasemajor: release%: .confirm check all
 	git add js/dist

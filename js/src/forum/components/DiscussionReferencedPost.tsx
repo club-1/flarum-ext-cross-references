@@ -38,7 +38,9 @@ export default class DiscussionReferencedPost extends EventPost {
   }
 
   descriptionKey() {
-    return 'club-1-cross-references.forum.post_stream.discussion_referenced_text';
+    return this.attrs.sourceIds.length == 1 ?
+      'club-1-cross-references.forum.post_stream.discussion_referenced_text' :
+      'club-1-cross-references.forum.post_stream.discussion_referenced_multiple_text';
   }
 
   descriptionData() {
@@ -48,7 +50,7 @@ export default class DiscussionReferencedPost extends EventPost {
       }
     } else {
       return {
-        source: <ul>
+        sources: <ul>
           {this.attrs.sourceIds.map((id) =>
             <li><DiscussionLink discussionId={id} /></li>
           )}

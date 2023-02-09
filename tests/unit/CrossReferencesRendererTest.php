@@ -76,6 +76,7 @@ class CrossReferencesRendererTest extends TestCase
         $renderer = new CrossReferencesRenderer($this->translator);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
         assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
+        assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
 
     /**
@@ -95,6 +96,7 @@ class CrossReferencesRendererTest extends TestCase
         $renderer = new CrossReferencesRenderer($this->translator);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
         assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
+        assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
 
     /**
@@ -113,6 +115,7 @@ class CrossReferencesRendererTest extends TestCase
         $renderer = new CrossReferencesRenderer($this->translator);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
         assertEquals([$title], Utils::getAttributeValues($rendered, $tag, 'title'));
+        assertEquals([], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
 
     public function dataProvider(): array

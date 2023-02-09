@@ -10,11 +10,12 @@ vendor: composer.json composer.lock
 	touch $@
 
 # Create a new release
-.PHONY: release-patch release-minor release-major
-release-%: TAG = v$(shell js/node_modules/.bin/semver -i $* `git describe --tags --abbrev=0`)
-release-patch release-minor release-major: release-%: check all
+release%: TAG = v$(shell js/node_modules/.bin/semver -i $* `git describe --tags --abbrev=0`)
+release%: CONFIRM_MSG = Create release $(TAG)
+releasepatch releaseminor releasemajor: release%: .confirm check all
 	git add js/dist
-	git commit -m $(TAG)
+	git commit -m $(TAG) --allow-empty
+	git push
 	git tag $(TAG)
 	git push --tags
 
@@ -36,5 +37,8 @@ clean: js cleancache
 cleancache:
 	rm -rf tests/.phpunit*
 
+.confirm:
+	@echo -n "$(CONFIRM_MSG)? [y/N] " && read ans && [ $${ans:-N} = y ]
+
 JSPHONY = all dev check analyse clean
-.PHONY: all dev js check analyse test testunit testintegration clean cleancache
+.PHONY: all dev js releasepatch releaseminor releasemajor check analyse test testunit testintegration clean cleancache .confirm

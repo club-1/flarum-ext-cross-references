@@ -1,3 +1,5 @@
+DATE = $(shell date +%F)
+REPO_URL = https://github.com/club-1/flarum-ext-cross-references
 INTERACTIVE := $(shell [ -t 0 ] && echo 1)
 PHPSTANFLAGS += $(if $(INTERACTIVE),,--no-progress) $(if $(INTERACTIVE)$(CI),,--error-format=raw)
 PHPUNITFLAGS += $(if $(INTERACTIVE)$(CI),--coverage-text,--colors=never)
@@ -17,11 +19,15 @@ vendor: composer.json composer.lock
 releasepatch: V = patch
 releaseminor: V = minor
 releasemajor: V = major
-release%: TAG = v$(shell js/node_modules/.bin/semver -i $V `git describe --tags --abbrev=0`)
+release%: PREVTAG = $(shell git describe --tags --abbrev=0)
+release%: TAG = v$(shell js/node_modules/.bin/semver -i $V $(PREVTAG))
 release%: CONFIRM_MSG = Create release $(TAG)
 releasepatch releaseminor releasemajor: release%: .confirm check all
-	git add js/dist
-	git commit -m $(TAG) --allow-empty
+	sed -i CHANGELOG.md \
+		-e '/^## \[unreleased\]/s/$$/\n\n## [$(TAG)] - $(DATE)/' \
+		-e '/^\[unreleased\]/{s/$(PREVTAG)/$(TAG)/; s#$$#\n[$(TAG)]: $(REPO_URL)/releases/tag/$(TAG)#}'
+	git add CHANGELOG.md js/dist
+	git commit -m $(TAG)
 	git push
 	git tag $(TAG)
 	git push --tags

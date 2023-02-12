@@ -1,0 +1,77 @@
+name: 🐛 Bug Report
+description: File a bug report
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error message '....'
+    validations:
+      required: true
+  - type: textarea
+    id: enironment
+    attributes:
+      label: Environment
+      value: |
+        - CLUB1 Cross References version: x.y.z
+        - Flarum version: x.y.z
+        - PHP version: x.y.z
+        - Browser: [e.g. chrome 67, firefox 109]
+    validations:
+      required: true
+  - type: textarea
+    id: php_flarum_info
+    attributes:
+      label: "Output of `php flarum info`"
+      render: text
+      placeholder: |
+        Flarum core 1.6.3
+        PHP version: 8.2.2
+        MySQL version: 10.6.11-MariaDB-2
+        Loaded extensions: Core, date, libxml, openssl, pcre, zlib, filter, hash, json, pcntl, random, Reflection, SPL, session, standard, sodium, mysqlnd, PDO, xml, calendar, ctype, curl, dom, mbstring, FFI, fileinfo, ftp, gd, gettext, iconv, intl, exif, mysqli, pdo_mysql, pdo_sqlite, Phar, posix, readline, shmop, SimpleXML, sockets, sqlite3, sysvmsg, sysvsem, sysvshm, tokenizer, xmlreader, xmlwriter, xsl, Zend OPcache, xdebug
+        +-------------------------+----------+------------------------------------------+
+        | Flarum Extensions       |          |                                          |
+        +-------------------------+----------+------------------------------------------+
+        | ID                      | Version  | Commit                                   |
+        +-------------------------+----------+------------------------------------------+
+        | flarum-flags            | v1.6.1   |                                          |
+        | flarum-approval         | v1.6.1   |                                          |
+        | flarum-tags             | v1.6.1   |                                          |
+        | flarum-suspend          | v1.6.1   |                                          |
+        | flarum-subscriptions    | v1.6.3   |                                          |
+        | flarum-sticky           | v1.6.1   |                                          |
+        | flarum-statistics       | v1.6.1   |                                          |
+        | flarum-mentions         | v1.6.3   |                                          |
+        | flarum-markdown         | v1.6.1   |                                          |
+        | flarum-lock             | v1.6.1   |                                          |
+        | flarum-likes            | v1.6.1   |                                          |
+        | flarum-lang-french      | v4.5.0   |                                          |
+        | flarum-lang-english     | v1.6.0   |                                          |
+        | flarum-emoji            | v1.6.1   |                                          |
+        | flarum-bbcode           | v1.6.0   |                                          |
+        | club-1-cross-references | dev-main | edbf271ce1bc9ca594101fba0966fc208dfedb2f |
+        +-------------------------+----------+------------------------------------------+
+        Base URL: http://localhost:8080
+        Installation path: /home/nicolas/Source/www/flarum
+        Queue driver: sync
+        Session driver: file
+        Mail driver: smtp
+    validations:
+      required: false

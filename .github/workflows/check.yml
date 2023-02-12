@@ -16,7 +16,7 @@ jobs:
         run: make
 
       - name: Run check
-        run: make check -k
+        run: make check -k PHPSTANFLAGS=-q
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3

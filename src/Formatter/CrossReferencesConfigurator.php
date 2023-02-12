@@ -24,9 +24,11 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
+use RuntimeException;
 use s9e\TextFormatter\Configurator;
 use s9e\TextFormatter\Parser\Tag;
 
@@ -66,8 +68,15 @@ class CrossReferencesConfigurator
         $this->configureCrossReferenceURLComment($config);
     }
 
-    public static function filterCrossReferences(Tag $tag, User $actor)
+    public static function filterCrossReferences(Tag $tag, ?User $actor): bool
     {
+        if (is_null($actor)) {
+            $log = resolve(LogReporter::class);
+            $msg = 'actor is "null", falling back to invalidating tag. This is probably due to another extension not passing this parameter to "Formatter->parse()". See stack trace below.';
+            $log->report(new RuntimeException($msg));
+            $tag->invalidate();
+            return false;
+        }
         /** @var Discussion|null */
         $d = Discussion::find($tag->getAttribute('id'));
         if (is_null($d) || $actor->cannot('viewForum', $d)) {

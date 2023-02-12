@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Fixed
+
+- Fallback gracefully to invalidating tag parsing if actor is null.
+
 ### Changed
 
 - Add this CHANGELOG.md file.

@@ -24,11 +24,13 @@
 namespace Club1\CrossReferences\Tests\unit;
 
 use Club1\CrossReferences\Formatter\CrossReferencesConfigurator;
+use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\RouteCollection;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
+use Illuminate\Container\Container;
 use Mockery as m;
 use Mockery\MockInterface;
 use s9e\TextFormatter\Configurator;
@@ -43,6 +45,8 @@ class CrossReferencesConfiguratorTest extends TestCase
     protected $settingsRepo;
     /** @var UrlGenerator&MockInterface */
     protected $urlGenerator;
+    /** @var LogReporter&MockInterface */
+    protected $log;
     /** @var Configurator */
     protected $configurator;
     /** @var \Flarum\Discussion\Discussion&MockInterface */
@@ -60,6 +64,12 @@ class CrossReferencesConfiguratorTest extends TestCase
 
         $this->urlGenerator = m::mock(UrlGenerator::class);
         $this->urlGenerator->shouldReceive('to')->with('forum')->andReturn($routeCollection);
+
+        $this->log = m::mock(LogReporter::class);
+
+        $container = new Container();
+        $container->instance(LogReporter::class, $this->log);
+        Container::setInstance($container);
 
         // Mock Eloquent Discussion Model by creating an alias in the autoloader.
         // This only works if the aliased class is not yet loaded.
@@ -227,6 +237,19 @@ class CrossReferencesConfiguratorTest extends TestCase
         ];
     }
 
+    public function testActorIsNull(): void
+    {
+        $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
+        $xrefConfigurator($this->configurator);
+        extract($this->configurator->finalize());
+        $parser->registeredVars['actor'] = null;
+        $this->log->shouldReceive('report')->once();
+
+        $xml = $parser->parse('#42');
+        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
+        $expected = [];
+        assertEquals($expected, $actual);
+    }
 
     /**
      * @dataProvider discussionExistsProvider

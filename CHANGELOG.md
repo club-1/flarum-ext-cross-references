@@ -6,6 +6,7 @@
 
 - Add this CHANGELOG.md file.
 - Add and setup PHPStan for static analysis of PHP code.
+- Use different flags for non-interactive shells in Makefile.
 
 ## [v1.0.1] - 2023-02-12
 

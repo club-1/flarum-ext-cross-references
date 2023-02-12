@@ -1,3 +1,7 @@
+INTERACTIVE := $(shell [ -t 0 ] && echo 1)
+PHPSTANFLAGS += $(if $(INTERACTIVE),,--no-progress) $(if $(INTERACTIVE)$(CI),,--error-format=raw)
+PHPUNITFLAGS += $(if $(INTERACTIVE)$(CI),--coverage-text,--colors=never)
+
 all: js vendor;
 
 dev: js vendor;
@@ -27,14 +31,14 @@ check: js analyse test;
 analyse: js analysephp;
 
 analysephp: vendor
-	vendor/bin/phpstan analyse --no-progress
+	vendor/bin/phpstan analyse $(PHPSTANFLAGS)
 
 test: testunit;
 #test: testunit testintegration;
 
 testunit testintegration: export XDEBUG_MODE=coverage
 testunit testintegration: test%: vendor
-	composer test:$* --  --coverage-cache=tests/.phpunit.cov.cache --coverage-text --coverage-clover=tests/.phpunit.$*.cov.xml
+	composer test:$* -- --coverage-cache=tests/.phpunit.cov.cache --coverage-clover=tests/.phpunit.$*.cov.xml $(PHPUNITFLAGS)
 
 clean: js cleancache
 	rm -rf vendor

@@ -24,9 +24,11 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\RequestUtil;
 use Flarum\Locale\Translator;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
@@ -37,9 +39,15 @@ class CrossReferencesRenderer
      */
     protected $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var LogReporter
+     */
+    protected $log;
+
+    public function __construct(Translator $translator, LogReporter $log)
     {
         $this->translator = $translator;
+        $this->log = $log;
     }
 
     /**
@@ -50,13 +58,19 @@ class CrossReferencesRenderer
      * @param string|null $xml
      * @return string $xml to be rendered
      */
-    public function __invoke(Renderer $renderer, $context, ?string $xml, ServerRequestInterface $request)
+    public function __invoke(Renderer $renderer, $context, ?string $xml, ?ServerRequestInterface $request)
     {
-        $actor = RequestUtil::getActor($request);
+        $actor = null;
+        if (is_null($request)) {
+            $msg = 'request is "null", falling back to display discussions as unknown. This is probably due to another extension not passing this parameter to "Formatter->render()". See stack trace below.';
+            $this->log->report(new RuntimeException($msg));
+        } else {
+            $actor = RequestUtil::getActor($request);
+        }
         $filterCrossReferences = function ($attributes) use ($actor) {
             /** @var Discussion|null */
             $discussion = Discussion::find($attributes['id']);
-            if (!is_null($discussion) && $actor->can('viewForum', $discussion)) {
+            if ($discussion && $actor && $actor->can('viewForum', $discussion)) {
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');

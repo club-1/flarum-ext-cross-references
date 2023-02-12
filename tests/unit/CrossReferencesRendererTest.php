@@ -24,6 +24,7 @@
 namespace Club1\CrossReferences\Tests\unit;
 
 use Club1\CrossReferences\Formatter\CrossReferencesRenderer;
+use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Locale\Translator;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
@@ -45,6 +46,8 @@ class CrossReferencesRendererTest extends TestCase
     protected $translator;
     /** @var Renderer&MockInterface */
     protected $renderer;
+    /** @var LogReporter&MockInterface */
+    protected $log;
     /** @var \Flarum\Discussion\Discussion&MockInterface */
     protected $discussionModel;
 
@@ -56,6 +59,7 @@ class CrossReferencesRendererTest extends TestCase
         $this->request->shouldReceive('getAttribute->getActor')->andReturn($this->actor);
         $this->translator = m::mock(Translator::class);
         $this->renderer = m::mock(Renderer::class);
+        $this->log = m::mock(LogReporter::class);
 
         // Mock Eloquent Discussion Model by creating an alias in the autoloader.
         // This only works if the aliased class is not yet loaded.
@@ -73,7 +77,7 @@ class CrossReferencesRendererTest extends TestCase
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
         $xml = "<$tag id=\"$id\"></$tag>";
 
-        $renderer = new CrossReferencesRenderer($this->translator);
+        $renderer = new CrossReferencesRenderer($this->translator, $this->log);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
         assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
         assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
@@ -93,8 +97,28 @@ class CrossReferencesRendererTest extends TestCase
         $this->actor->shouldReceive('can')->with('viewForum', $discussion)->once()->andReturn(false);
         $xml = "<$tag id=\"$id\"></$tag>";
 
-        $renderer = new CrossReferencesRenderer($this->translator);
+        $renderer = new CrossReferencesRenderer($this->translator, $this->log);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
+        assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
+        assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
+    }
+
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testRequestIsNull(string $tag, string $title, int $id): void
+    {
+        $discussion = new \Flarum\Discussion\Discussion();
+        $discussion->title = $title;
+        $discussion->id = $id;
+        $this->discussionModel->shouldReceive('find')->with($id)->once()->andReturn($discussion);
+        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->once()->andReturn('unknown');
+        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
+        $this->log->shouldReceive('report')->once();
+        $xml = "<$tag id=\"$id\"></$tag>";
+
+        $renderer = new CrossReferencesRenderer($this->translator, $this->log);
+        $rendered = $renderer($this->renderer, null, $xml, null);
         assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
         assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
@@ -112,7 +136,7 @@ class CrossReferencesRendererTest extends TestCase
         $this->actor->shouldReceive('can')->with('viewForum', $discussion)->once()->andReturn(true);
         $xml = "<$tag id=\"$id\"></$tag>";
 
-        $renderer = new CrossReferencesRenderer($this->translator);
+        $renderer = new CrossReferencesRenderer($this->translator, $this->log);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
         assertEquals([$title], Utils::getAttributeValues($rendered, $tag, 'title'));
         assertEquals([], Utils::getAttributeValues($rendered, $tag, 'unknown'));

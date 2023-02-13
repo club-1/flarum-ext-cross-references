@@ -7,7 +7,8 @@
 - Fallback gracefully to invalidating tag parsing if actor is null.
 - Detect again discussion URL in manually created links, and create a
   cross-reference in target discussion.
-  This has been broken since v0.5.0 when TextFormatter was added.
+  This has been broken since v0.5.0 when TextFormatter was added. (#27)
+- Remove space after source link's title when show ID is disabled.
 
 ### Changed
 
@@ -15,6 +16,7 @@
 - Add and setup PHPStan for static analysis of PHP code.
 - Use different flags for non-interactive shells in Makefile.
 - Add script to bump CHANGELOG.md on release.
+- Add tests for TextFormatter templates rendering. (#26)
 
 ## [v1.0.1] - 2023-02-12
 

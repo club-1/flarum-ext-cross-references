@@ -16,7 +16,7 @@ parameters:
   ignoreErrors:
     - message: '#function extract is passed by reference#'
       path: tests/unit/CrossReferencesConfiguratorTest.php
-    - message: '#Variable \$parser might not be defined#'
+    - message: '#Variable \$(parser|renderer) might not be defined#'
       path: tests/unit/CrossReferencesConfiguratorTest.php
   checkMissingIterableValueType: false
   databaseMigrationsPath: ['migrations']

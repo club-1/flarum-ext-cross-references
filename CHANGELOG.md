@@ -2,6 +2,8 @@
 
 ## [unreleased]
 
+## [v1.0.2] - 2023-02-14
+
 ### Fixed
 
 - Fallback gracefully to invalidating tag parsing if actor is null.
@@ -32,6 +34,7 @@
 
 First stable release.
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.1...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.2...HEAD
+[v1.0.2]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.2
 [v1.0.1]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.0

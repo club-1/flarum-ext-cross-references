@@ -33,21 +33,16 @@ use s9e\TextFormatter\Utils;
 
 class PostEventListener
 {
-
-    /**
-     * @var UrlGenerator
-     */
-    protected $urlGen;
-
     /**
      * @var string
      */
-    protected $discussionPath;
+    protected $discussionRegex;
 
     public function __construct(UrlGenerator $urlGenerator)
     {
-        $this->urlGen = $urlGenerator;
-        $this->discussionPath = $this->urlGen->to('forum')->route('discussion', ['id' => '']);
+        $discussionPath = $urlGenerator->to('forum')->route('discussion', ['id' => '']);
+        $discussionPathEsc = addcslashes($discussionPath, '/');
+        $this->discussionRegex = "/^$discussionPathEsc([0-9]+)/";
     }
 
     /**
@@ -69,10 +64,17 @@ class PostEventListener
             return;
         }
         $xml = $event->post->parsed_content;
+        $xrefmanual = [];
+        foreach (Utils::getAttributeValues($xml, 'URL', 'url') as $url) {
+            $matches = [];
+            if (preg_match($this->discussionRegex, $url, $matches)) {
+                $xrefmanual[] = $matches[1];
+            }
+        }
         $xrefshortIds  = Utils::getattributevalues($xml, 'CROSSREFERENCESHORT', 'id');
         $xrefurlIds    = Utils::getattributevalues($xml, 'CROSSREFERENCEURL', 'id');
         $xrefurlcomIds = Utils::getattributevalues($xml, 'CROSSREFERENCEURLCOMMENT', 'id');
-        $targetIds = array_unique(array_merge($xrefshortIds, $xrefurlIds, $xrefurlcomIds));
+        $targetIds = array_unique(array_merge($xrefmanual, $xrefshortIds, $xrefurlIds, $xrefurlcomIds));
         foreach($targetIds as $targetId) {
             $targetId = intval($targetId);
             if ($targetId == $event->post->discussion_id) {

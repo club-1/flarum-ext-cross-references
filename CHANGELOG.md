@@ -5,6 +5,9 @@
 ### Fixed
 
 - Fallback gracefully to invalidating tag parsing if actor is null.
+- Detect again discussion URL in manually created links, and create a
+  cross-reference in target discussion.
+  This has been broken since v0.5.0 when TextFormatter was added.
 
 ### Changed
 

@@ -172,8 +172,8 @@ class PostEventListenerTest extends TestCase
             ],
             // all tags should work
             [
-                "<$short id=\"13\"></$short> <$url id=\"14\"></$url> <$comment id=\"15\"></$comment>",
-                [13, 14, 15],
+                "<$short id=\"13\"></$short> <$url id=\"14\"></$url> <$comment id=\"15\"></$comment> <URL url=\"https://forum.club1.fr/d/16\">titre</URL>",
+                [13, 14, 15, 16],
             ],
             // sould deduplicate
             [

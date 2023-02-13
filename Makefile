@@ -20,8 +20,8 @@ releasepatch: V := patch
 releaseminor: V := minor
 releasemajor: V := major
 release%: PREVTAG := $(shell git describe --tags --abbrev=0)
-release%: TAG := v$(shell js/node_modules/.bin/semver -i $V $(PREVTAG))
-release%: CONFIRM_MSG := Create release $(TAG)
+release%: TAG = v$(shell js/node_modules/.bin/semver -i $V $(PREVTAG))
+release%: CONFIRM_MSG = Create release $(TAG)
 releasepatch releaseminor releasemajor: release%: .confirm check all
 	sed -i CHANGELOG.md \
 		-e '/^## \[unreleased\]/s/$$/\n\n## [$(TAG)] - $(DATE)/' \

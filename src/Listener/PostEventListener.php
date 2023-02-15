@@ -58,7 +58,7 @@ class PostEventListener
     /**
      * @param Posted | Revised $event
      */
-    public function handle(object $event)
+    public function handle(object $event): void
     {
         if (!($event->post instanceof CommentPost)) {
             return;

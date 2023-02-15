@@ -67,7 +67,10 @@ class PostEventListenerTest extends TestCase
         $xrefPost->shouldReceive('reply')->andReturn(m::mock(MergeableInterface::class));
     }
 
-    public function registerTargetDiscussion(int $id, bool $sourceAlreadyExists = false)
+    /**
+     * @return Discussion&MockInterface
+     */
+    public function registerTargetDiscussion(int $id, bool $sourceAlreadyExists = false): Discussion
     {
         /** @var MockInterface */
         $sources = m::mock('sources');

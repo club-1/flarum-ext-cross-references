@@ -57,7 +57,7 @@ class CrossReferencesConfigurator
         $this->discussionPathEsc = addcslashes($this->discussionPath, '/');
     }
 
-    public function __invoke(Configurator $config)
+    public function __invoke(Configurator $config): void
     {
         $config->rendering->parameters[self::PARAM_DISCUSSION_URL] = $this->discussionPath;
         $config->rendering->parameters[self::PARAM_SHOW_DISCUSSION_ID] = $this->settings->get('club-1-cross-references.show_discussion_id');
@@ -90,7 +90,7 @@ class CrossReferencesConfigurator
         return true;
     }
 
-    protected function configureCrossReferenceShort(Configurator $config)
+    protected function configureCrossReferenceShort(Configurator $config): void
     {
         $tagName = 'CROSSREFERENCESHORT';
 
@@ -122,7 +122,7 @@ class CrossReferencesConfigurator
         $config->Preg->match('/\B#(?<id>\d+)\b/i', $tagName);
     }
 
-    protected function configureCrossReferenceURL(Configurator $config)
+    protected function configureCrossReferenceURL(Configurator $config): void
     {
         $tagName = 'CROSSREFERENCEURL';
 
@@ -155,7 +155,7 @@ class CrossReferencesConfigurator
         $config->Preg->match("/\b(?<url>$this->discussionPathEsc(?<id>\d+)(-[-\p{L}\p{N}\p{M}]*)?\/?)(?=[^-\p{L}\p{N}\/]|$)/i", $tagName);
     }
 
-    protected function configureCrossReferenceURLComment(Configurator $config)
+    protected function configureCrossReferenceURLComment(Configurator $config): void
     {
         $tagName = 'CROSSREFERENCEURLCOMMENT';
 

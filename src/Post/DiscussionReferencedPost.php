@@ -56,7 +56,7 @@ class DiscussionReferencedPost extends AbstractEventPost implements MergeableInt
     /**
      * Create a new instance in reply to a discussion.
      */
-    public static function reply(int $discussionId, int $userId, int $sourceId)
+    public static function reply(int $discussionId, int $userId, int $sourceId): static
     {
         $post = new static;
 

@@ -38,7 +38,7 @@ class SettingsSavedListener
         $this->formatter = $formatter;
     }
 
-    public function handle(Saved $event)
+    public function handle(Saved $event): void
     {
         // Flush the formatter cache to refresh to rendering of messages.
         $this->formatter->flush();

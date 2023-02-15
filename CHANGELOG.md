@@ -2,6 +2,10 @@
 
 ## [unreleased]
 
+### Changed
+
+- Increase PHPStan level from 5 to 7 and add some return types along the way.
+
 ## [v1.0.2] - 2023-02-14
 
 ### Fixed

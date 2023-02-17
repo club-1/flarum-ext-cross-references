@@ -28,7 +28,6 @@ import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 import { ResponseCache } from './cache';
 import DiscussionId from './components/DiscussionId';
-import DiscussionLink from './components/DiscussionLink';
 import DiscussionReferencedPost from './components/DiscussionReferencedPost';
 
 app.initializers.add('club-1-cross-references', function(app) {
@@ -54,12 +53,7 @@ function addSourceLinkReplacement() {
       if (match == null) {
         return;
       }
-      if (a.text === a.href) {
-        const discussionId = match[1];
-        const span = document.createElement('span');
-        m.mount(span, {view: () => m(DiscussionLink, {discussionId, href: a.href})});
-        a.replaceWith(span)
-      } else {
+      if (a.text !== a.href && !a.text.startsWith(a.href + ' ')) {
         a.addEventListener('click', (e) => {
           m.route.set(this.getAttribute('href'))
           e.preventDefault();

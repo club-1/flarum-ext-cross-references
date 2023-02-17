@@ -53,10 +53,11 @@ function addSourceLinkReplacement() {
       if (match == null) {
         return;
       }
-      if (a.text !== a.href && !a.text.startsWith(a.href + ' ')) {
+      if (a.text !== a.href && !a.text.startsWith(a.href + ' ') && !a.classList.contains('redirection-initialised')) {
+        a.classList.add('redirection-initialised');
         a.addEventListener('click', (e) => {
-          m.route.set(this.getAttribute('href'))
           e.preventDefault();
+          m.route.set(this.getAttribute('href'))
         });
       }
     });

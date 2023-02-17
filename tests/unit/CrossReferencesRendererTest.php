@@ -27,6 +27,8 @@ use Club1\CrossReferences\Formatter\CrossReferencesRenderer;
 use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Locale\Translator;
 use Flarum\Testing\unit\TestCase;
+use Flarum\User\Access\Gate;
+use Flarum\User\Guest;
 use Flarum\User\User;
 use Mockery as m;
 use Mockery\MockInterface;
@@ -67,6 +69,13 @@ class CrossReferencesRendererTest extends TestCase
         $this->discussionModel = m::mock('alias:Flarum\Discussion\Discussion');
     }
 
+    public static function setUpGuestPermissions(bool $allowed): void
+    {
+        $gate = m::mock(Gate::class);
+        $gate->shouldReceive('allows')->andReturn($allowed);
+        Guest::setGate($gate);
+    }
+
     /**
      * @dataProvider dataProvider
      */
@@ -105,22 +114,34 @@ class CrossReferencesRendererTest extends TestCase
 
     /**
      * @dataProvider dataProvider
+     * @dataProvider guestNotAllowedProvider
      */
-    public function testRequestIsNull(string $tag, string $title, int $id): void
+    public function testRequestIsNull(string $tag, string $title, int $id, bool $guestAllowed = true): void
     {
+        self::setUpGuestPermissions($guestAllowed);
         $discussion = new \Flarum\Discussion\Discussion();
         $discussion->title = $title;
         $discussion->id = $id;
         $this->discussionModel->shouldReceive('find')->with($id)->once()->andReturn($discussion);
-        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->once()->andReturn('unknown');
+        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->times(intval(!$guestAllowed))->andReturn('unknown');
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
         $this->log->shouldReceive('report')->once();
         $xml = "<$tag id=\"$id\"></$tag>";
 
         $renderer = new CrossReferencesRenderer($this->translator, $this->log);
         $rendered = $renderer($this->renderer, null, $xml, null);
-        assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
-        assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
+        if ($guestAllowed) {
+            assertEquals([$title], Utils::getAttributeValues($rendered, $tag, 'title'));
+            assertEquals([], Utils::getAttributeValues($rendered, $tag, 'unknown'));
+        } else {
+            assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
+            assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
+        }
+    }
+
+    public function guestNotAllowedProvider(): array
+    {
+        return [['CROSSREFERENCESHORT', 'This is private', 7, false]];
     }
 
     /**

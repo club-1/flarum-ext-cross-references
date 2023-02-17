@@ -27,6 +27,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\RequestUtil;
 use Flarum\Locale\Translator;
+use Flarum\User\Guest;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 use s9e\TextFormatter\Renderer;
@@ -60,9 +61,9 @@ class CrossReferencesRenderer
      */
     public function __invoke(Renderer $renderer, $context, ?string $xml, ?ServerRequestInterface $request)
     {
-        $actor = null;
+        $actor = new Guest();
         if (is_null($request)) {
-            $msg = 'request is "null", falling back to display discussions as unknown. This is probably due to another extension not passing this parameter to "Formatter->render()". See stack trace below.';
+            $msg = 'request is "null", falling back to display discussions as viewed by guests. This is probably due to another extension not passing this parameter to "Formatter->render()". See stack trace below.';
             $this->log->report(new RuntimeException($msg));
         } else {
             $actor = RequestUtil::getActor($request);
@@ -70,7 +71,7 @@ class CrossReferencesRenderer
         $filterCrossReferences = function ($attributes) use ($actor) {
             /** @var Discussion|null */
             $discussion = Discussion::find($attributes['id']);
-            if ($discussion && $actor && $actor->can('viewForum', $discussion)) {
+            if ($discussion && $actor->can('viewForum', $discussion)) {
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');

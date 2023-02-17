@@ -26,6 +26,7 @@ namespace Club1\CrossReferences\Tests\unit;
 use Club1\CrossReferences\Formatter\CrossReferencesConfigurator;
 use DOMDocument;
 use DOMElement;
+use Flarum\Foundation\Config;
 use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\RouteCollection;
 use Flarum\Http\UrlGenerator;
@@ -53,6 +54,8 @@ class CrossReferencesConfiguratorTest extends TestCase
     protected $urlGenerator;
     /** @var LogReporter&MockInterface */
     protected $log;
+    /** @var Config&MockInterface */
+    protected $config;
     /** @var Configurator */
     protected $configurator;
     /** @var \Flarum\Discussion\Discussion&MockInterface */
@@ -72,9 +75,11 @@ class CrossReferencesConfiguratorTest extends TestCase
         $this->urlGenerator->shouldReceive('to')->with('forum')->andReturn($routeCollection);
 
         $this->log = m::mock(LogReporter::class);
+        $this->config = m::mock(Config::class)->makePartial();
 
         $container = new Container();
         $container->instance(LogReporter::class, $this->log);
+        $container->instance(Config::class, $this->config);
         Container::setInstance($container);
 
         // Mock Eloquent Discussion Model by creating an alias in the autoloader.
@@ -99,7 +104,7 @@ class CrossReferencesConfiguratorTest extends TestCase
             $discussion = new \Flarum\Discussion\Discussion();
             $discussion->title = $data['title'];
         }
-        $this->discussionModel->shouldReceive('find')->andReturn($discussion);
+        $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->andReturn($discussion);
     }
 
     public function basicParserConfiguration(): Parser

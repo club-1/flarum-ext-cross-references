@@ -24,9 +24,11 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Foundation\Config;
 use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\RequestUtil;
 use Flarum\Locale\Translator;
+use Flarum\User\Guest;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 use s9e\TextFormatter\Renderer;
@@ -44,10 +46,16 @@ class CrossReferencesRenderer
      */
     protected $log;
 
-    public function __construct(Translator $translator, LogReporter $log)
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    public function __construct(Translator $translator, LogReporter $log, Config $config)
     {
         $this->translator = $translator;
         $this->log = $log;
+        $this->config = $config;
     }
 
     /**
@@ -60,17 +68,19 @@ class CrossReferencesRenderer
      */
     public function __invoke(Renderer $renderer, $context, ?string $xml, ?ServerRequestInterface $request)
     {
-        $actor = null;
         if (is_null($request)) {
-            $msg = 'request is "null", falling back to display discussions as unknown. This is probably due to another extension not passing this parameter to "Formatter->render()". See stack trace below.';
-            $this->log->report(new RuntimeException($msg));
+            if ($this->config->inDebugMode()) {
+                $msg = 'request is "null", falling back to display discussion as for Guest. This is probably due to another extension not passing this parameter to "Formatter->render()". See stack trace below.';
+                $this->log->report(new RuntimeException($msg));
+            }
+            $actor = new Guest();
         } else {
             $actor = RequestUtil::getActor($request);
         }
         $filterCrossReferences = function ($attributes) use ($actor) {
             /** @var Discussion|null */
-            $discussion = Discussion::find($attributes['id']);
-            if ($discussion && $actor && $actor->can('viewForum', $discussion)) {
+            $discussion = Discussion::whereVisibleTo($actor)->firstWhere('id', $attributes['id']);
+            if ($discussion) {
                 $attributes['title'] = $discussion->title;
             } else {
                 $attributes['title'] = $this->translator->trans('club-1-cross-references.forum.unknown_discussion');

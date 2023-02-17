@@ -24,9 +24,11 @@
 namespace Club1\CrossReferences\Formatter;
 
 use Flarum\Discussion\Discussion;
+use Flarum\Foundation\Config;
 use Flarum\Foundation\ErrorHandling\LogReporter;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\User\Guest;
 use Flarum\User\User;
 use RuntimeException;
 use s9e\TextFormatter\Configurator;
@@ -71,21 +73,22 @@ class CrossReferencesConfigurator
     public static function filterCrossReferences(Tag $tag, ?User $actor): bool
     {
         if (is_null($actor)) {
-            $log = resolve(LogReporter::class);
-            $msg = 'actor is "null", falling back to invalidating tag. This is probably due to another extension not passing this parameter to "Formatter->parse()". See stack trace below.';
-            $log->report(new RuntimeException($msg));
-            $tag->invalidate();
-            return false;
+            if (resolve(Config::class)->inDebugMode()) {
+                $log = resolve(LogReporter::class);
+                $msg = 'actor is "null", falling back to display discussion as for Guest. This is probably due to another extension not passing this parameter to "Formatter->parse()". See stack trace below.';
+                $log->report(new RuntimeException($msg));
+            }
+            $actor = new Guest();
         }
         /** @var Discussion|null */
-        $d = Discussion::find($tag->getAttribute('id'));
-        if (is_null($d) || $actor->cannot('viewForum', $d)) {
+        $discussion = Discussion::whereVisibleTo($actor)->firstWhere('id', $tag->getAttribute('id'));
+        if (is_null($discussion)) {
             $tag->invalidate();
             return false;
         }
         // Set placeholder values for TextFormatter to be happy.
         // The real values is set during render.
-        $tag->setAttribute('title', $d->title);
+        $tag->setAttribute('title', $discussion->title);
         $tag->setAttribute('comment', '');
         return true;
     }

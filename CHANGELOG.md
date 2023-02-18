@@ -5,6 +5,8 @@
 ### Changed
 
 - Increase PHPStan level from 5 to 7 and add some return types along the way.
+- Fallback to rendering discussion links as viewed by guests if request
+  is null.
 
 ## [v1.0.2] - 2023-02-14
 

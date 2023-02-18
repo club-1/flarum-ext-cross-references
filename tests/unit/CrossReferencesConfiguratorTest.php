@@ -93,7 +93,6 @@ class CrossReferencesConfiguratorTest extends TestCase
     public static function mockActor(bool $allowed = true): User
     {
         $actor = m::mock(User::class);
-        $actor->shouldReceive('cannot')->andReturn(!$allowed);
         return $actor;
     }
 
@@ -237,11 +236,36 @@ class CrossReferencesConfiguratorTest extends TestCase
      */
     public function testActorPermissions(string $text, bool $allowed, array $expected): void
     {
-        $this->mockDiscussion();
+        if ($allowed) {
+            $this->mockDiscussion();
+        } else {
+            $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->andReturn(null);
+        }
         $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
         $xrefConfigurator($this->configurator);
         extract($this->configurator->finalize());
         $parser->registeredVars['actor'] = self::mockActor($allowed);
+
+        $xml = $parser->parse($text);
+        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
+        assertEquals($expected, $actual);
+    }
+
+    /**
+     * @dataProvider actorPermissionsProvider
+     */
+    public function testActorIsNull(string $text, bool $guestAllowed, array $expected): void
+    {
+        if ($guestAllowed) {
+            $this->mockDiscussion();
+        } else {
+            $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->andReturn(null);
+        }
+        $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
+        $xrefConfigurator($this->configurator);
+        extract($this->configurator->finalize());
+        $parser->registeredVars['actor'] = null;
+        $this->log->shouldReceive('report');
 
         $xml = $parser->parse($text);
         $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
@@ -254,20 +278,6 @@ class CrossReferencesConfiguratorTest extends TestCase
             ['#42', true, ['42']],
             ['#42', false, []],
         ];
-    }
-
-    public function testActorIsNull(): void
-    {
-        $xrefConfigurator = new CrossReferencesConfigurator($this->settingsRepo, $this->urlGenerator);
-        $xrefConfigurator($this->configurator);
-        extract($this->configurator->finalize());
-        $parser->registeredVars['actor'] = null;
-        $this->log->shouldReceive('report')->once();
-
-        $xml = $parser->parse('#42');
-        $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
-        $expected = [];
-        assertEquals($expected, $actual);
     }
 
     /**

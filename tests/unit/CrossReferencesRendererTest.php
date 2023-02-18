@@ -110,9 +110,9 @@ class CrossReferencesRendererTest extends TestCase
 
     /**
      * @dataProvider dataProvider
-     * @dataProvider guestNotAllowedProvider
+     * @dataProvider requestIsNullProvider
      */
-    public function testRequestIsNull(string $tag, string $title, int $id, bool $guestAllowed = true): void
+    public function testRequestIsNull(string $tag, string $title, int $id, bool $guestAllowed = true, bool $debugMode = false): void
     {
         $discussion = new \Flarum\Discussion\Discussion();
         $discussion->title = $title;
@@ -120,7 +120,8 @@ class CrossReferencesRendererTest extends TestCase
         $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->once()->andReturn($guestAllowed ? $discussion : null);
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->times(intval(!$guestAllowed))->andReturn('unknown');
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
-        $this->log->shouldReceive('report');
+        $this->config->shouldReceive('inDebugMode')->andReturn($debugMode);
+        $this->log->shouldReceive('report')->times(intval($debugMode));
         $xml = "<$tag id=\"$id\"></$tag>";
 
         $renderer = new CrossReferencesRenderer($this->translator, $this->log, $this->config);
@@ -134,9 +135,12 @@ class CrossReferencesRendererTest extends TestCase
         }
     }
 
-    public function guestNotAllowedProvider(): array
+    public function requestIsNullProvider(): array
     {
-        return [['CROSSREFERENCESHORT', 'This is private', 7, false]];
+        return [
+            ['CROSSREFERENCESHORT', 'This is private', 7, false, true],
+            ['CROSSREFERENCESHORT', 'This is public!', 7, true, true],
+        ];
     }
 
     /**

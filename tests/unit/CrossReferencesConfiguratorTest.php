@@ -253,8 +253,9 @@ class CrossReferencesConfiguratorTest extends TestCase
 
     /**
      * @dataProvider actorPermissionsProvider
+     * @dataProvider actorIsNullDebugModeProvider
      */
-    public function testActorIsNull(string $text, bool $guestAllowed, array $expected): void
+    public function testActorIsNull(string $text, bool $guestAllowed, array $expected, bool $debugMode = false): void
     {
         if ($guestAllowed) {
             $this->mockDiscussion();
@@ -265,11 +266,20 @@ class CrossReferencesConfiguratorTest extends TestCase
         $xrefConfigurator($this->configurator);
         extract($this->configurator->finalize());
         $parser->registeredVars['actor'] = null;
-        $this->log->shouldReceive('report');
+        $this->config->shouldReceive('inDebugMode')->andReturn($debugMode);
+        $this->log->shouldReceive('report')->times(intval($debugMode));
 
         $xml = $parser->parse($text);
         $actual = Utils::getAttributeValues($xml, 'CROSSREFERENCESHORT', 'id');
         assertEquals($expected, $actual);
+    }
+
+    public function actorIsNullDebugModeProvider(): array
+    {
+        return [
+            ['#42', true, ['42'], true],
+            ['#42', false, [], true],
+        ];
     }
 
     public function actorPermissionsProvider(): array

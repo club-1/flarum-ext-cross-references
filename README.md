@@ -32,6 +32,22 @@ It adds similar features to Flarum forums.
 - HeaderRow
   - [x] shows the ID of the discussion (option)
 
+## Known issues
+
+### Discussion links are sometimes incorrectly rendered as [unknown discussion]
+
+This is because the renderer is called with `$request = null`.
+It is probably due to another extension not setting this parameter when calling
+[`Formatter->render()`](https://api.docs.flarum.org/php/v1.6.0/flarum/formatter/formatter#method_render)
+or [`CommentPost->formatContent()`](https://api.docs.flarum.org/php/v1.6.0/flarum/post/commentpost#method_formatContent).
+
+Enable [Flarum's debug mode](https://docs.flarum.org/troubleshoot/#step-0-activate-debug-mode)
+then check [Flarum's log](https://docs.flarum.org/troubleshoot/#step-3-collect-information)
+to find the source of the issue.
+
+Here is an example of how this issue should be fixed in said extensions:
+[the-turk/flarum-diff#35](https://github.com/the-turk/flarum-diff/pull/35)
+
 ## Installation
 
 Install with composer:

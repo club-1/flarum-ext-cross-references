@@ -2,11 +2,20 @@
 
 ## [unreleased]
 
+### Fixed
+
+- Fix links incorrectly displayed as [unknown discussion] when request or
+  actor is null, by fallbacking to parsing and rendering discussion links
+  as viewed by guests.
+- Fix links incorrectly displayed as [unknown discussion] in some cases
+  by improving the detection of permissions to view referenced discussions
+  in both rendering and parsing.
+
 ### Changed
 
 - Increase PHPStan level from 5 to 7 and add some return types along the way.
-- Fallback to rendering discussion links as viewed by guests if request
-  is null.
+- Log actor/request is null error and stack trace only when Flarum is in
+  debug mode.
 
 ## [v1.0.2] - 2023-02-14
 

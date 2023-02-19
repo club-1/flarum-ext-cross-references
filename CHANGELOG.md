@@ -2,6 +2,8 @@
 
 ## [unreleased]
 
+## [v1.0.3] - 2023-02-20
+
 ### Added
 
 - Add an option to disable the retrofit of old messages' discussion links
@@ -68,7 +70,8 @@ First stable release.
 
 [@rob006]: https://github.com/rob006
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.2...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.3...HEAD
+[v1.0.3]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.3
 [v1.0.2]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.2
 [v1.0.1]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.0

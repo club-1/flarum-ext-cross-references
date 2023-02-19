@@ -34,7 +34,7 @@ It adds similar features to Flarum forums.
 
 ## Known issues
 
-### Discussion links are sometimes incorrectly rendered as [unknown discussion]
+### Discussion links are sometimes incorrectly rendered as `[unknown discussion]`
 
 This is because the renderer is called with `$request = null`.
 It is probably due to another extension not setting this parameter when calling

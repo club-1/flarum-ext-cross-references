@@ -11,10 +11,10 @@
 
 ### Fixed
 
-- Fix links incorrectly displayed as [unknown discussion] when request or
+- Fix links incorrectly displayed as `[unknown discussion]` when request or
   actor is null, by fallbacking to parsing and rendering discussion links
   as viewed by guests. (thanks to [@rob006] in [#32])
-- Fix links incorrectly displayed as [unknown discussion] in some cases
+- Fix links incorrectly displayed as `[unknown discussion]` in some cases
   by improving the detection of permissions to view referenced discussions
   in both rendering and parsing. (thanks to [@rob006] in [#32])
 
@@ -38,7 +38,7 @@
 - Fallback gracefully to invalidating tag parsing if actor is null.
 - Detect again discussion URL in manually created links, and create a
   cross-reference in target discussion.
-  This has been broken since v0.5.0 when TextFormatter was added. ([#27])
+  This has been broken since [v0.5.0] when TextFormatter was added. ([#27])
 - Remove space after source link's title when show ID is disabled.
 
 [#27]: https://github.com/club-1/flarum-ext-cross-references/issues/27
@@ -75,3 +75,4 @@ First stable release.
 [v1.0.2]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.2
 [v1.0.1]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.0
+[v0.5.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v0.5.0

@@ -16,8 +16,12 @@
 - Increase PHPStan level from 5 to 7 and add some return types along the way.
 - Log actor/request is null error and stack trace only when Flarum is in
   debug mode. (thanks to [@rob006] in [#32])
+- Do not replace unknown discussion links of CommentPosts by unclickable
+  placeholders. We keep showing them the way it was written. ([#35], [#36])
 
 [#32]: https://github.com/club-1/flarum-ext-cross-references/pull/32
+[#35]: https://github.com/club-1/flarum-ext-cross-references/issues/35
+[#36]: https://github.com/club-1/flarum-ext-cross-references/pull/36
 
 ## [v1.0.2] - 2023-02-14
 

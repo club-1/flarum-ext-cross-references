@@ -79,13 +79,11 @@ class CrossReferencesRendererTest extends TestCase
     public function testDiscussionNotFound(string $tag, string $title, int $id): void
     {
         $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->once()->andReturn(null);
-        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->once()->andReturn('unknown');
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
         $xml = "<$tag id=\"$id\"></$tag>";
 
         $renderer = new CrossReferencesRenderer($this->translator, $this->log, $this->config);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
-        assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
         assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
 
@@ -98,13 +96,11 @@ class CrossReferencesRendererTest extends TestCase
         $discussion->title = $title;
         $discussion->id = $id;
         $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->once()->andReturn(null);
-        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->once()->andReturn('unknown');
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
         $xml = "<$tag id=\"$id\"></$tag>";
 
         $renderer = new CrossReferencesRenderer($this->translator, $this->log, $this->config);
         $rendered = $renderer($this->renderer, null, $xml, $this->request);
-        assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
         assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
     }
 
@@ -118,7 +114,6 @@ class CrossReferencesRendererTest extends TestCase
         $discussion->title = $title;
         $discussion->id = $id;
         $this->discussionModel->shouldReceive('whereVisibleTo->firstWhere')->once()->andReturn($guestAllowed ? $discussion : null);
-        $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.unknown_discussion')->times(intval(!$guestAllowed))->andReturn('unknown');
         $this->translator->shouldReceive('trans')->with('club-1-cross-references.forum.comment')->once()->andReturn('comment');
         $this->config->shouldReceive('inDebugMode')->andReturn($debugMode);
         $this->log->shouldReceive('report')->times(intval($debugMode));
@@ -130,7 +125,6 @@ class CrossReferencesRendererTest extends TestCase
             assertEquals([$title], Utils::getAttributeValues($rendered, $tag, 'title'));
             assertEquals([], Utils::getAttributeValues($rendered, $tag, 'unknown'));
         } else {
-            assertEquals(['unknown'], Utils::getAttributeValues($rendered, $tag, 'title'));
             assertEquals([true], Utils::getAttributeValues($rendered, $tag, 'unknown'));
         }
     }

@@ -54,7 +54,7 @@ function addSourceLinkReplacement() {
       if (match == null) {
         return;
       }
-      if (a.text === a.href) {
+      if (a.text === a.href && !a.classList.contains('DiscussionLink')) {
         const discussionId = match[1];
         const span = document.createElement('span');
         m.mount(span, {view: () => m(DiscussionLink, {discussionId, href: a.href})});

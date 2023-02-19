@@ -103,11 +103,7 @@ class CrossReferencesConfigurator
         $tag->template = '
             <xsl:choose>
                 <xsl:when test="@unknown = 1">
-                    <span class="DiscussionLink DiscussionUnknown">
-                        <xsl:value-of select="@title"/>
-                        <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                        </xsl:if>
-                    </span>
+                    <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">#<xsl:value-of select="@id"/></a>
                 </xsl:when>
                 <xsl:otherwise>
                     <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
@@ -136,11 +132,9 @@ class CrossReferencesConfigurator
         $tag->template = '
             <xsl:choose>
                 <xsl:when test="@unknown = 1">
-                    <span class="DiscussionLink DiscussionUnknown">
-                        <xsl:value-of select="@title"/>
-                        <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                        </xsl:if>
-                    </span>
+                    <a href="{@url}" class="DiscussionLink">
+                        <xsl:value-of select="@url"/>
+                    </a>
                 </xsl:when>
                 <xsl:otherwise>
                     <a href="{@url}" class="DiscussionLink">
@@ -170,11 +164,9 @@ class CrossReferencesConfigurator
         $tag->template = '
             <xsl:choose>
                 <xsl:when test="@unknown = 1">
-                    <span class="DiscussionLink DiscussionUnknown">
-                        <xsl:value-of select="@title"/>
-                        <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                        </xsl:if> <span class="DiscussionComment">(<xsl:value-of select="@comment"/>)</span>
-                    </span>
+                    <a href="{@url}" class="DiscussionLink">
+                        <xsl:value-of select="@url"/>
+                    </a>
                 </xsl:when>
                 <xsl:otherwise>
                     <a href="{@url}" class="DiscussionLink">

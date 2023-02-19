@@ -485,7 +485,7 @@ function addSourceLinkReplacement() {
       if (match == null) {
         return;
       }
-      if (a.text === a.href && !a.classList.contains('DiscussionLink')) {
+      if (flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('retrofitLinksInFrontend') && a.text === a.href && !a.classList.contains('DiscussionLink')) {
         var discussionId = match[1];
         var span = document.createElement('span');
         m.mount(span, {

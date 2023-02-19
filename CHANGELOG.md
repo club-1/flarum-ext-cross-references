@@ -2,6 +2,11 @@
 
 ## [unreleased]
 
+### Added
+
+- Add an option to disable the retrofit of old messages' discussion links
+  in the frontend. ([#38])
+
 ### Fixed
 
 - Fix links incorrectly displayed as [unknown discussion] when request or
@@ -22,6 +27,7 @@
 [#32]: https://github.com/club-1/flarum-ext-cross-references/pull/32
 [#35]: https://github.com/club-1/flarum-ext-cross-references/issues/35
 [#36]: https://github.com/club-1/flarum-ext-cross-references/pull/36
+[#38]: https://github.com/club-1/flarum-ext-cross-references/issues/38
 
 ## [v1.0.2] - 2023-02-14
 

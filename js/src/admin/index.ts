@@ -35,6 +35,12 @@ app.initializers.add('club-1-cross-references', function(app) {
       label: app.translator.trans('club-1-cross-references.admin.enable_short_references.label'),
       help: app.translator.trans('club-1-cross-references.admin.enable_short_references.help'),
       type: 'boolean',
+    })
+    .registerSetting({
+      setting: 'club-1-cross-references.retrofit_links_in_frontend',
+      label: app.translator.trans('club-1-cross-references.admin.retrofit_links_in_frontend.label'),
+      help: app.translator.trans('club-1-cross-references.admin.retrofit_links_in_frontend.help'),
+      type: 'boolean',
     });
 
 });

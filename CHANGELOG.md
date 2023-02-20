@@ -2,6 +2,12 @@
 
 ## [unreleased]
 
+### Fixed
+
+- Fix duplicated onclick router events attached to discussion links. ([#39])
+
+[#39]: https://github.com/club-1/flarum-ext-cross-references/issues/39
+
 ## [v1.0.3] - 2023-02-20
 
 ### Added

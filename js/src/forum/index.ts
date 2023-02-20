@@ -40,12 +40,12 @@ app.initializers.add('club-1-cross-references', function(app) {
 });
 
 /**
- * Extend CommentPost to replace plain links to discussions into
- * formated ones using its title as the text.
+ * Extend CommentPost to setup router for discussion links and optionaly replace
+ * plain links to discussions into formated ones using their title as the text.
  */
 function addSourceLinkReplacement() {
   function replaceSourceLinks(this: CommentPost) {
-    this.$('.Post-body a').map(function() {
+    this.$('.Post-body a:not(.RouteSet)').map(function() {
       const a = this as HTMLAnchorElement;
       if (a.protocol !== document.location.protocol || a.host !== document.location.host) {
         return;
@@ -64,6 +64,7 @@ function addSourceLinkReplacement() {
         m.mount(span, {view: () => m(DiscussionLink, {discussionId, href: a.href})});
         a.replaceWith(span)
       } else {
+        a.classList.add('RouteSet');
         a.addEventListener('click', (e) => {
           m.route.set(this.getAttribute('href'))
           e.preventDefault();

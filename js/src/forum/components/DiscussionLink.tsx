@@ -66,7 +66,7 @@ export default class DiscussionLink extends Link {
     if (this.discussion) {
       return <Link
         href={href ? href : app.route('discussion', {id: this.attrs.discussionId})}
-        class="DiscussionLink"
+        class="DiscussionLink RouteSet"
       >
         {
           this.discussion?.title()

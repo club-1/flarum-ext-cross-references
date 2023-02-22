@@ -2,9 +2,13 @@
 
 ## [unreleased]
 
+## [v1.0.4] - 2023-02-22
+
 ### Fixed
 
-- Fix duplicated onclick router events attached to discussion links. ([#39])
+- Fix duplicated onclick router events attached to discussion links.
+  This prevents from messing up the browser history. (thanks to [@rob006],
+  [#39])
 
 [#39]: https://github.com/club-1/flarum-ext-cross-references/issues/39
 
@@ -76,7 +80,8 @@ First stable release.
 
 [@rob006]: https://github.com/rob006
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.3...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.4...HEAD
+[v1.0.4]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.4
 [v1.0.3]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.3
 [v1.0.2]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.2
 [v1.0.1]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.1

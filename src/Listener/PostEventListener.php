@@ -60,9 +60,6 @@ class PostEventListener
      */
     public function handle(object $event): void
     {
-        if (!($event->post instanceof CommentPost)) {
-            return;
-        }
         $xml = $event->post->parsed_content;
         $xrefmanual = [];
         foreach (Utils::getAttributeValues($xml, 'URL', 'url') as $url) {

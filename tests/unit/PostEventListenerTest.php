@@ -138,16 +138,6 @@ class PostEventListenerTest extends TestCase
         $this->listener->handle($event);
     }
 
-    public function testPostNotComment(): void
-    {
-        $post = m::mock(Post::class)->makePartial();
-        $post->shouldNotReceive('getAttribute');
-        $actor = self::mockActor(1);
-
-        $event = new Posted($post, $actor);
-        $this->listener->handle($event);
-    }
-
     /**
      * @dataProvider dataProvider
      */

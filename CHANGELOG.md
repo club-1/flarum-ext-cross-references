@@ -2,6 +2,12 @@
 
 ## [unreleased]
 
+### Fixed
+
+- Fix links with utf8 slugs are not matched in PHP. ([#41])
+
+[#41]: https://github.com/club-1/flarum-ext-cross-references/issues/41
+
 ## [v1.0.4] - 2023-02-22
 
 ### Fixed

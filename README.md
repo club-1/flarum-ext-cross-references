@@ -34,7 +34,7 @@ It adds similar features to Flarum forums.
 
 ## Known issues
 
-### Discussion links are sometimes incorrectly rendered as `[unknown discussion]`
+### Discussion links sometimes show plain links instead of the discussion title in rendered post, but are shown as expected in preview.
 
 This is because the renderer is called with `$request = null`.
 It is probably due to another extension not setting this parameter when calling

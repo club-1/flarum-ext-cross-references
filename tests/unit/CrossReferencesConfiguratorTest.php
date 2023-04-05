@@ -187,6 +187,7 @@ class CrossReferencesConfiguratorTest extends TestCase
             ['coucou phttps://forum.club1.fr/d/9', []],
             ['coucou.https://forum.club1.fr/d/9', ['9']],
             ['coucou (https://forum.club1.fr/d/9)', ['9']],
+            ['https://forum.club1.fr/d/18-續古逸叢書本南華真經', ['18']],
         ];
     }
 
@@ -225,6 +226,7 @@ class CrossReferencesConfiguratorTest extends TestCase
             ['coucou phttps://forum.club1.fr/d/9/2', []],
             ['coucou.https://forum.club1.fr/d/9/2', ['9']],
             ['coucou (https://forum.club1.fr/d/9/2)', ['9']],
+            ['https://forum.club1.fr/d/18-續古逸叢書本南華真經/3', ['18']],
         ];
     }
 

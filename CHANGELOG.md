@@ -2,6 +2,8 @@
 
 ## [unreleased]
 
+## [v1.0.5] - 2023-04-06
+
 ### Fixed
 
 - Fix links with utf8 slugs are not matched in PHP. ([#41])
@@ -86,7 +88,8 @@ First stable release.
 
 [@rob006]: https://github.com/rob006
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.4...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.5...HEAD
+[v1.0.5]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.5
 [v1.0.4]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.4
 [v1.0.3]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.3
 [v1.0.2]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.2

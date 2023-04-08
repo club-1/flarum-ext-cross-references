@@ -31,9 +31,9 @@ use Flarum\Post\CommentPost;
 use Flarum\Post\Event\Posted;
 use Flarum\Post\Event\Revised;
 use Flarum\Post\MergeableInterface;
-use Flarum\Post\Post;
 use Flarum\Testing\unit\TestCase;
 use Flarum\User\User;
+use Illuminate\Contracts\Events\Dispatcher;
 use Mockery as m;
 use Mockery\MockInterface;
 
@@ -50,6 +50,8 @@ class PostEventListenerTest extends TestCase
 
     /** @var UrlGenerator&MockInterface */
     protected $urlGenerator;
+    /** @var Dispatcher&MockInterface */
+    protected $events;
     /** @var PostEventListener&MockInterface */
     protected $listener;
 
@@ -61,7 +63,8 @@ class PostEventListenerTest extends TestCase
 
         $this->urlGenerator = m::mock(UrlGenerator::class);
         $this->urlGenerator->shouldReceive('to')->with('forum')->andReturn($routeCollection);
-        $this->listener = m::mock(PostEventListener::class, [$this->urlGenerator])->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->events = m::mock(Dispatcher::class);
+        $this->listener = m::mock(PostEventListener::class, [$this->urlGenerator, $this->events])->makePartial()->shouldAllowMockingProtectedMethods();
 
         $xrefPost = m::mock('alias:Club1\CrossReferences\Post\DiscussionReferencedPost');
         $xrefPost->shouldReceive('reply')->andReturn(m::mock(MergeableInterface::class));
@@ -90,7 +93,7 @@ class PostEventListenerTest extends TestCase
         $post = m::mock(CommentPost::class)->makePartial();
         $post->parsed_content = $xml;
         $post->discussion_id = $discussionId;
-        $post->discussion = $discussion;
+        $post->discussion = is_null($discussion) ? m::mock(Discussion::class) : $discussion;
      return $post;
     }
 
@@ -133,6 +136,7 @@ class PostEventListenerTest extends TestCase
         $actor = self::mockActor(3);
         $d = $this->registerTargetDiscussion($id);
         $d->shouldReceive('mergePost')->once();
+        $this->events->shouldReceive('dispatch')->once();
 
         $event = new Revised($post, $actor);
         $this->listener->handle($event);
@@ -148,6 +152,7 @@ class PostEventListenerTest extends TestCase
         foreach($ids as $id) {
             $d = $this->registerTargetDiscussion($id);
             $d->shouldReceive('mergePost')->once();
+            $this->events->shouldReceive('dispatch')->once();
         }
 
         $event = new Posted($post, $actor);

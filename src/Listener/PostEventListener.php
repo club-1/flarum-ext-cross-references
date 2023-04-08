@@ -3,7 +3,7 @@
 /*
  * This file is part of club-1/flarum-ext-cross-references.
  *
- * Copyright (c) 2022 Nicolas Peugnet <nicolas@club1.fr>.
+ * Copyright (c) 2022, 2023 Nicolas Peugnet <nicolas@club1.fr>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,12 +23,13 @@
 
 namespace Club1\CrossReferences\Listener;
 
+use Club1\CrossReferences\Event\DiscussionReferenced;
 use Club1\CrossReferences\Post\DiscussionReferencedPost;
 use Flarum\Discussion\Discussion;
 use Flarum\Http\UrlGenerator;
-use Flarum\Post\CommentPost;
 use Flarum\Post\Event\Posted;
 use Flarum\Post\Event\Revised;
+use Illuminate\Contracts\Events\Dispatcher;
 use s9e\TextFormatter\Utils;
 
 class PostEventListener
@@ -38,11 +39,17 @@ class PostEventListener
      */
     protected $discussionRegex;
 
-    public function __construct(UrlGenerator $urlGenerator)
+    /**
+     * @var Dispatcher
+     */
+    protected $events;
+
+    public function __construct(UrlGenerator $urlGenerator, Dispatcher $events)
     {
         $discussionPath = $urlGenerator->to('forum')->route('discussion', ['id' => '']);
         $discussionPathEsc = addcslashes($discussionPath, '/');
         $this->discussionRegex = "/^$discussionPathEsc([0-9]+)/";
+        $this->events = $events;
     }
 
     /**
@@ -92,6 +99,9 @@ class PostEventListener
             );
 
             $target->mergePost($post);
+
+            $discussionReferencedEvent = new DiscussionReferenced($event->post->discussion, $target, $event->actor);
+            $this->events->dispatch($discussionReferencedEvent);
         }
     }
 }

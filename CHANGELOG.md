@@ -2,6 +2,11 @@
 
 ## [unreleased]
 
+### Added
+
+- Emit a `DiscussionReferenced` event each time a discussion is mentionned
+  from another for the first time.
+
 ## [v1.0.5] - 2023-04-06
 
 ### Fixed

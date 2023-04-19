@@ -6,6 +6,11 @@
 
 - Emit a `DiscussionReferenced` event each time a discussion is mentionned
   from another for the first time.
+- Add foreign key constraints to the table schema, using the "cascade"
+  delete policy. This enforces consistency in the database and increases
+  the performances of the relation queries.
+  The migration deletes the invalid rows before adding the constraints to
+  prevent failures if previously referenced discussions have been deleted.
 
 ## [v1.0.5] - 2023-04-06
 

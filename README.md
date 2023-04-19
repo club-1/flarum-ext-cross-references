@@ -4,7 +4,7 @@
 
 A [Flarum](http://flarum.org) extension. Add cross reference links when a discussion is mentioned from another one.
 
-![cross reference screenshot](https://static.club1.fr/nicolas/flarum-ext-cross-references.png)
+![cross reference screenshot](https://static.club1.fr/nicolas/projects/flarum-ext-cross-references/banner.png)
 
 ## Features
 

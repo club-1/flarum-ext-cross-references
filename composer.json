@@ -32,6 +32,9 @@
             "Club1\\CrossReferences\\": "src/"
         }
     },
+    "suggest": {
+        "club-1/flarum-ext-chore-commands": "Allows to reparse all the comment posts with the new formatter's configuration"
+    },
     "extra": {
         "flarum-extension": {
             "title": "Cross references",

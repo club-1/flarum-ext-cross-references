@@ -9,40 +9,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Install dependencies & Build
-        run: make
+    strategy:
+      matrix:
+        php: ['7.3', '7.4', '8.0', '8.1', '8.2']
 
-      - name: Run check
-        run: make check -k PHPSTANFLAGS=-q
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: tests/.phpunit.unit.cov.xml,tests/.phpunit.integration.cov.xml
-
-  php_74:
-    name: PHP 7.4
-    runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
-          extensions: xdebug
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
 
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: rm composer.lock && composer install
+      - if: ${{ matrix.php < 8.1 }}
+        run: rm composer.lock
 
-      - name: Analyse PHP
-        run: make analysephp
+      - name: Install dependencies & build
+        run: composer install && make
 
-      - name: Make test
-        run: make test
+      - name: Run check
+        run: make check -k PHPSTANFLAGS=-q
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3

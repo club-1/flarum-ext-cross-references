@@ -11,6 +11,7 @@
   the performances of the relation queries.
   The migration deletes the invalid rows before adding the constraints to
   prevent failures if previously referenced discussions have been deleted.
+- Test more PHP versions.
 
 ## [v1.0.5] - 2023-04-06
 

@@ -7,30 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        config:
-          - php: '7.3'
-            env: { PHPSTANFLAGS: -q }
-          - php: '7.4'
-            env: { PHPSTANFLAGS: -q }
-          - php: '8.0'
-            env: { PHPSTANFLAGS: -q }
-          - php: '8.1'
-            env: { PHPSTANFLAGS: -q }
-          - php: '8.2'
-            env: {}
-
-    env: ${{ matrix.config.env }}
+        php: ['7.3', '7.4', '8.0', '8.1', '8.2']
 
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.config.php }}
+          php-version: ${{ matrix.php }}
           coverage: xdebug
 
       - uses: actions/checkout@v3
@@ -41,8 +29,8 @@ jobs:
       - name: Install dependencies & build
         run: composer install && make
 
-      - name: Run check
-        run: make check -k
+      - name: Run test
+        run: make test -k
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3

@@ -61,7 +61,7 @@ return [
 
     (new Extend\Settings())
         ->default('club-1-cross-references.enable_short_references', true)
-        ->default('club-1-cross-references.retrofit_links_in_frontend', true)
+        ->default('club-1-cross-references.retrofit_links_in_frontend', false)
         ->serializeToForum('retrofitLinksInFrontend', 'club-1-cross-references.retrofit_links_in_frontend', function($value) {
             return $value === '1';
         })

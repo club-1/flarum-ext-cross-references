@@ -12,6 +12,8 @@
   The migration deletes the invalid rows before adding the constraints to
   prevent failures if previously referenced discussions have been deleted.
 - Test more PHP versions.
+- Recommend `club-1-chore-commands` extension to reparse old messages.
+- Make `false` the default value for "retrofit links in frontend" setting.
 
 ## [v1.0.5] - 2023-04-06
 

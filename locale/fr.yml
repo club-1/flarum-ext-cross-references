@@ -13,6 +13,8 @@ club-1-cross-references:
       help: >
         Affiche les titres des liens de discussions dans les messages envoyés au moment où cette extension n'était pas activée.
         Cette opération est réalisée au niveau du frontend, elle pourrait donc mener à une mauvaise experience utilisateur.
+        Pour appliquer ce changement directement dpuis le backend, utilisez la commande `chore:reparse`
+        de l'extension [`club-1/flarum-ext-chore-commands`](https://github.com/club-1/flarum-ext-chore-commands).
   forum:
     post_stream:
       discussion_referenced_text: '{username} a référencé cette discussion depuis {source}'

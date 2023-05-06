@@ -53,7 +53,7 @@ Here is an example of how this issue should be fixed in said extensions:
 Install with composer:
 
 ```sh
-composer require club-1/flarum-ext-cross-references
+composer require club-1/flarum-ext-cross-references:"*"
 ```
 
 ### Recommendation
@@ -63,7 +63,7 @@ This extension alone does not apply the formatting changes to previously posted 
 ## Updating
 
 ```sh
-composer update club-1/flarum-ext-cross-references
+composer update club-1/flarum-ext-cross-references:"*"
 php flarum migrate
 php flarum cache:clear
 ```

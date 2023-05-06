@@ -1,3 +1,1192 @@
-/*! For license information please see forum.js.LICENSE.txt */
-(()=>{var t={648:(t,e,r)=>{var n=r(288).default;function o(){"use strict";t.exports=o=function(){return e},t.exports.__esModule=!0,t.exports.default=t.exports;var e={},r=Object.prototype,i=r.hasOwnProperty,s=Object.defineProperty||function(t,e,r){t[e]=r.value},a="function"==typeof Symbol?Symbol:{},c=a.iterator||"@@iterator",u=a.asyncIterator||"@@asyncIterator",f=a.toStringTag||"@@toStringTag";function l(t,e,r){return Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}),t[e]}try{l({},"")}catch(t){l=function(t,e,r){return t[e]=r}}function h(t,e,r,n){var o=e&&e.prototype instanceof m?e:m,i=Object.create(o.prototype),a=new k(n||[]);return s(i,"_invoke",{value:I(t,r,a)}),i}function p(t,e,r){try{return{type:"normal",arg:t.call(e,r)}}catch(t){return{type:"throw",arg:t}}}e.wrap=h;var d={};function m(){}function v(){}function y(){}var g={};l(g,c,(function(){return this}));var b=Object.getPrototypeOf,w=b&&b(b(S([])));w&&w!==r&&i.call(w,c)&&(g=w);var x=y.prototype=m.prototype=Object.create(g);function _(t){["next","throw","return"].forEach((function(e){l(t,e,(function(t){return this._invoke(e,t)}))}))}function L(t,e){function r(o,s,a,c){var u=p(t[o],t,s);if("throw"!==u.type){var f=u.arg,l=f.value;return l&&"object"==n(l)&&i.call(l,"__await")?e.resolve(l.__await).then((function(t){r("next",t,a,c)}),(function(t){r("throw",t,a,c)})):e.resolve(l).then((function(t){f.value=t,a(f)}),(function(t){return r("throw",t,a,c)}))}c(u.arg)}var o;s(this,"_invoke",{value:function(t,n){function i(){return new e((function(e,o){r(t,n,e,o)}))}return o=o?o.then(i,i):i()}})}function I(t,e,r){var n="suspendedStart";return function(o,i){if("executing"===n)throw new Error("Generator is already running");if("completed"===n){if("throw"===o)throw i;return{value:void 0,done:!0}}for(r.method=o,r.arg=i;;){var s=r.delegate;if(s){var a=E(s,r);if(a){if(a===d)continue;return a}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if("suspendedStart"===n)throw n="completed",r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);n="executing";var c=p(t,e,r);if("normal"===c.type){if(n=r.done?"completed":"suspendedYield",c.arg===d)continue;return{value:c.arg,done:r.done}}"throw"===c.type&&(n="completed",r.method="throw",r.arg=c.arg)}}}function E(t,e){var r=e.method,n=t.iterator[r];if(void 0===n)return e.delegate=null,"throw"===r&&t.iterator.return&&(e.method="return",e.arg=void 0,E(t,e),"throw"===e.method)||"return"!==r&&(e.method="throw",e.arg=new TypeError("The iterator does not provide a '"+r+"' method")),d;var o=p(n,t.iterator,e.arg);if("throw"===o.type)return e.method="throw",e.arg=o.arg,e.delegate=null,d;var i=o.arg;return i?i.done?(e[t.resultName]=i.value,e.next=t.nextLoc,"return"!==e.method&&(e.method="next",e.arg=void 0),e.delegate=null,d):i:(e.method="throw",e.arg=new TypeError("iterator result is not an object"),e.delegate=null,d)}function O(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function j(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function k(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(O,this),this.reset(!0)}function S(t){if(t){var e=t[c];if(e)return e.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,n=function e(){for(;++r<t.length;)if(i.call(t,r))return e.value=t[r],e.done=!1,e;return e.value=void 0,e.done=!0,e};return n.next=n}}return{next:P}}function P(){return{value:void 0,done:!0}}return v.prototype=y,s(x,"constructor",{value:y,configurable:!0}),s(y,"constructor",{value:v,configurable:!0}),v.displayName=l(y,f,"GeneratorFunction"),e.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===v||"GeneratorFunction"===(e.displayName||e.name))},e.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,y):(t.__proto__=y,l(t,f,"GeneratorFunction")),t.prototype=Object.create(x),t},e.awrap=function(t){return{__await:t}},_(L.prototype),l(L.prototype,u,(function(){return this})),e.AsyncIterator=L,e.async=function(t,r,n,o,i){void 0===i&&(i=Promise);var s=new L(h(t,r,n,o),i);return e.isGeneratorFunction(r)?s:s.next().then((function(t){return t.done?t.value:s.next()}))},_(x),l(x,f,"Generator"),l(x,c,(function(){return this})),l(x,"toString",(function(){return"[object Generator]"})),e.keys=function(t){var e=Object(t),r=[];for(var n in e)r.push(n);return r.reverse(),function t(){for(;r.length;){var n=r.pop();if(n in e)return t.value=n,t.done=!1,t}return t.done=!0,t}},e.values=S,k.prototype={constructor:k,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=void 0,this.done=!1,this.delegate=null,this.method="next",this.arg=void 0,this.tryEntries.forEach(j),!t)for(var e in this)"t"===e.charAt(0)&&i.call(this,e)&&!isNaN(+e.slice(1))&&(this[e]=void 0)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(t){if(this.done)throw t;var e=this;function r(r,n){return s.type="throw",s.arg=t,e.next=r,n&&(e.method="next",e.arg=void 0),!!n}for(var n=this.tryEntries.length-1;n>=0;--n){var o=this.tryEntries[n],s=o.completion;if("root"===o.tryLoc)return r("end");if(o.tryLoc<=this.prev){var a=i.call(o,"catchLoc"),c=i.call(o,"finallyLoc");if(a&&c){if(this.prev<o.catchLoc)return r(o.catchLoc,!0);if(this.prev<o.finallyLoc)return r(o.finallyLoc)}else if(a){if(this.prev<o.catchLoc)return r(o.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<o.finallyLoc)return r(o.finallyLoc)}}}},abrupt:function(t,e){for(var r=this.tryEntries.length-1;r>=0;--r){var n=this.tryEntries[r];if(n.tryLoc<=this.prev&&i.call(n,"finallyLoc")&&this.prev<n.finallyLoc){var o=n;break}}o&&("break"===t||"continue"===t)&&o.tryLoc<=e&&e<=o.finallyLoc&&(o=null);var s=o?o.completion:{};return s.type=t,s.arg=e,o?(this.method="next",this.next=o.finallyLoc,d):this.complete(s)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),d},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var r=this.tryEntries[e];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),j(r),d}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var r=this.tryEntries[e];if(r.tryLoc===t){var n=r.completion;if("throw"===n.type){var o=n.arg;j(r)}return o}}throw new Error("illegal catch attempt")},delegateYield:function(t,e,r){return this.delegate={iterator:S(t),resultName:e,nextLoc:r},"next"===this.method&&(this.arg=void 0),d}},e}t.exports=o,t.exports.__esModule=!0,t.exports.default=t.exports},288:t=>{function e(r){return t.exports=e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t.exports.__esModule=!0,t.exports.default=t.exports,e(r)}t.exports=e,t.exports.__esModule=!0,t.exports.default=t.exports},357:(t,e,r)=>{var n=r(648)();t.exports=n;try{regeneratorRuntime=n}catch(t){"object"==typeof globalThis?globalThis.regeneratorRuntime=n:Function("r","regeneratorRuntime = r")(n)}}},e={};function r(n){var o=e[n];if(void 0!==o)return o.exports;var i=e[n]={exports:{}};return t[n](i,i.exports,r),i.exports}r.n=t=>{var e=t&&t.__esModule?()=>t.default:()=>t;return r.d(e,{a:e}),e},r.d=(t,e)=>{for(var n in e)r.o(e,n)&&!r.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:e[n]})},r.o=(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r.r=t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})};var n={};(()=>{"use strict";r.r(n),r.d(n,{filterCrossReferences:()=>A});const t=flarum.core.compat["common/extend"],e=flarum.core.compat["common/models/Discussion"];var o=r.n(e);const i=flarum.core.compat["forum/app"];var s=r.n(i);const a=flarum.core.compat["forum/components/CommentPost"];var c=r.n(a);const u=flarum.core.compat["forum/components/DiscussionHero"];var f=r.n(u);const l=flarum.core.compat["forum/components/DiscussionListItem"];var h=r.n(l);function p(t,e,r,n,o,i,s){try{var a=t[i](s),c=a.value}catch(t){return void r(t)}a.done?e(c):Promise.resolve(c).then(n,o)}var d=r(357),v=r.n(d),y=function(){function t(t){this.head=void 0,this.tail=void 0,this.data=new Map,this.capacity=void 0,this.capacity=t}var e=t.prototype;return e.get=function(t){return this.data.get(t)},e.set=function(t,e){if(this.data.size==this.capacity){var r=this.head;this.data.delete(r.key),this.head=r.next}var n={key:t};return this.head||(this.head=n),this.tail?(this.tail.next=n,this.tail=n):this.tail=n,this.data.set(t,e),this},t}();function g(t,e){return t+e}var b={};function w(){}b[o().name]="discussions";var x=function(){function t(){}return t.find=function(){var t,e=(t=v().mark((function t(e,r,n){var o,i,a,c=this;return v().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(void 0===n&&(n={}),o=g(e.name,r),1!=this.responseErrors.get(o)){t.next=4;break}return t.abrupt("return",null);case 4:if(!(i=this.inFlight.get(o))){t.next=9;break}return t.abrupt("return",i);case 9:return a=s().store.find(b[e.name],r,n,{errorHandler:w}).catch((function(){return c.responseErrors.set(o,!0),null})).finally((function(){return c.inFlight.delete(o)})),this.inFlight.set(o,a),t.abrupt("return",a);case 12:case"end":return t.stop()}}),t,this)})),function(){var e=this,r=arguments;return new Promise((function(n,o){var i=t.apply(e,r);function s(t){p(i,n,o,s,a,"next",t)}function a(t){p(i,n,o,s,a,"throw",t)}s(void 0)}))});return function(t,r,n){return e.apply(this,arguments)}}(),t}();function _(t,e){return _=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(t,e){return t.__proto__=e,t},_(t,e)}function L(t,e){t.prototype=Object.create(e.prototype),t.prototype.constructor=t,_(t,e)}x.responseErrors=new y(128),x.inFlight=new Map;const I=flarum.core.compat["common/Component"];var E=r.n(I),O=function(t){function e(){return t.apply(this,arguments)||this}return L(e,t),e.prototype.view=function(){return m("span",{class:"DiscussionId"},"#",this.attrs.discussionId)},e}(E());const j=flarum.core.compat["common/components/Link"];var k=r.n(j),S=function(t){function e(){for(var e,r=arguments.length,n=new Array(r),o=0;o<r;o++)n[o]=arguments[o];return(e=t.call.apply(t,[this].concat(n))||this).attrs=void 0,e.discussion=void 0,e}L(e,t);var r=e.prototype;return r.oninit=function(e){var r=this;t.prototype.oninit.call(this,e);var n=this.attrs.discussionId,i=s().store.getById("discussions",n);i||x.find(o(),n).then((function(t){t&&(r.discussion=t,m.redraw())})),i&&(this.discussion=i)},r.view=function(){var t,e=this.attrs.href,r=s().forum.attribute("showDiscussionId"),n=e&&/\/d\/[^\/]+\/[0-9]+/.test(e);return this.discussion?m(k(),{href:e||s().route("discussion",{id:this.attrs.discussionId}),class:"DiscussionLink RouteSet"},null==(t=this.discussion)?void 0:t.title()," ",r&&m(O,{discussionId:this.attrs.discussionId})," ",n&&m(P,null)):m("span",{class:"DiscussionLink DiscussionUnknown"},s().translator.trans("club-1-cross-references.forum.unknown_discussion")," ",r&&m(O,{discussionId:this.attrs.discussionId})," ",n&&m(P,null))},e}(k()),P=function(t){function e(){return t.apply(this,arguments)||this}return L(e,t),e.prototype.view=function(){return m("span",{class:"DiscussionComment"},"(",s().translator.trans("club-1-cross-references.forum.comment"),")")},e}(E());const D=flarum.core.compat["forum/components/EventPost"];var F=function(t){function e(){for(var e,r=arguments.length,n=new Array(r),o=0;o<r;o++)n[o]=arguments[o];return(e=t.call.apply(t,[this].concat(n))||this).attrs=void 0,e}L(e,t),e.initAttrs=function(e){t.initAttrs.call(this,e),e.sourceIds=e.post.content()};var r=e.prototype;return r.icon=function(){return"fas fa-reply"},r.descriptionKey=function(){return 1==this.attrs.sourceIds.length?"club-1-cross-references.forum.post_stream.discussion_referenced_text":"club-1-cross-references.forum.post_stream.discussion_referenced_multiple_text"},r.descriptionData=function(){return 1==this.attrs.sourceIds.length?{source:m(S,{discussionId:this.attrs.sourceIds[0]})}:{sources:m("ul",null,this.attrs.sourceIds.map((function(t){return m("li",null,m(S,{discussionId:t}))})))}},e}(r.n(D)());function A(t){var e=t.getAttribute("id"),r=s().store.getById("discussions",e);if(!r)return x.find(o(),e).then((function(t){var e,r;t&&(r=null==(e=s().composer.fields)?void 0:e.content)&&(r("​"+r()),setTimeout((function(){return r(r().slice(1))}),50))})),!1;var n=r;t.setAttribute("title",n.title()),t.setAttribute("comment",s().translator.trans("club-1-cross-references.forum.comment"))}s().initializers.add("club-1-cross-references",(function(e){e.postComponents.discussionReferenced=F,function(){function e(){this.$(".Post-body a:not(.RouteSet)").map((function(){var t=this,e=this;if(e.protocol===document.location.protocol&&e.host===document.location.host){var r=e.pathname.match(/\/d\/([0-9]+)/);if(null!=r)if(s().forum.attribute("retrofitLinksInFrontend")&&e.text===e.href&&!e.classList.contains("DiscussionLink")){var n=r[1],o=document.createElement("span");m.mount(o,{view:function(){return m(S,{discussionId:n,href:e.href})}}),e.replaceWith(o)}else e.classList.add("RouteSet"),e.addEventListener("click",(function(e){m.route.set(t.getAttribute("href")),e.preventDefault()}))}}))}(0,t.extend)(c().prototype,"oncreate",e),(0,t.extend)(c().prototype,"onupdate",e)}(),(0,t.extend)(f().prototype,"items",(function(t){if(s().forum.attribute("showDiscussionId")){var e=this.attrs.discussion.id(),r=t.get("title");t.setContent("title",m("h2",[r.text," ",m(O,{discussionId:e})]))}})),(0,t.extend)(h().prototype,"infoItems",(function(t){if(s().forum.attribute("showDiscussionId")){var e=this.attrs.discussion.id();t.add("id",m(O,{discussionId:e}),90)}}))}))})(),module.exports=n})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/forum/cache.ts":
+/*!****************************!*\
+  !*** ./src/forum/cache.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FIFOCache": () => (/* binding */ FIFOCache),
+/* harmony export */   "ResponseCache": () => (/* binding */ ResponseCache)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/models/Discussion */ "flarum/common/models/Discussion");
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_3__);
+
+
+/*
+ * This file is part of club-1/flarum-ext-cross-references.
+ *
+ * Copyright (c) 2023 Nicolas Peugnet <nicolas@club1.fr>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+
+
+var FIFOCache = /*#__PURE__*/function () {
+  function FIFOCache(capacity) {
+    this.head = void 0;
+    this.tail = void 0;
+    this.data = new Map();
+    this.capacity = void 0;
+    this.capacity = capacity;
+  }
+  var _proto = FIFOCache.prototype;
+  _proto.get = function get(key) {
+    return this.data.get(key);
+  };
+  _proto.set = function set(key, value) {
+    if (this.data.size == this.capacity) {
+      var evicted = this.head;
+      this.data["delete"](evicted.key);
+      this.head = evicted.next;
+    }
+    var entry = {
+      key: key
+    };
+    if (!this.head) {
+      this.head = entry;
+    }
+    if (!this.tail) {
+      this.tail = entry;
+    } else {
+      this.tail.next = entry;
+      this.tail = entry;
+    }
+    this.data.set(key, value);
+    return this;
+  };
+  return FIFOCache;
+}();
+function getKey(name, id) {
+  return name + id;
+}
+var ModelMap = {};
+ModelMap[(flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_2___default().name)] = 'discussions';
+
+/** Empty function used to disable callbacks */
+function noop() {}
+;
+var ResponseCache = /*#__PURE__*/function () {
+  function ResponseCache() {}
+  ResponseCache.find = /*#__PURE__*/function () {
+    var _find = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(m, id, options) {
+      var _this = this;
+      var key, inFlight, req;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (options === void 0) {
+                options = {};
+              }
+              key = getKey(m.name, id);
+              if (!(this.responseErrors.get(key) == true)) {
+                _context.next = 4;
+                break;
+              }
+              return _context.abrupt("return", null);
+            case 4:
+              inFlight = this.inFlight.get(key);
+              if (!inFlight) {
+                _context.next = 9;
+                break;
+              }
+              return _context.abrupt("return", inFlight);
+            case 9:
+              req = flarum_forum_app__WEBPACK_IMPORTED_MODULE_3___default().store.find(ModelMap[m.name], id, options, {
+                errorHandler: noop
+              })["catch"](function () {
+                _this.responseErrors.set(key, true);
+                return null;
+              })["finally"](function () {
+                return _this.inFlight["delete"](key);
+              });
+              this.inFlight.set(key, req);
+              return _context.abrupt("return", req);
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+    function find(_x, _x2, _x3) {
+      return _find.apply(this, arguments);
+    }
+    return find;
+  }();
+  return ResponseCache;
+}();
+ResponseCache.responseErrors = new FIFOCache(128);
+ResponseCache.inFlight = new Map();
+
+/***/ }),
+
+/***/ "./src/forum/components/DiscussionId.tsx":
+/*!***********************************************!*\
+  !*** ./src/forum/components/DiscussionId.tsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DiscussionId)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__);
+
+/*
+ * This file is part of club-1/flarum-ext-cross-references.
+ *
+ * Copyright (c) 2022 Nicolas Peugnet <nicolas@club1.fr>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+
+var DiscussionId = /*#__PURE__*/function (_Component) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionId, _Component);
+  function DiscussionId() {
+    return _Component.apply(this, arguments) || this;
+  }
+  var _proto = DiscussionId.prototype;
+  _proto.view = function view() {
+    return m("span", {
+      "class": "DiscussionId"
+    }, "#", this.attrs.discussionId);
+  };
+  return DiscussionId;
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
+
+
+/***/ }),
+
+/***/ "./src/forum/components/DiscussionLink.tsx":
+/*!*************************************************!*\
+  !*** ./src/forum/components/DiscussionLink.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DiscussionLink)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Link */ "flarum/common/components/Link");
+/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _DiscussionId__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DiscussionId */ "./src/forum/components/DiscussionId.tsx");
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../cache */ "./src/forum/cache.ts");
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/common/models/Discussion */ "flarum/common/models/Discussion");
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_6__);
+
+/*
+ * This file is part of club-1/flarum-ext-cross-references.
+ *
+ * Copyright (c) 2022 Nicolas Peugnet <nicolas@club1.fr>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+
+
+
+
+
+
+var DiscussionLink = /*#__PURE__*/function (_Link) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionLink, _Link);
+  function DiscussionLink() {
+    var _this;
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _Link.call.apply(_Link, [this].concat(args)) || this;
+    _this.attrs = void 0;
+    _this.discussion = void 0;
+    return _this;
+  }
+  var _proto = DiscussionLink.prototype;
+  _proto.oninit = function oninit(vnode) {
+    var _this2 = this;
+    _Link.prototype.oninit.call(this, vnode);
+    var discussionId = this.attrs.discussionId;
+    var discussion = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().store.getById('discussions', discussionId);
+    if (!discussion) {
+      _cache__WEBPACK_IMPORTED_MODULE_5__.ResponseCache.find((flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_6___default()), discussionId).then(function (d) {
+        if (d) {
+          _this2.discussion = d;
+          m.redraw();
+        }
+      });
+    }
+    if (discussion) {
+      this.discussion = discussion;
+    }
+  };
+  _proto.view = function view() {
+    var href = this.attrs.href;
+    var showId = flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().forum.attribute('showDiscussionId');
+    var isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
+    if (this.discussion) {
+      var _this$discussion;
+      return m((flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_2___default()), {
+        href: href ? href : flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().route('discussion', {
+          id: this.attrs.discussionId
+        }),
+        "class": "DiscussionLink RouteSet"
+      }, (_this$discussion = this.discussion) == null ? void 0 : _this$discussion.title(), " ", showId && m(_DiscussionId__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        discussionId: this.attrs.discussionId
+      }), " ", isComment && m(DiscussionComment, null));
+    } else {
+      return m("span", {
+        "class": "DiscussionLink DiscussionUnknown"
+      }, flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.unknown_discussion'), " ", showId && m(_DiscussionId__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        discussionId: this.attrs.discussionId
+      }), " ", isComment && m(DiscussionComment, null));
+    }
+  };
+  return DiscussionLink;
+}((flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_2___default()));
+
+var DiscussionComment = /*#__PURE__*/function (_Component) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionComment, _Component);
+  function DiscussionComment() {
+    return _Component.apply(this, arguments) || this;
+  }
+  var _proto2 = DiscussionComment.prototype;
+  _proto2.view = function view() {
+    return m("span", {
+      "class": "DiscussionComment"
+    }, "(", flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('club-1-cross-references.forum.comment'), ")");
+  };
+  return DiscussionComment;
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_3___default()));
+
+/***/ }),
+
+/***/ "./src/forum/components/DiscussionReferencedPost.tsx":
+/*!***********************************************************!*\
+  !*** ./src/forum/components/DiscussionReferencedPost.tsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DiscussionReferencedPost)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_forum_components_EventPost__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/forum/components/EventPost */ "flarum/forum/components/EventPost");
+/* harmony import */ var flarum_forum_components_EventPost__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_EventPost__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _DiscussionLink__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DiscussionLink */ "./src/forum/components/DiscussionLink.tsx");
+
+/*
+ * This file is part of club-1/flarum-ext-cross-references.
+ *
+ * Copyright (c) 2022 Nicolas Peugnet <nicolas@club1.fr>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+
+
+var DiscussionReferencedPost = /*#__PURE__*/function (_EventPost) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(DiscussionReferencedPost, _EventPost);
+  function DiscussionReferencedPost() {
+    var _this;
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _EventPost.call.apply(_EventPost, [this].concat(args)) || this;
+    _this.attrs = void 0;
+    return _this;
+  }
+  DiscussionReferencedPost.initAttrs = function initAttrs(attrs) {
+    _EventPost.initAttrs.call(this, attrs);
+    attrs.sourceIds = attrs.post.content();
+  };
+  var _proto = DiscussionReferencedPost.prototype;
+  _proto.icon = function icon() {
+    return 'fas fa-reply';
+  };
+  _proto.descriptionKey = function descriptionKey() {
+    return this.attrs.sourceIds.length == 1 ? 'club-1-cross-references.forum.post_stream.discussion_referenced_text' : 'club-1-cross-references.forum.post_stream.discussion_referenced_multiple_text';
+  };
+  _proto.descriptionData = function descriptionData() {
+    if (this.attrs.sourceIds.length == 1) {
+      return {
+        source: m(_DiscussionLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          discussionId: this.attrs.sourceIds[0]
+        })
+      };
+    } else {
+      return {
+        sources: m("ul", null, this.attrs.sourceIds.map(function (id) {
+          return m("li", null, m(_DiscussionLink__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            discussionId: id
+          }));
+        }))
+      };
+    }
+  };
+  return DiscussionReferencedPost;
+}((flarum_forum_components_EventPost__WEBPACK_IMPORTED_MODULE_1___default()));
+
+
+/***/ }),
+
+/***/ "./src/forum/index.ts":
+/*!****************************!*\
+  !*** ./src/forum/index.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "filterCrossReferences": () => (/* binding */ filterCrossReferences)
+/* harmony export */ });
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/models/Discussion */ "flarum/common/models/Discussion");
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/forum/components/CommentPost */ "flarum/forum/components/CommentPost");
+/* harmony import */ var flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_forum_components_DiscussionHero__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/forum/components/DiscussionHero */ "flarum/forum/components/DiscussionHero");
+/* harmony import */ var flarum_forum_components_DiscussionHero__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_DiscussionHero__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_forum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/forum/components/DiscussionListItem */ "flarum/forum/components/DiscussionListItem");
+/* harmony import */ var flarum_forum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _cache__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cache */ "./src/forum/cache.ts");
+/* harmony import */ var _components_DiscussionId__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/DiscussionId */ "./src/forum/components/DiscussionId.tsx");
+/* harmony import */ var _components_DiscussionReferencedPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/DiscussionReferencedPost */ "./src/forum/components/DiscussionReferencedPost.tsx");
+/*
+ * This file is part of club-1/flarum-ext-cross-references.
+ *
+ * Copyright (c) 2022 Nicolas Peugnet <nicolas@club1.fr>.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+
+
+
+
+
+
+
+
+
+flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().initializers.add('club-1-cross-references', function (app) {
+  app.postComponents.discussionReferenced = _components_DiscussionReferencedPost__WEBPACK_IMPORTED_MODULE_8__["default"];
+  addSourceLinkReplacement();
+  addDiscussionTitleId();
+  addDiscussionListId();
+});
+
+/**
+ * Extend CommentPost to setup router for discussion links.
+ */
+function addSourceLinkReplacement() {
+  function replaceSourceLinks() {
+    this.$('.Post-body a.DiscussionLink:not(.RouteSet)').map(function () {
+      var _this = this;
+      var a = this;
+      a.classList.add('RouteSet');
+      a.addEventListener('click', function (e) {
+        m.route.set(_this.getAttribute('href'));
+        e.preventDefault();
+      });
+    });
+  }
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_3___default().prototype), 'oncreate', replaceSourceLinks);
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_3___default().prototype), 'onupdate', replaceSourceLinks);
+}
+
+/**
+ * Extend DiscussionHero to add its ID in the title item.
+ */
+function addDiscussionTitleId() {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_components_DiscussionHero__WEBPACK_IMPORTED_MODULE_4___default().prototype), 'items', function (items) {
+    if (!flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('showDiscussionId')) {
+      return;
+    }
+    var attrs = this.attrs;
+    var discussionId = attrs.discussion.id();
+    var title = items.get('title');
+    items.setContent('title', m('h2', [title.text, ' ', m(_components_DiscussionId__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      discussionId: discussionId
+    })]));
+  });
+}
+
+/**
+ * Extend DiscussionListItem to add its ID as an item with a high priority.
+ */
+function addDiscussionListId() {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5___default().prototype), 'infoItems', function (items) {
+    if (!flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('showDiscussionId')) {
+      return;
+    }
+    var attrs = this.attrs;
+    var discussionId = attrs.discussion.id();
+    items.add('id', m(_components_DiscussionId__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      discussionId: discussionId
+    }), 90);
+  });
+}
+
+/**
+ * Extremely dirty hack to trigger a refresh of the composer preview
+ * by inserting a ZeroWidthSpace at the beginning of the message and
+ * then removing it 50ms later after the render pass.
+ *
+ * TODO: Replace this workaround once this issue is fixed:
+ * <https://github.com/flarum/framework/issues/3720>
+ */
+function refreshComposerPreview() {
+  var _app$composer$fields;
+  var content = (_app$composer$fields = (flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().composer.fields)) == null ? void 0 : _app$composer$fields.content;
+  if (content) {
+    content('​' + content());
+    setTimeout(function () {
+      return content(content().slice(1));
+    }, 50);
+  }
+}
+function filterCrossReferences(tag) {
+  var id = tag.getAttribute('id');
+  var res = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().store.getById('discussions', id);
+  if (res) {
+    var discussion = res;
+    tag.setAttribute('title', discussion.title());
+  } else {
+    _cache__WEBPACK_IMPORTED_MODULE_6__.ResponseCache.find((flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_1___default()), id).then(function (d) {
+      if (d) refreshComposerPreview();
+    });
+    return false;
+  }
+  tag.setAttribute('comment', flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().translator.trans('club-1-cross-references.forum.comment'));
+}
+
+/***/ }),
+
+/***/ "flarum/common/Component":
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['common/Component']" ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['common/Component'];
+
+/***/ }),
+
+/***/ "flarum/common/components/Link":
+/*!***************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Link']" ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['common/components/Link'];
+
+/***/ }),
+
+/***/ "flarum/common/extend":
+/*!******************************************************!*\
+  !*** external "flarum.core.compat['common/extend']" ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['common/extend'];
+
+/***/ }),
+
+/***/ "flarum/common/models/Discussion":
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/models/Discussion']" ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['common/models/Discussion'];
+
+/***/ }),
+
+/***/ "flarum/forum/app":
+/*!**************************************************!*\
+  !*** external "flarum.core.compat['forum/app']" ***!
+  \**************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['forum/app'];
+
+/***/ }),
+
+/***/ "flarum/forum/components/CommentPost":
+/*!*********************************************************************!*\
+  !*** external "flarum.core.compat['forum/components/CommentPost']" ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['forum/components/CommentPost'];
+
+/***/ }),
+
+/***/ "flarum/forum/components/DiscussionHero":
+/*!************************************************************************!*\
+  !*** external "flarum.core.compat['forum/components/DiscussionHero']" ***!
+  \************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['forum/components/DiscussionHero'];
+
+/***/ }),
+
+/***/ "flarum/forum/components/DiscussionListItem":
+/*!****************************************************************************!*\
+  !*** external "flarum.core.compat['forum/components/DiscussionListItem']" ***!
+  \****************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['forum/components/DiscussionListItem'];
+
+/***/ }),
+
+/***/ "flarum/forum/components/EventPost":
+/*!*******************************************************************!*\
+  !*** external "flarum.core.compat['forum/components/EventPost']" ***!
+  \*******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['forum/components/EventPost'];
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"]);
+function _regeneratorRuntime() {
+  "use strict";
+
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+    return exports;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  var exports = {},
+    Op = Object.prototype,
+    hasOwn = Op.hasOwnProperty,
+    defineProperty = Object.defineProperty || function (obj, key, desc) {
+      obj[key] = desc.value;
+    },
+    $Symbol = "function" == typeof Symbol ? Symbol : {},
+    iteratorSymbol = $Symbol.iterator || "@@iterator",
+    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  function define(obj, key, value) {
+    return Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), obj[key];
+  }
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function define(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+      generator = Object.create(protoGenerator.prototype),
+      context = new Context(tryLocsList || []);
+    return defineProperty(generator, "_invoke", {
+      value: makeInvokeMethod(innerFn, self, context)
+    }), generator;
+  }
+  function tryCatch(fn, obj, arg) {
+    try {
+      return {
+        type: "normal",
+        arg: fn.call(obj, arg)
+      };
+    } catch (err) {
+      return {
+        type: "throw",
+        arg: err
+      };
+    }
+  }
+  exports.wrap = wrap;
+  var ContinueSentinel = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  var IteratorPrototype = {};
+  define(IteratorPrototype, iteratorSymbol, function () {
+    return this;
+  });
+  var getProto = Object.getPrototypeOf,
+    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function (method) {
+      define(prototype, method, function (arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if ("throw" !== record.type) {
+        var result = record.arg,
+          value = result.value;
+        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+          invoke("next", value, resolve, reject);
+        }, function (err) {
+          invoke("throw", err, resolve, reject);
+        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+          result.value = unwrapped, resolve(result);
+        }, function (error) {
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+      reject(record.arg);
+    }
+    var previousPromise;
+    defineProperty(this, "_invoke", {
+      value: function value(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function (resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+      }
+    });
+  }
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = "suspendedStart";
+    return function (method, arg) {
+      if ("executing" === state) throw new Error("Generator is already running");
+      if ("completed" === state) {
+        if ("throw" === method) throw arg;
+        return doneResult();
+      }
+      for (context.method = method, context.arg = arg;;) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+          if ("suspendedStart" === state) throw state = "completed", context.arg;
+          context.dispatchException(context.arg);
+        } else "return" === context.method && context.abrupt("return", context.arg);
+        state = "executing";
+        var record = tryCatch(innerFn, self, context);
+        if ("normal" === record.type) {
+          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+          return {
+            value: record.arg,
+            done: context.done
+          };
+        }
+        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+      }
+    };
+  }
+  function maybeInvokeDelegate(delegate, context) {
+    var methodName = context.method,
+      method = delegate.iterator[methodName];
+    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+    var info = record.arg;
+    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  }
+  function pushTryEntry(locs) {
+    var entry = {
+      tryLoc: locs[0]
+    };
+    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  }
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal", delete record.arg, entry.completion = record;
+  }
+  function Context(tryLocsList) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+  }
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) return iteratorMethod.call(iterable);
+      if ("function" == typeof iterable.next) return iterable;
+      if (!isNaN(iterable.length)) {
+        var i = -1,
+          next = function next() {
+            for (; ++i < iterable.length;) {
+              if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+            }
+            return next.value = undefined, next.done = !0, next;
+          };
+        return next.next = next;
+      }
+    }
+    return {
+      next: doneResult
+    };
+  }
+  function doneResult() {
+    return {
+      value: undefined,
+      done: !0
+    };
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+    value: GeneratorFunctionPrototype,
+    configurable: !0
+  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+    value: GeneratorFunction,
+    configurable: !0
+  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+    var ctor = "function" == typeof genFun && genFun.constructor;
+    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  }, exports.mark = function (genFun) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+  }, exports.awrap = function (arg) {
+    return {
+      __await: arg
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+    return this;
+  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    void 0 === PromiseImpl && (PromiseImpl = Promise);
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+      return result.done ? result.value : iter.next();
+    });
+  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+    return this;
+  }), define(Gp, "toString", function () {
+    return "[object Generator]";
+  }), exports.keys = function (val) {
+    var object = Object(val),
+      keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    return keys.reverse(), function next() {
+      for (; keys.length;) {
+        var key = keys.pop();
+        if (key in object) return next.value = key, next.done = !1, next;
+      }
+      return next.done = !0, next;
+    };
+  }, exports.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function reset(skipTempReset) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
+        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
+      }
+    },
+    stop: function stop() {
+      this.done = !0;
+      var rootRecord = this.tryEntries[0].completion;
+      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      return this.rval;
+    },
+    dispatchException: function dispatchException(exception) {
+      if (this.done) throw exception;
+      var context = this;
+      function handle(loc, caught) {
+        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+      }
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i],
+          record = entry.completion;
+        if ("root" === entry.tryLoc) return handle("end");
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc"),
+            hasFinally = hasOwn.call(entry, "finallyLoc");
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+          } else {
+            if (!hasFinally) throw new Error("try statement without catch or finally");
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function abrupt(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+      var record = finallyEntry ? finallyEntry.completion : {};
+      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+    },
+    complete: function complete(record, afterLoc) {
+      if ("throw" === record.type) throw record.arg;
+      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    },
+    finish: function finish(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+      }
+    },
+    "catch": function _catch(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if ("throw" === record.type) {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+      return this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+    }
+  }, exports;
+}
+module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+}
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// TODO(Babel 8): Remove this file.
+
+var runtime = __webpack_require__(/*! ../helpers/regeneratorRuntime */ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
+module.exports = runtime;
+
+// Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
+/* harmony export */ });
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _inheritsLoose)
+/* harmony export */ });
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  (0,_setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(subClass, superClass);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _setPrototypeOf)
+/* harmony export */ });
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************!*\
+  !*** ./forum.ts ***!
+  \******************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "filterCrossReferences": () => (/* reexport safe */ _src_forum__WEBPACK_IMPORTED_MODULE_0__.filterCrossReferences)
+/* harmony export */ });
+/* harmony import */ var _src_forum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum */ "./src/forum/index.ts");
+
+})();
+
+module.exports = __webpack_exports__;
+/******/ })()
+;
 //# sourceMappingURL=forum.js.map

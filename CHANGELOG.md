@@ -2,6 +2,8 @@
 
 ## [unreleased]
 
+## [v1.1.0] - 2023-05-06
+
 ### Added
 
 - Emit a `DiscussionReferenced` event each time a discussion is mentionned
@@ -101,7 +103,8 @@ First stable release.
 
 [@rob006]: https://github.com/rob006
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.0.5...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.1.0
 [v1.0.5]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.5
 [v1.0.4]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.4
 [v1.0.3]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.3

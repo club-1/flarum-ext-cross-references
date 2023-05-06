@@ -2,6 +2,12 @@
 
 ## [unreleased]
 
+### Removed
+
+- Remove "retrofit links in frontend" feature's code and related setting. ([#42])
+
+[#42]: https://github.com/club-1/flarum-ext-cross-references/issues/42
+
 ## [v1.1.0] - 2023-05-06
 
 ### Added

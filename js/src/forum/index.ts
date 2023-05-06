@@ -28,7 +28,6 @@ import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 import { ResponseCache } from './cache';
 import DiscussionId from './components/DiscussionId';
-import DiscussionLink from './components/DiscussionLink';
 import DiscussionReferencedPost from './components/DiscussionReferencedPost';
 
 app.initializers.add('club-1-cross-references', function(app) {
@@ -40,36 +39,17 @@ app.initializers.add('club-1-cross-references', function(app) {
 });
 
 /**
- * Extend CommentPost to setup router for discussion links and optionaly replace
- * plain links to discussions into formated ones using their title as the text.
+ * Extend CommentPost to setup router for discussion links.
  */
 function addSourceLinkReplacement() {
   function replaceSourceLinks(this: CommentPost) {
-    this.$('.Post-body a:not(.RouteSet)').map(function() {
+    this.$('.Post-body a.DiscussionLink:not(.RouteSet)').map(function() {
       const a = this as HTMLAnchorElement;
-      if (a.protocol !== document.location.protocol || a.host !== document.location.host) {
-        return;
-      }
-      const match = a.pathname.match(/\/d\/([0-9]+)/);
-      if (match == null) {
-        return;
-      }
-      if (
-        app.forum.attribute('retrofitLinksInFrontend')
-        && a.text === a.href
-        && !a.classList.contains('DiscussionLink')
-      ) {
-        const discussionId = match[1];
-        const span = document.createElement('span');
-        m.mount(span, {view: () => m(DiscussionLink, {discussionId, href: a.href})});
-        a.replaceWith(span)
-      } else {
-        a.classList.add('RouteSet');
-        a.addEventListener('click', (e) => {
-          m.route.set(this.getAttribute('href'))
-          e.preventDefault();
-        });
-      }
+      a.classList.add('RouteSet');
+      a.addEventListener('click', (e) => {
+        m.route.set(this.getAttribute('href'))
+        e.preventDefault();
+      });
     });
   }
   extend(CommentPost.prototype, 'oncreate', replaceSourceLinks);

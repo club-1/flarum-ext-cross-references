@@ -17,6 +17,14 @@
 - Recommend `club-1-chore-commands` extension to reparse old messages.
 - Make `false` the default value for "retrofit links in frontend" setting.
 
+### Deprecated
+
+- The "retrofit links in frontend" feature will be removed in `v1.2.0`.
+  Consider using the `chore:reparse` command of the [club-1/flarum-ext-chore-commands]
+  extension instead.
+
+[club-1/flarum-ext-chore-commands]: https://github.com/club-1/flarum-ext-chore-commands
+
 ## [v1.0.5] - 2023-04-06
 
 ### Fixed

@@ -2,6 +2,11 @@
 
 ## [unreleased]
 
+### Fixed
+
+- Fix formatting of the "retrofit links in frontend" setting and reword it
+  to precise that it is deprecated.
+
 ## [v1.1.0] - 2023-05-06
 
 ### Added

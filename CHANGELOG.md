@@ -8,6 +8,13 @@
 
 [#42]: https://github.com/club-1/flarum-ext-cross-references/issues/42
 
+## [v1.1.1] - 2023-05-10
+
+### Fixed
+
+- Fix formatting of the "retrofit links in frontend" setting and reword it
+  to precise that it is deprecated.
+
 ## [v1.1.0] - 2023-05-06
 
 ### Added
@@ -117,7 +124,8 @@ First stable release.
 
 [@rob006]: https://github.com/rob006
 
-[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/club-1/flarum-ext-cross-references/compare/v1.1.1...HEAD
+[v1.1.1]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.1.0
 [v1.0.5]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.5
 [v1.0.4]: https://github.com/club-1/flarum-ext-cross-references/releases/tag/v1.0.4

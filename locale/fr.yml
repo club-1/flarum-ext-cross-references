@@ -8,15 +8,6 @@ club-1-cross-references:
     enable_short_references:
       label: 'Activer les références courtes'
       help: 'Convertit les textes #<ID> dans les messages (e.g. #42) en liens vers la discussion corresponndante.'
-    retrofit_links_in_frontend:
-      label: 'Convertir les anciens liens dans le frontend'
-      help: >
-        <p><strong>Déprécié</strong> (sera supprimé dans <code>v1.2.0</code>)
-        Envisagez d'utiliser la commande <code>chore:reparse</code>
-        de l'extension <code>club-1/flarum-ext-chore-commands</code> à la place.
-        Voir: <code>https://github.com/club-1/flarum-ext-chore-commands</code></p>
-        <p>Affiche les titres des liens de discussions dans les messages envoyés au moment où cette extension n'était pas activée.
-        Cette opération est réalisée au niveau du frontend, elle pourrait donc mener à une mauvaise experience utilisateur.</p>
   forum:
     post_stream:
       discussion_referenced_text: '{username} a référencé cette discussion depuis {source}'

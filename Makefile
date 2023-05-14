@@ -16,11 +16,12 @@ vendor: composer.json composer.lock
 	touch $@
 
 # Create a new release
-releasepatch: V := patch
-releaseminor: V := minor
-releasemajor: V := major
+bump = echo '$2' | awk 'BEGIN{FS=OFS="."} {$$$1+=1} 1'
+releasepatch: V := 3
+releaseminor: V := 2
+releasemajor: V := 1
 release%: PREVTAG = $(shell git describe --tags --abbrev=0)
-release%: TAG = v$(shell js/node_modules/.bin/semver -i $V $(PREVTAG))
+release%: TAG = v$(shell $(call bump,$V,$(PREVTAG:v%=%)))
 release%: CONFIRM_MSG = Create release $(TAG)
 releasepatch releaseminor releasemajor: release%: .confirm check all
 	sed -i CHANGELOG.md \

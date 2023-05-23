@@ -138,7 +138,7 @@ class PostEventListenerTest extends TestCase
         $d->shouldReceive('mergePost')->once();
         $this->events->shouldReceive('dispatch')->once();
 
-        $event = new Revised($post, $actor);
+        $event = new Revised($post, $actor, 'something');
         $this->listener->handle($event);
     }
 

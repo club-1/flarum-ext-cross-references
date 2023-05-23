@@ -100,6 +100,7 @@ class CrossReferencesConfigurator
         $tag = $config->tags->add($tagName);
         $tag->attributes->add('id')->filterChain->append('#uint');
         $tag->attributes->add('title');
+        $tag->attributes->add('tags');
         $tag->template = '
             <xsl:choose>
                 <xsl:when test="@unknown = 1">
@@ -109,7 +110,7 @@ class CrossReferencesConfigurator
                     <a href="{$DISCUSSION_URL}{@id}" class="DiscussionLink">
                         <xsl:value-of select="@title"/>
                         <xsl:if test="$SHOW_DISCUSSION_ID = 1"> <span class="DiscussionId">#<xsl:value-of select="@id"/></span>
-                        </xsl:if>
+                        </xsl:if> <xsl:value-of select="@tags" disable-output-escaping="yes"/>
                     </a>
                 </xsl:otherwise>
             </xsl:choose>';

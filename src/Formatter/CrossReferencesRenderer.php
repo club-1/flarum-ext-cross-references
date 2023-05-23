@@ -82,6 +82,7 @@ class CrossReferencesRenderer
             $discussion = Discussion::whereVisibleTo($actor)->firstWhere('id', $attributes['id']);
             if ($discussion) {
                 $attributes['title'] = $discussion->title;
+                $attributes['tags'] = '<span class="TagsLabel "><span style="--tag-bg: #12dc12;" class="TagLabel  colored text-contrast--light TagLabel--child"><span class="TagLabel-text"><i class="icon fa fa-check"></i> résolu</span></span></span>';
             } else {
                 $attributes['unknown'] = true;
             }

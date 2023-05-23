@@ -26,6 +26,7 @@ import app from 'flarum/forum/app';
 import CommentPost from 'flarum/forum/components/CommentPost';
 import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
+import tagsLabel from 'flarum/tags/helpers/tagsLabel';
 import { ResponseCache } from './cache';
 import DiscussionId from './components/DiscussionId';
 import DiscussionReferencedPost from './components/DiscussionReferencedPost';
@@ -111,6 +112,7 @@ export function filterCrossReferences(tag: any): false | void {
   if (res) {
     const discussion = res as Discussion;
     tag.setAttribute('title', discussion.title());
+    tag.setAttribute('tags', '<span class="TagsLabel "><span style="--tag-bg: #12dc12;" class="TagLabel  colored text-contrast--light TagLabel--child"><span class="TagLabel-text"><i class="icon fa fa-check"></i> résolu</span></span></span>');
   } else {
     ResponseCache.find(Discussion, id).then((d) => {
       if (d) refreshComposerPreview();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34a5425e15bee19233a1af51a036b391",
+    "content-hash": "b8dc0d74602a2df2f603268be9393c89",
     "packages": [
         {
             "name": "axy/backtrace",
@@ -8728,17 +8728,22 @@
         },
         {
             "name": "flarum/phpstan",
-            "version": "dev-main",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/flarum/phpstan",
-                "reference": "04af6c418d0192b322bd0d7051ef6b9872ba2e10"
+                "url": "https://github.com/flarum/phpstan.git",
+                "reference": "2d8bdbc20fc36e9cc9072afef36c2d8e7c1cd3f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flarum/phpstan/zipball/2d8bdbc20fc36e9cc9072afef36c2d8e7c1cd3f0",
+                "reference": "2d8bdbc20fc36e9cc9072afef36c2d8e7c1cd3f0",
+                "shasum": ""
             },
             "require": {
                 "nunomaduro/larastan": "^1.0",
                 "phpstan/phpstan": ">=1.8.11 < 1.9.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "phpstan": {
@@ -8755,11 +8760,25 @@
                     "Flarum\\PHPStan\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Flarum PHPStan extension",
-            "time": "2023-02-08T09:43:41+00:00"
+            "support": {
+                "source": "https://github.com/flarum/phpstan/tree/v1.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/flarum",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/flarum",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2023-04-19T11:58:11+00:00"
         },
         {
             "name": "flarum/testing",
@@ -11562,9 +11581,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "flarum/phpstan": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

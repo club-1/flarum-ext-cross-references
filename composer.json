@@ -89,15 +89,8 @@
         "test:integration": "Runs all integration tests.",
         "test:setup": "Sets up a database for use with integration tests. Execute this only once."
     },
-    "repositories": [
-        {
-            "name": "flarum/phpstan",
-            "type": "git",
-            "url": "https://github.com/flarum/phpstan"
-        }
-    ],
     "require-dev": {
-        "flarum/phpstan": "dev-main",
+        "flarum/phpstan": "^1.8",
         "flarum/testing": "^1.0.0",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-mockery": "^1.1",

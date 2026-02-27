@@ -19,43 +19,110 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import app from 'flarum/forum/app';
 import EventPost from 'flarum/forum/components/EventPost';
 import { IPostAttrs } from 'flarum/forum/components/Post';
+import Discussion from 'flarum/common/models/Discussion';
 import DiscussionLink from './DiscussionLink';
+import type { Vnode } from 'mithril';
 
-type DiscussionReferencedPostAttrs = IPostAttrs & {sourceIds: string[]};
+type DiscussionReferencedPostAttrs = IPostAttrs & {
+  sourceIds: string[],
+};
 
 export default class DiscussionReferencedPost extends EventPost {
-  attrs!: DiscussionReferencedPostAttrs
+  attrs!: DiscussionReferencedPostAttrs;
+
+  discussions: Record<string, Discussion> = {};
 
   static initAttrs(attrs: DiscussionReferencedPostAttrs) {
     super.initAttrs(attrs);
-
     attrs.sourceIds = attrs.post.content() as unknown as string[];
   }
+
+  oninit(vnode: Vnode) {
+    super.oninit(vnode);
+    this.loadDiscussions();
+  }
+
+  onbeforeupdate(vnode: Vnode, old: Vnode) {
+    if (vnode.attrs.post !== old.attrs.post) {
+      this.loadDiscussions();
+    }
+  }
+
+  loadDiscussions() {
+    this.loading = true;
+    this.discussions = {};
+
+    const ids = this.attrs.sourceIds;
+
+    const promises = ids.map(async (id) => {
+      let discussion = app.store.getById<Discussion>('discussions', id);
+
+      if (!discussion) {
+        try {
+          const response = await app.request({
+            method: 'GET',
+            url: app.forum.attribute('apiUrl') + `/discussions/${id}`,
+            errorHandler: () => {},
+          });
+
+          app.store.pushPayload(response);
+          discussion = app.store.getById<Discussion>('discussions', id);
+        } catch {
+          discussion = undefined;
+        }
+      }
+
+      if (discussion) {
+        this.discussions[id] = discussion;
+      }
+    });
+
+    Promise.all(promises).then(() => {
+      this.loading = false;
+      m.redraw();
+    });
+  }
+
   icon() {
     return 'fas fa-reply';
   }
 
   descriptionKey() {
-    return this.attrs.sourceIds.length == 1 ?
-      'club-1-cross-references.forum.post_stream.discussion_referenced_text' :
-      'club-1-cross-references.forum.post_stream.discussion_referenced_multiple_text';
+    return this.attrs.sourceIds.length == 1
+      ? 'club-1-cross-references.forum.post_stream.discussion_referenced_text'
+      : 'club-1-cross-references.forum.post_stream.discussion_referenced_multiple_text';
   }
 
   descriptionData() {
-    if (this.attrs.sourceIds.length == 1) {
+    if (this.attrs.sourceIds.length === 1) {
+      const id = this.attrs.sourceIds[0];
+
       return {
-        source: <DiscussionLink discussionId={this.attrs.sourceIds[0]} />
-      }
-    } else {
-      return {
-        sources: <ul>
-          {this.attrs.sourceIds.map((id) =>
-            <li><DiscussionLink discussionId={id} /></li>
-          )}
-        </ul>
-      }
+        source: (
+          <DiscussionLink
+            discussionId={id}
+            discussion={this.discussions[id]}
+          />
+        ),
+      };
     }
+
+    return {
+      sources: (
+        <ul>
+          {this.attrs.sourceIds.map((id) => (
+            <li>
+              <DiscussionLink
+                discussionId={id}
+                discussion={this.discussions[id]}
+              />
+            </li>
+          ))}
+        </ul>
+      ),
+    };
   }
 }

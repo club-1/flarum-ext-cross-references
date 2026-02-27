@@ -31,3 +31,11 @@
 	list-style: none;
 	padding: 0;
 }
+
+.EventPost.DiscussionReferencedPost.Post.Post--loading {
+    height: 62px;
+}
+
+.DiscussionReferencedPost .LoadingIndicator-container--block {
+    height: auto;
+}

@@ -34,61 +34,42 @@ export interface IDiscussion {
 }
 
 type DiscussionLinkAttrs = ComponentAttrs & {
+  discussion?: IDiscussion,
   discussionId: string,
   href?: string,
 }
 
 export default class DiscussionLink extends Link {
   attrs!: DiscussionLinkAttrs;
-  discussion?: IDiscussion;
-
-  oninit(vnode: Vnode) {
-    super.oninit(vnode);
-    const discussionId = this.attrs.discussionId;
-    const discussion = app.store.getById<Discussion>('discussions', discussionId);
-    if (!discussion) {
-      ResponseCache.find(Discussion, discussionId).then((d) => {
-        if (d) {
-          this.discussion = d;
-          m.redraw();
-        }
-      });
-    }
-    if (discussion) {
-      this.discussion = discussion;
-    }
-  }
 
   view() {
-    const href = this.attrs.href;
+    const { discussion, discussionId, href } = this.attrs;
     const showId = app.forum.attribute('showDiscussionId');
     const isComment = href && /\/d\/[^\/]+\/[0-9]+/.test(href);
-    if (this.discussion) {
-      return <Link
-        href={href ? href : app.route('discussion', {id: this.attrs.discussionId})}
-        class="DiscussionLink RouteSet"
-      >
-        {
-          this.discussion?.title()
-        } {
-          showId && <DiscussionId discussionId={this.attrs.discussionId} />
-        } {
-          isComment && <DiscussionComment/>
-        }
-      </Link>
-    } else {
-      return <span
-        class="DiscussionLink DiscussionUnknown"
-      >
-        {
-          app.translator.trans('club-1-cross-references.forum.unknown_discussion')
-        } {
-          showId && <DiscussionId discussionId={this.attrs.discussionId} />
-        } {
-          isComment && <DiscussionComment/>
-        }
-      </span>
+
+    if (discussion) {
+
+      return (
+        <Link
+          href={href ? href : app.route('discussion', { id: discussionId })}
+          class="DiscussionLink RouteSet"
+        >
+          {discussion.title()}
+          &ensp;
+          {showId && <DiscussionId discussionId={discussionId} />}
+          {isComment && <DiscussionComment />}
+        </Link>
+      );
     }
+
+    return (
+      <span class="DiscussionLink DiscussionUnknown">
+        {app.translator.trans('club-1-cross-references.forum.unknown_discussion')}
+        &ensp;
+        {showId && <DiscussionId discussionId={discussionId} />}
+        {isComment && <DiscussionComment />}
+      </span>
+    );
   }
 }
 
